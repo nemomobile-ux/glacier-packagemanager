@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Packages
+Exec=/usr/bin/invoker --type=generic glacier-packagemanager
+Icon=/usr/share/glacier-packagemanager/images/glacier-packagemanager.png
+X-Desktop-File-Install-Version=0.20

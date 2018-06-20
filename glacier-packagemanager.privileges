@@ -1,0 +1,2 @@
+# Tells invoker to run glacier-packagemanager as nemo:privileged
+/usr/bin/glacier-packagemanager,
