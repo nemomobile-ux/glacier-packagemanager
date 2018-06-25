@@ -43,7 +43,7 @@ Page {
         color: "transparent"
 
         Label{
-            id: removeLabel
+            id: installLabel
             text: qsTr("Install package") + " " + pkgname + "?";
             anchors.centerIn: parent
         }
@@ -56,7 +56,7 @@ Page {
             anchors{
                 left: parent.left
                 leftMargin: Theme.itemSpacingLarge
-                top: removeLabel.bottom
+                top: installLabel.bottom
                 topMargin: Theme.itemSpacingLarge
             }
 
@@ -87,6 +87,7 @@ Page {
                     installProgressBar.visible = true
                     installProgressBar.value = 0
                     controlsArea.visible = false
+                    installLabel.text =  qsTr("Installing package") + " " + pkgname;
                     packageManager.installPackage([pkgname])
                 }
             }
