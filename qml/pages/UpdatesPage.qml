@@ -23,6 +23,8 @@ import QtQuick.Controls 1.0
 import QtQuick.Controls.Nemo 1.0
 import QtQuick.Controls.Styles.Nemo 1.0
 
+import Nemo.Dialogs 1.0
+
 import org.glacier.packagemanager 1.0
 
 Page {
@@ -57,6 +59,8 @@ Page {
         height: parent.height
 
         color: "transparent"
+
+        visible: !updateProgress.visible
 
         ListView{
             id: updatesListView
@@ -96,6 +100,78 @@ Page {
             id: updatesLabel
             anchors.centerIn: parent
             text: qsTr("Load updates list")
+        }
+    }
+
+    Rectangle{
+        id: updateProgress
+
+        anchors.centerIn: parent
+        width: parent.width
+        height: childrenRect.height
+
+        color: "transparent"
+
+        visible: false
+
+        ProgressBar{
+            id: refreshProgressBar
+
+            width: mainPage.width - Theme.itemSpacingLarge*2
+            anchors{
+                left: parent.left
+                leftMargin: Theme.itemSpacingLarge
+            }
+
+            indeterminate: true
+            minimumValue: 0
+            maximumValue: 100
+        }
+
+        Label{
+            id: refreshRepoLabel
+            text: qsTr("Updating...")
+
+            anchors{
+                top: refreshProgressBar.bottom
+                topMargin: Theme.itemSpacingLarge
+                horizontalCenter: parent.horizontalCenter
+            }
+        }
+    }
+
+    Dialog{
+        id: simpleDialog
+        acceptText: qsTr("Ok")
+        headingText: qsTr("Packages updated")
+
+        inline: false
+
+        icon: "image://theme/exclamation-triangle"
+
+        onAccepted: {
+            back();
+        }
+    }
+
+    Connections{
+        target: packageManager
+        onUpdatePackagesStarted: {
+            updateProgress.visible = true
+        }
+        onUpdatePackagesProgress: {
+            refreshProgressBar.value = percentage;
+        }
+        onUpdatePackagesFinished: {
+            simpleDialog.open();
+        }
+    }
+
+    function back(){
+        if(action === "update"){
+            Qt.quit()
+        } else {
+            pageStack.pop()
         }
     }
 }

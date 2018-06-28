@@ -134,8 +134,16 @@ void PackageManager::installUpdates(QStringList pkgList)
     }
 
     XTransaction *transaction = XTransactionManager::updatePackages(pkgList);
-
+    connect(transaction, &XTransaction::started, this, &PackageManager::updatePackagesStarted);
+    connect(transaction, &XTransaction::finished, this, &PackageManager::updatePackagesFinished);
+    connect(transaction, &XTransaction::progressChanged,this, &PackageManager::onUpdateProgressChanged);
     transaction->start();
+}
+
+void PackageManager::onUpdateProgressChanged(XTransaction *transaction, uint percentage)
+{
+    Q_UNUSED(transaction);
+    emit updatePackagesProgress(percentage);
 }
 
 void PackageManager::getUpdates()

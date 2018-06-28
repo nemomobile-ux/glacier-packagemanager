@@ -34,7 +34,6 @@ Page {
             ToolButton {
                 iconSource: "image://theme/refresh"
                 onClicked: packageManager.refreshRepos(true);
-                visible: (action !== "remove")
             }
         ]
     }
@@ -45,6 +44,8 @@ Page {
         anchors.centerIn: parent
         width: parent.width
         height: childrenRect.height
+
+        visible: false;
 
         ProgressBar{
             id: refreshRepoProgressBar
@@ -81,9 +82,7 @@ Page {
         target: packageManager
         onRefreshReposFinished: {
             refreshRepoProgressBar.value = 100
-            if(action !== "install"){
-                packageManager.getUpdates()
-            }
+            packageManager.getUpdates()
         }
 
         onRefreshReposProgress: {
@@ -92,17 +91,11 @@ Page {
 
         onRefreshReposStarted: {
             refreshRepoProgressBar.value = 0
+            refreshRepoIndicator.visible = true
         }
 
         onUpdatesReady: {
-            if(action === "update") {
-                pageStack.replace(Qt.resolvedUrl("/usr/share/glacier-packagemanager/qml/pages/UpdatesPage.qml"));
-            } else if (action === "install") {
-                console.log("Try install "+pkgname)
-                pageStack.replace(Qt.resolvedUrl("/usr/share/glacier-packagemanager/qml/pages/InstallPackagePage.qml"));
-            }
-
-            console.log("ACTION IS "+action);
+            pageStack.push(Qt.resolvedUrl("/usr/share/glacier-packagemanager/qml/pages/UpdatesPage.qml"));
         }
     }
 }

@@ -35,6 +35,10 @@ signals:
     void refreshReposProgress(uint percentage);
 
     void updatesReady();
+    void updatePackagesFail(QString errorMessage);
+    void updatePackagesFinished();
+    void updatePackagesStarted();
+    void updatePackagesProgress(uint percentage);
 
     void installPackagesSuccessed();
     void installPackagesFail(QString errorMessage);
@@ -62,6 +66,7 @@ private slots:
     void onRefreshProgressChanged(XTransaction *transaction, uint percentage);
 
     void listOfUpdatesReady(XTransaction *transaction);
+    void onUpdateProgressChanged(XTransaction *transaction, uint percentage);
 
     void _installPackage(XTransaction *taction);
     void onInstallPackagesFail(XTransaction *transaction);
