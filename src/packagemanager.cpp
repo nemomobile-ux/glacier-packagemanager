@@ -64,7 +64,8 @@ void PackageManager::_installPackage(XTransaction *taction)
 
 void PackageManager::onInstallPackagesFail(XTransaction *transaction)
 {
-    emit installPackagesFail(transaction->errorDetailsString());
+    Q_UNUSED(transaction)
+    qDebug() << Q_FUNC_INFO;
 }
 
 
@@ -115,7 +116,8 @@ void PackageManager::_removePackage(XTransaction *taction)
 
 void PackageManager::onRemovePackagesFail(XTransaction *transaction)
 {
-    emit removePackagesFail(transaction->errorDetailsString());
+    Q_UNUSED(transaction);
+    qDebug() << Q_FUNC_INFO;
 }
 
 void PackageManager::onRemoveProgressChanged(XTransaction *transaction, uint percentage)
