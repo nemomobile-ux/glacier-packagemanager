@@ -118,19 +118,19 @@
         <translation>Aktualizace</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UpdatesPage.qml" line="47"/>
-        <source>System is updated</source>
-        <translation>Systém je aktuální</translation>
-    </message>
-    <message>
         <location filename="../qml/pages/UpdatesPage.qml" line="88"/>
         <source>Update packages</source>
         <translation>Aktualizovat balíčky</translation>
     </message>
     <message>
+        <location filename="../qml/pages/UpdatesPage.qml" line="47"/>
+        <source>System is up to date</source>
+        <translation>Systém je aktuální</translation>
+    </message>
+    <message>
         <location filename="../qml/pages/UpdatesPage.qml" line="102"/>
-        <source>Load updates list</source>
-        <translation>Nahrát seznam aktualizací</translation>
+        <source>Loading updates list</source>
+        <translation>Načítá se seznam aktualizací</translation>
     </message>
     <message>
         <location filename="../qml/pages/UpdatesPage.qml" line="133"/>
