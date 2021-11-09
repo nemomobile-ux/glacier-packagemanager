@@ -44,7 +44,7 @@ Page {
 
         onUpdatesReady: {
             if(updatesListView.count == 0) {
-                updatesLabel.text = qsTr("System is updated")
+                updatesLabel.text = qsTr("System is up to date")
             } else {
                 updatesLabel.visible = false
                 updatesListView.visible = true
@@ -99,7 +99,7 @@ Page {
         Label{
             id: updatesLabel
             anchors.centerIn: parent
-            text: qsTr("Load updates list")
+            text: qsTr("Loading updates list")
         }
     }
 
