@@ -120,18 +120,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/UpdatesPage.qml" line="47"/>
-        <source>System is updated</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../qml/pages/UpdatesPage.qml" line="88"/>
         <source>Update packages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../qml/pages/UpdatesPage.qml" line="47"/>
+        <source>System is up to date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../qml/pages/UpdatesPage.qml" line="102"/>
-        <source>Load updates list</source>
+        <source>Loading updates list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
