@@ -29,7 +29,7 @@ class PackageManager : public QObject
 public:
     explicit PackageManager(QObject *parent = nullptr);
 
-signals:
+Q_SIGNALS:
     void refreshReposStarted();
     void refreshReposFinished(bool success);
     void refreshReposProgress(uint percentage);
@@ -52,7 +52,7 @@ signals:
     void removePackagesStarted();
     void removePackagesProgress(uint percentage);
 
-public slots:
+public Q_SLOTS:
     void refreshRepos(bool force = false);
 
     void getUpdates();
@@ -61,7 +61,7 @@ public slots:
     void installPackage(QStringList pkgList);
     void removePackage(QStringList pkgList);
 
-private slots:
+private Q_SLOTS:
     void onRefreshFinished(XTransaction *transaction);
     void onRefreshProgressChanged(XTransaction *transaction, uint percentage);
 

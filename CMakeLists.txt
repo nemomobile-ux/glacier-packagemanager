@@ -17,6 +17,9 @@ find_package(Qt5 COMPONENTS Gui Qml Quick LinguistTools REQUIRED)
 find_package(Glacier COMPONENTS App REQUIRED)
 find_package(PkgConfig)
 pkg_check_modules(XPACKAGEKIT REQUIRED IMPORTED_TARGET XPackageKit)
+pkg_check_modules(PAMAC REQUIRED IMPORTED_TARGET pamac)
+pkg_check_modules(GLIB2 REQUIRED IMPORTED_TARGET glib-2.0)
+pkg_check_modules(GOBJECT2 REQUIRED IMPORTED_TARGET gobject-2.0)
 
 add_subdirectory(src)
 

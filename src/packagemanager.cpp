@@ -72,7 +72,7 @@ void PackageManager::onInstallPackagesFail(XTransaction *transaction)
 void PackageManager::onInstallProgressChanged(XTransaction *transaction, uint percentage)
 {
     Q_UNUSED(transaction);
-    emit installPackagesProgress(percentage);
+    Q_EMIT installPackagesProgress(percentage);
 }
 
 
@@ -123,7 +123,7 @@ void PackageManager::onRemovePackagesFail(XTransaction *transaction)
 void PackageManager::onRemoveProgressChanged(XTransaction *transaction, uint percentage)
 {
     Q_UNUSED(transaction);
-    emit removePackagesProgress(percentage);
+    Q_EMIT removePackagesProgress(percentage);
 }
 
 /**************** UPDATES ****************/
@@ -145,7 +145,7 @@ void PackageManager::installUpdates(QStringList pkgList)
 void PackageManager::onUpdateProgressChanged(XTransaction *transaction, uint percentage)
 {
     Q_UNUSED(transaction);
-    emit updatePackagesProgress(percentage);
+    Q_EMIT updatePackagesProgress(percentage);
 }
 
 void PackageManager::getUpdates()
@@ -188,18 +188,18 @@ void PackageManager::listOfUpdatesReady(XTransaction *transaction)
 
     qDebug() << Q_FUNC_INFO << "Aviable " << updateList.size() << " updates";
 
-    emit updatesReady();
+    Q_EMIT updatesReady();
 }
 
 
 void PackageManager::onRefreshFinished(XTransaction *transaction)
 {
-    emit refreshReposFinished(transaction->isSucceeded());
+    Q_EMIT refreshReposFinished(transaction->isSucceeded());
 }
 
 void PackageManager::onRefreshProgressChanged(XTransaction *transaction, uint percentage)
 {
     Q_UNUSED(transaction);
-    emit refreshReposProgress(percentage);
+    Q_EMIT refreshReposProgress(percentage);
 }
 

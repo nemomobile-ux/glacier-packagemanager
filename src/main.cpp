@@ -33,6 +33,7 @@
 
 #include "packagemanager.h"
 #include "models/updateslistmodel.h"
+#include "pamac/database.h"
 
 int main(int argc, char *argv[])
 {
@@ -44,6 +45,9 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine *engine = GlacierApp::engine(app);
     QQmlContext *context = engine->rootContext();
+
+    DataBase *pmDB = new DataBase();
+    pmDB->getUpdates();
 
     QCommandLineParser parser;
     parser.setApplicationDescription("Test helper");

@@ -114,5 +114,5 @@ void UpdatesListModel::fillUpdatesList(XTransaction *transaction)
     endInsertRows();
 
     qDebug() << Q_FUNC_INFO << "Available " << m_updateList.count() << " updates";
-    emit updatesReady();
+    Q_EMIT updatesReady();
 }

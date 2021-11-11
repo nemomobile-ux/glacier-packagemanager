@@ -55,10 +55,10 @@ public:
     QVariant data(const QModelIndex &index, int role) const;
     QHash<int, QByteArray> roleNames() const {return m_hash;}
 
-signals:
+Q_SIGNALS:
     void updatesReady();
 
-public slots:
+public Q_SLOTS:
     void getUpdates();
     QStringList getSelectedPackagesIds();
 
