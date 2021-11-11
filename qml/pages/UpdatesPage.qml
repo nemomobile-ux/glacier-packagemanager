@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2018-2021 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -25,10 +25,11 @@ import QtQuick.Controls.Styles.Nemo 1.0
 
 import Nemo.Dialogs 1.0
 
-import org.glacier.packagemanager 1.0
+import "../components"
 
 Page {
-    id: mainPage
+    id: updatesPage
+    property var updateListModel: []
 
     headerTools: HeaderToolsLayout {
         id: tools
@@ -39,28 +40,9 @@ Page {
         showBackButton: action == "update" ? false : true
     }
 
-    UpdatesListModel{
-        id: updateListModel
-
-        onUpdatesReady: {
-            if(updatesListView.count == 0) {
-                updatesLabel.text = qsTr("System is up to date")
-            } else {
-                updatesLabel.visible = false
-                updatesListView.visible = true
-                startUpdateButton.visible = true
-            }
-        }
-    }
-
-    Rectangle{
+    Item{
         id: updatesView
-        width: parent.width
-        height: parent.height
-
-        color: "transparent"
-
-        visible: !updateProgress.visible
+        anchors.fill: parent
 
         ListView{
             id: updatesListView
@@ -69,13 +51,11 @@ Page {
             height: parent.height-startUpdateButton.height-Theme.itemSpacingSmall
 
             anchors.top: parent.top
-            visible: false
+            visible: updateListModel.length > 0
             clip: true
 
-            delegate: ListViewItemWithActions{
-                label: name
-                description: summary
-                showNext: false
+            delegate: PackageListDelegate{
+                pkg: modelData
             }
         }
 
@@ -89,81 +69,25 @@ Page {
 
             anchors.bottom: parent.bottom
             visible: false
-
-            onClicked: {
-                packageManager.installUpdates(updateListModel.getSelectedPackagesIds());
-            }
-
         }
 
         Label{
             id: updatesLabel
             anchors.centerIn: parent
             text: qsTr("Loading updates list")
+            visible: updateListModel.length == 0
         }
     }
 
-    Rectangle{
-        id: updateProgress
-
-        anchors.centerIn: parent
-        width: parent.width
-        height: childrenRect.height
-
-        color: "transparent"
-
-        visible: false
-
-        ProgressBar{
-            id: refreshProgressBar
-
-            width: mainPage.width - Theme.itemSpacingLarge*2
-            anchors{
-                left: parent.left
-                leftMargin: Theme.itemSpacingLarge
-            }
-
-            indeterminate: true
-            minimumValue: 0
-            maximumValue: 100
-        }
-
-        Label{
-            id: refreshRepoLabel
-            text: qsTr("Updating...")
-
-            anchors{
-                top: refreshProgressBar.bottom
-                topMargin: Theme.itemSpacingLarge
-                horizontalCenter: parent.horizontalCenter
-            }
-        }
-    }
-
-    Dialog{
-        id: simpleDialog
-        acceptText: qsTr("Ok")
-        headingText: qsTr("Packages updated")
-
-        inline: false
-
-        icon: "image://theme/exclamation-triangle"
-
-        onAccepted: {
-            back();
-        }
+    Component.onCompleted: {
+        pkgDb.getUpdates();
     }
 
     Connections{
-        target: packageManager
-        onUpdatePackagesStarted: {
-            updateProgress.visible = true
-        }
-        onUpdatePackagesProgress: {
-            refreshProgressBar.value = percentage;
-        }
-        onUpdatePackagesFinished: {
-            simpleDialog.open();
+        target: pkgDb
+
+        function onGetUpdatesReady(packages) {
+            updatesPage.updateListModel = packages
         }
     }
 

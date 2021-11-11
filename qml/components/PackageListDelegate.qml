@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2021 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2021 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -23,29 +23,34 @@ import QtQuick.Controls 1.0
 import QtQuick.Controls.Nemo 1.0
 import QtQuick.Controls.Styles.Nemo 1.0
 
-import "pages"
 
-import org.glacier.packagemanager 1.0
+ListViewItemWithActions {
+    id: delegate
 
-ApplicationWindow {
-    id: root
+    property var pkg
 
-    initialPage: firstpage();
+    label: modelData.name
+    description: pkg.description
+    icon: calcIcon(pkg)
+    iconColorized: false
 
-    PackageManager{
-        id: packageManager
+    onClicked: {
+        pageStack.push(Qt.resolvedUrl("/usr/share/glacier-packagemanager/qml/pages/PackageInfoPage.qml"), {item: pkg});
     }
 
-    PackageDatabase{
-        id: pkgDb
-    }
-
-    function firstpage() {
-        if(action === "remove") {
-            return Qt.createComponent(Qt.resolvedUrl("/usr/share/glacier-packagemanager/qml/pages/RemovePackagePage.qml"))
-        } else if (action === "install") {
-            return Qt.createComponent(Qt.resolvedUrl("/usr/share/glacier-packagemanager/qml/pages/InstallPackagePage.qml"))
+    function calcIcon(item) {
+        if(item.icon != "") {
+            return item.icon
         }
-        return Qt.createComponent(Qt.resolvedUrl("/usr/share/glacier-packagemanager/qml/pages/MainPage.qml"))
+
+        if(item.haveUpdates && item.installed) {
+            return "image://theme/refresh"
+        }
+
+        if(item.installed) {
+            return "image://theme/box"
+        }
+
+        return "image://theme/download"
     }
 }

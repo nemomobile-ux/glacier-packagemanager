@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2018-2021 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -23,8 +23,11 @@ import QtQuick.Controls 1.0
 import QtQuick.Controls.Nemo 1.0
 import QtQuick.Controls.Styles.Nemo 1.0
 
+import "../components"
+
 Page {
     id: mainPage
+    property var searchPackages: []
 
     headerTools: HeaderToolsLayout {
         id: tools
@@ -32,71 +35,66 @@ Page {
 
         tools: [
             ToolButton {
+                id: refreshButton
                 iconSource: "image://theme/refresh"
-                onClicked: packageManager.refreshRepos(true);
+                onClicked: pageStack.push(Qt.resolvedUrl("/usr/share/glacier-packagemanager/qml/pages/UpdatesPage.qml"));
+                showCounter: counterValue != 0
+                counterValue: 0
             }
         ]
     }
 
     Item{
-        id: refreshRepoIndicator
+        id: rootView
+        anchors.fill: parent
 
-        anchors.centerIn: parent
-        width: parent.width
-        height: childrenRect.height
+        Column{
+            id: rootColumn
+            spacing:Theme.itemSpacingLarge
+            width: parent.width - Theme.itemSpacingLarge*2
+            height: parent.height - Theme.itemSpacingLarge *2
 
-        visible: false;
-
-        ProgressBar{
-            id: refreshRepoProgressBar
-
-            width: mainPage.width - Theme.itemSpacingLarge*2
             anchors{
+                top: parent.top
+                topMargin: Theme.itemSpacingLarge
                 left: parent.left
                 leftMargin: Theme.itemSpacingLarge
             }
 
-            indeterminate: true
-            minimumValue: 0
-            maximumValue: 100
-        }
+            TextField{
+                id: searchLine
+                width: parent.width
+                onTextChanged: {
+                    pkgDb.searchPackages(searchLine.text)
+                }
+            }
 
-        Label{
-            id: refreshRepoLabel
-            text: qsTr("Updating repo...")
-
-            anchors{
-                top: refreshRepoProgressBar.bottom
-                topMargin: Theme.itemSpacingLarge
-                horizontalCenter: parent.horizontalCenter
+            ListView{
+                id: searchListView
+                width: parent.width
+                height: parent.height - searchLine.height
+                clip: true
+                model: searchPackages
+                delegate: PackageListDelegate{
+                    pkg: modelData
+                }
             }
         }
-
-    }
-
-    Component.onCompleted: {
-        packageManager.refreshRepos(false);
     }
 
     Connections{
-        target: packageManager
-        onRefreshReposFinished: {
-            refreshRepoProgressBar.value = 100
-            packageManager.getUpdates()
+        target: pkgDb
+        function onSearchPackagesReady(packages) {
+            searchPackages = packages
         }
 
-        onRefreshReposProgress: {
-            refreshRepoProgressBar.value = percentage
+        function onGetUpdatesReady(packages) {
+            refreshButton.counterValue = packages.length
         }
+    }
 
-        onRefreshReposStarted: {
-            refreshRepoProgressBar.value = 0
-            refreshRepoIndicator.visible = true
-        }
-
-        onUpdatesReady: {
-            pageStack.push(Qt.resolvedUrl("/usr/share/glacier-packagemanager/qml/pages/UpdatesPage.qml"));
-        }
+    Component.onCompleted: {
+        pkgDb.getUpdates();
     }
 }
 

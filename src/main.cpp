@@ -34,20 +34,19 @@
 #include "packagemanager.h"
 #include "models/updateslistmodel.h"
 #include "pamac/database.h"
+#include "pamac/config.h"
 
 int main(int argc, char *argv[])
 {
     qmlRegisterType<PackageManager>("org.glacier.packagemanager",1,0,"PackageManager");
     qmlRegisterType<UpdatesListModel>("org.glacier.packagemanager",1,0,"UpdatesListModel");
+    qmlRegisterType<DataBase>("org.glacier.packagemanager",1,0,"PackageDatabase");
 
     QGuiApplication *app = GlacierApp::app(argc, argv);
     app->setOrganizationName("NemoMobile");
 
     QQmlApplicationEngine *engine = GlacierApp::engine(app);
     QQmlContext *context = engine->rootContext();
-
-    DataBase *pmDB = new DataBase();
-    pmDB->getUpdates();
 
     QCommandLineParser parser;
     parser.setApplicationDescription("Test helper");

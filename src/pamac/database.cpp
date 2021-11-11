@@ -19,6 +19,7 @@
 
 #include "database.h"
 #include "updates.h"
+#include <QDateTime>
 #include <QDebug>
 #include <QThread>
 
@@ -113,8 +114,19 @@ QVariantMap DataBase::getPkg(PamacPackage *p)
     QString icon = pamac_package_get_icon(p);
     qint32 installedSize = pamac_package_get_installed_size(p);
     qint32 downloadedSize = pamac_package_get_download_size(p);
-    /*VALA_EXTERN GDateTime* pamac_package_get_install_date (PamacPackage* self);
-    VALA_EXTERN GPtrArray* pamac_package_get_screenshots (PamacPackage* self);*/
+
+    QDateTime installdate = QDateTime::fromSecsSinceEpoch(0);
+    GDateTime* inTime = pamac_package_get_install_date(p);
+    if(inTime != nullptr) {
+        installdate = QDateTime::fromSecsSinceEpoch(g_date_time_to_unix(inTime));
+    }
+
+    QStringList screenShotLists;
+    GPtrArray* screenShots = pamac_package_get_screenshots(p);
+    for(int i = 0; i < screenShots->len; i++) {
+        screenShotLists << (gchar*)(g_ptr_array_index(screenShots, i));
+    }
+
 
     return QVariantMap({{ QStringLiteral("name"), name },
                         { QStringLiteral("id"), id },
@@ -122,6 +134,7 @@ QVariantMap DataBase::getPkg(PamacPackage *p)
                         { QStringLiteral("appId"), appId },
                         { QStringLiteral("version"), version },
                         { QStringLiteral("installedVersion"), installedVersion },
+                        { QStringLiteral("installedTime"), installedSize },
                         { QStringLiteral("description"), description },
                         { QStringLiteral("descriptionLong"), descriptionLong },
                         { QStringLiteral("repo"), repo },
@@ -131,7 +144,8 @@ QVariantMap DataBase::getPkg(PamacPackage *p)
                         { QStringLiteral("icon"), icon },
                         { QStringLiteral("installedSize"), installedSize },
                         { QStringLiteral("downloadedSize"), downloadedSize },
-                        { QStringLiteral("haveUpdates"), installedVersion != version },
+                        { QStringLiteral("screenshots"), screenShotLists },
+                        { QStringLiteral("haveUpdates"), installedVersion != version && installedVersion != "" },
                         { QStringLiteral("installed"), installedVersion != ""}});
 
 }
@@ -204,6 +218,5 @@ void DataBase::getUpdatesFinish(GObject *source_object, GAsyncResult *res, gpoin
     Updates upd = pamac_database_get_updates_finish(db->m_pmDatabase,res);
 
     QList<QVariantMap> packages = db->gptrToPackageList(upd.get());
-    qDebug() << packages;
     Q_EMIT db->getUpdatesReady(packages);
 }
