@@ -38,6 +38,9 @@ ApplicationWindow {
 
     PackageTransaction{
         id: pkgTa
+        onTransactionStarted: {
+            pageStack.push(Qt.resolvedUrl("/usr/share/glacier-packagemanager/qml/pages/TransactionPage.qml"));
+        }
     }
 
     function firstpage() {

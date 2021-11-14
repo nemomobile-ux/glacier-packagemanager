@@ -34,9 +34,12 @@ public:
     Q_INVOKABLE void getAuthorization();
     Q_INVOKABLE void install(QStringList packages);
     Q_INVOKABLE void remove(QStringList packages);
+    Q_INVOKABLE void upgrade();
 
 Q_SIGNALS:
     void getAuthorizationReady(bool authorized);
+    void transactionStarted();
+    void transactionFinished();
     void emitActionProgress(const QString& emitAction,const QString& status, double progress);
     void emitError(const QString& error);
 

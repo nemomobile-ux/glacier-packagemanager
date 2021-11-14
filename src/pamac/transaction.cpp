@@ -28,17 +28,17 @@ Transaction::Transaction(QObject *parent) : QObject(parent)
     m_pmTransaction = pamac_transaction_new(m_database->db());
 
     g_signal_connect(static_cast<PamacTransaction*>(m_pmTransaction),"emit_action",
-                      reinterpret_cast<GCallback>(+([](GObject* obj,char* action){
-                          Q_UNUSED(obj);
-                          qDebug() << "Action:" << action;
-                      })),this);
+                     reinterpret_cast<GCallback>(+([](GObject* obj,char* action){
+                                                     Q_UNUSED(obj);
+                                                     qDebug() << "Action:" << action;
+                                                 })),this);
 
 
     g_signal_connect(static_cast<PamacTransaction*>(m_pmTransaction),"emit_action_progress",
                      reinterpret_cast<GCallback>(+[](GObject* obj,char* action,char* status,double progress,Transaction* t){
                          Q_UNUSED(obj);
 
-                         t->debug(QString::fromUtf8(action),QString::fromUtf8(status),progress);
+                         t->emitActionProgress(QString::fromUtf8(action),QString::fromUtf8(status),progress);
                      }),this);
 
     g_signal_connect(static_cast<PamacTransaction*>(m_pmTransaction),"emit_error",
@@ -76,7 +76,25 @@ Transaction::Transaction(QObject *parent) : QObject(parent)
                          qDebug() << "importantDetailsOutput" << message;
                      }),this);
 
+    g_signal_connect(static_cast<PamacTransaction*>(m_pmTransaction),"start_waiting",
+                     reinterpret_cast<GCallback>(+[](GObject* obj,Transaction* t){
+                         qDebug() << "startWaiting";
+                     }),this);
 
+    g_signal_connect(static_cast<PamacTransaction*>(m_pmTransaction),"stop_waiting",
+                     reinterpret_cast<GCallback>(+[](GObject* obj,Transaction* t){
+                         qDebug() << "stopWaiting";
+                     }),this);
+
+    g_signal_connect(static_cast<PamacTransaction*>(m_pmTransaction),"start_downloading",
+                     reinterpret_cast<GCallback>(+[](GObject* obj,Transaction* t){
+                         qDebug() << "startDownloading";
+                     }),this);
+
+    g_signal_connect(static_cast<PamacTransaction*>(m_pmTransaction),"stop_downloading",
+                     reinterpret_cast<GCallback>(+[](GObject* obj,Transaction* t){
+                         qDebug() << "stopDownloading";
+                     }),this);
 }
 
 Transaction::~Transaction(){
@@ -94,6 +112,7 @@ void Transaction::install(QStringList packages)
         pamac_transaction_add_pkg_to_install(m_pmTransaction, packages.at(i).toUtf8());
     }
     pamac_transaction_run_async(m_pmTransaction,transactionFinish,this);
+    Q_EMIT transactionStarted();
 }
 
 void Transaction::remove(QStringList packages)
@@ -102,6 +121,13 @@ void Transaction::remove(QStringList packages)
         pamac_transaction_add_pkg_to_remove(m_pmTransaction, packages.at(i).toUtf8());
     }
     pamac_transaction_run_async(m_pmTransaction,transactionFinish,this);
+    Q_EMIT transactionStarted();
+}
+
+void Transaction::upgrade()
+{
+    pamac_transaction_add_pkgs_to_upgrade(m_pmTransaction, true);
+    Q_EMIT transactionStarted();
 }
 
 void Transaction::getAuthorizationFinish(GObject *source_object, GAsyncResult *res, gpointer user_data)
@@ -118,16 +144,9 @@ void Transaction::askCommitFinish(GObject *source_object, GAsyncResult *res, gpo
 
 void Transaction::transactionFinish(GObject *source_object, GAsyncResult *res, gpointer user_data)
 {
-    qDebug() << Q_FUNC_INFO;
-
     Transaction *transaction = static_cast<Transaction*>(user_data);
     pamac_transaction_quit_daemon(transaction->m_pmTransaction);
     transaction->m_database->refresh();
-}
 
-void Transaction::debug(const QString &emitAction, const QString &status, double progress)
-{
-    qDebug() << emitAction;
-    qDebug() << status;
-    qDebug() << progress;
+    Q_EMIT transaction->transactionFinished();
 }
