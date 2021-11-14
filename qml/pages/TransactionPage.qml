@@ -77,6 +77,34 @@ Page {
             progressbar.indeterminate = false
         }
 
+        function onEmitAction(emitAction) {
+            emitActionLabel.text = emitAction
+            statusLabel.text = ""
+            progressbar.value = 0
+            progressbar.indeterminate = true
+        }
+
+        function onStartWaiting() {
+            emitActionLabel.text = qsTr("Waiting...")
+            statusLabel.text = ""
+            progressbar.value = 0
+            progressbar.indeterminate = true
+        }
+
+        function onStartDownloading() {
+            emitActionLabel.text = qsTr("Downloading...")
+            statusLabel.text = ""
+            progressbar.value = 0
+            progressbar.indeterminate = true
+        }
+
+        function onStartPreparing() {
+            emitActionLabel.text = qsTr("Preparing...")
+            statusLabel.text = ""
+            progressbar.value = 0
+            progressbar.indeterminate = true
+        }
+
         function onTransactionFinished() {
             pageStack.pop()
         }

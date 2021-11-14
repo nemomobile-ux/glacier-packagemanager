@@ -41,7 +41,15 @@ Q_SIGNALS:
     void transactionStarted();
     void transactionFinished();
     void emitActionProgress(const QString& emitAction,const QString& status, double progress);
+    void emitAction(const QString& emitAction);
     void emitError(const QString& error);
+
+    void startWaiting();
+    void stopWaiting();
+    void startDownloading();
+    void stopDownloading();
+    void startPreparing();
+    void stopPreparing();
 
 private:
     DataBase* m_database = nullptr;

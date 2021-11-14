@@ -28,16 +28,14 @@ Transaction::Transaction(QObject *parent) : QObject(parent)
     m_pmTransaction = pamac_transaction_new(m_database->db());
 
     g_signal_connect(static_cast<PamacTransaction*>(m_pmTransaction),"emit_action",
-                     reinterpret_cast<GCallback>(+([](GObject* obj,char* action){
-                                                     Q_UNUSED(obj);
-                                                     qDebug() << "Action:" << action;
-                                                 })),this);
-
+                     reinterpret_cast<GCallback>(+([](GObject* obj,char* action, Transaction* t){
+                         Q_UNUSED(obj);
+                         t->emitAction(QString::fromUtf8(action));
+                     })),this);
 
     g_signal_connect(static_cast<PamacTransaction*>(m_pmTransaction),"emit_action_progress",
                      reinterpret_cast<GCallback>(+[](GObject* obj,char* action,char* status,double progress,Transaction* t){
                          Q_UNUSED(obj);
-
                          t->emitActionProgress(QString::fromUtf8(action),QString::fromUtf8(status),progress);
                      }),this);
 
@@ -56,12 +54,12 @@ Transaction::Transaction(QObject *parent) : QObject(parent)
     g_signal_connect(static_cast<PamacTransaction*>(m_pmTransaction),"start_preparing",
                      reinterpret_cast<GCallback>(+[](GObject* obj,Transaction* t){
                          Q_UNUSED(obj);
-                         qDebug() << "startPreparing";
+                         Q_EMIT t->startPreparing();
                      }),this);
     g_signal_connect(static_cast<PamacTransaction*>(m_pmTransaction),"stop_preparing",
                      reinterpret_cast<GCallback>(+[](GObject* obj,Transaction* t){
                          Q_UNUSED(obj);
-                         qDebug() << "stopPreparing";
+                         Q_EMIT t->stopPreparing();
                      }),this);
 
     g_signal_connect(static_cast<PamacTransaction*>(m_pmTransaction),"emit_script_output",
@@ -78,22 +76,22 @@ Transaction::Transaction(QObject *parent) : QObject(parent)
 
     g_signal_connect(static_cast<PamacTransaction*>(m_pmTransaction),"start_waiting",
                      reinterpret_cast<GCallback>(+[](GObject* obj,Transaction* t){
-                         qDebug() << "startWaiting";
+                         Q_EMIT t->startWaiting();
                      }),this);
 
     g_signal_connect(static_cast<PamacTransaction*>(m_pmTransaction),"stop_waiting",
                      reinterpret_cast<GCallback>(+[](GObject* obj,Transaction* t){
-                         qDebug() << "stopWaiting";
+                         Q_EMIT t->stopWaiting();
                      }),this);
 
     g_signal_connect(static_cast<PamacTransaction*>(m_pmTransaction),"start_downloading",
                      reinterpret_cast<GCallback>(+[](GObject* obj,Transaction* t){
-                         qDebug() << "startDownloading";
+                         Q_EMIT t->startDownloading();
                      }),this);
 
     g_signal_connect(static_cast<PamacTransaction*>(m_pmTransaction),"stop_downloading",
                      reinterpret_cast<GCallback>(+[](GObject* obj,Transaction* t){
-                         qDebug() << "stopDownloading";
+                         Q_EMIT t->stopDownloading();
                      }),this);
 }
 
