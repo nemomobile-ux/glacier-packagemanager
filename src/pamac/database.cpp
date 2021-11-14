@@ -221,7 +221,7 @@ void DataBase::getInstalledAppsFinish(GObject *source_object, GAsyncResult *res,
 void DataBase::getUpdatesFinish(GObject *source_object, GAsyncResult *res, gpointer user_data)
 {
     DataBase *db = static_cast<DataBase*>(user_data);
-    Updates upd = pamac_database_get_updates_finish(db->m_pmDatabase,res);
+    Updates upd(pamac_database_get_updates_finish(db->m_pmDatabase,res));
 
     QList<QVariantMap> packages = db->gptrToPackageList(upd.get());
     Q_EMIT db->getUpdatesReady(packages);

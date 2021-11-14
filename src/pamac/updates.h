@@ -2,7 +2,6 @@
 #define UPDATES_H
 
 #include <QObject>
-#include <bits/shared_ptr.h>
 #include "pamac.h"
 
 class Updates : public QObject
@@ -14,7 +13,7 @@ public:
     GPtrArray *get();
 
 private:
-    std::shared_ptr<PamacUpdates> m_updates;
+    PamacUpdates* m_updates;
 };
 
 #endif // UPDATES_H
