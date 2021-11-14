@@ -35,21 +35,15 @@ Page {
 
         tools: [
             ToolButton {
-                id: removeButton
-                iconSource: "image://theme/trash"
-                visible: item.installed
-                onClicked: pkgTa.remove(item.name)
-            },
-            ToolButton {
-                id: updateButton
-                iconSource: "image://theme/refresh"
-                visible: item.haveUpdates
-            },
-            ToolButton {
-                id: installButton
-                iconSource: "image://theme/download"
-                visible: !item.installed
-                onClicked: pkgTa.install(item.name)
+                id: actionButton
+                iconSource: item.installed ? "image://theme/trash" : "image://theme/download"
+                onClicked: {
+                    if(item.installed) {
+                        pkgTa.remove(item.name)
+                    } else {
+                        pkgTa.install(item.name)
+                    }
+                }
             }
         ]
     }
