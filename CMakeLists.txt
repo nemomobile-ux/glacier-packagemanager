@@ -16,7 +16,6 @@ set(QT_MIN_VERSION "5.6.0")
 find_package(Qt5 COMPONENTS Gui Qml Quick LinguistTools REQUIRED)
 find_package(Glacier COMPONENTS App REQUIRED)
 find_package(PkgConfig)
-pkg_check_modules(XPACKAGEKIT REQUIRED IMPORTED_TARGET XPackageKit)
 pkg_check_modules(PAMAC REQUIRED IMPORTED_TARGET pamac)
 pkg_check_modules(GLIB2 REQUIRED IMPORTED_TARGET glib-2.0)
 pkg_check_modules(GOBJECT2 REQUIRED IMPORTED_TARGET gobject-2.0)
@@ -36,8 +35,6 @@ install(FILES glacier-packagemanager.desktop
 	DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/applications)
 install(FILES glacier-packagemanager.png
 	DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/glacier-packagemanager/images)
-install(FILES glacier-packagemanager.privileges
-        DESTINATION ${CMAKE_INSTALL_DATADIR}/mapplauncherd/privileges.d/)
 install(DIRECTORY qml
     DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/glacier-packagemanager
 )

@@ -29,8 +29,6 @@ DataBase::DataBase(QObject *parent) : QObject(parent)
     m_pmDatabase = pamac_database_new(m_config->get());
 
     pamac_database_enable_appstream(m_pmDatabase);
-
-    m_config->getIgnorePkgs();
 }
 
 void DataBase::searchPackages(const QString &name)
@@ -44,6 +42,12 @@ void DataBase::searchPackages(const QString &name)
 void DataBase::getUpdates()
 {
     pamac_database_get_updates_async(m_pmDatabase, false, getUpdatesFinish, this);
+}
+
+void DataBase::refresh()
+{
+    pamac_database_refresh(m_pmDatabase);
+    Q_EMIT dbRefreshed();
 }
 
 QVariantMap DataBase::getPackage(const QString &name)
@@ -115,10 +119,12 @@ QVariantMap DataBase::getPkg(PamacPackage *p)
     qint32 installedSize = pamac_package_get_installed_size(p);
     qint32 downloadedSize = pamac_package_get_download_size(p);
 
-    QDateTime installdate = QDateTime::fromSecsSinceEpoch(0);
-    GDateTime* inTime = pamac_package_get_install_date(p);
-    if(inTime != nullptr) {
-        installdate = QDateTime::fromSecsSinceEpoch(g_date_time_to_unix(inTime));
+    if(installedVersion != "") {
+        QDateTime installdate = QDateTime::fromSecsSinceEpoch(0);
+        GDateTime* inTime = pamac_package_get_install_date(p);
+        if(inTime != nullptr) {
+            installdate = QDateTime::fromSecsSinceEpoch(g_date_time_to_unix(inTime));
+        }
     }
 
     QStringList screenShotLists;

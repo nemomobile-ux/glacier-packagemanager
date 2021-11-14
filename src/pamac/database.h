@@ -20,7 +20,6 @@
 #ifndef DATABASE_H
 #define DATABASE_H
 
-#include <QMap>
 #include <QObject>
 #include <pamac.h>
 
@@ -45,6 +44,10 @@ public:
     Q_INVOKABLE void searchPackages(const QString &name);
 
     Q_INVOKABLE void getUpdates();
+    Q_INVOKABLE void refresh();
+
+    PamacDatabase* db() {return m_pmDatabase;}
+    Config* config() {return m_config;}
 
 Q_SIGNALS:
     void categoryPackagesReady(QList<QVariantMap> packages);
@@ -53,6 +56,7 @@ Q_SIGNALS:
     void getRepoPackagesReady(QList<QVariantMap> packages);
     void getInstalledAppsReady(QList<QVariantMap> packages);
     void getUpdatesReady(QList<QVariantMap> packages);
+    void dbRefreshed();
 
 private:
     PamacDatabase* m_pmDatabase;

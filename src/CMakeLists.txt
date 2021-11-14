@@ -1,14 +1,12 @@
 set(SRC
-    models/updateslistmodel.h
-    models/updateslistmodel.cpp
     pamac/database.cpp
     pamac/database.h
     pamac/config.cpp
     pamac/config.h
     pamac/updates.cpp
     pamac/updates.h
-    packagemanager.h
-    packagemanager.cpp
+    pamac/transaction.cpp
+    pamac/transaction.h
     main.cpp
 )
 
@@ -21,7 +19,6 @@ target_link_libraries(glacier-packagemanager
 	Qt5::Qml
 	Qt5::Quick
 	Glacier::App
-	PkgConfig::XPACKAGEKIT
         PkgConfig::PAMAC
         PkgConfig::GLIB2
         PkgConfig::GOBJECT2)

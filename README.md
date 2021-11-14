@@ -1,9 +1,6 @@
 Glacier Package manager
 ====================
-Package manager for Nemomobile, based on QtQuickControls-nemo
-
-# Requires
-https://git.merproject.org/akozhevnikov/XPackageKit
+Manjaro package manager for Nemomobile, based on QtQuickControls-nemo
 
 # Upsage
 glacier-packagemanager --install pkgname

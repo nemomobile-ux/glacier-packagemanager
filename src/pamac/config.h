@@ -21,6 +21,8 @@
 #define CONFIG_H
 
 #include <QObject>
+#include <QString>
+#include <QVariant>
 #include "pamac.h"
 
 class Config : public QObject

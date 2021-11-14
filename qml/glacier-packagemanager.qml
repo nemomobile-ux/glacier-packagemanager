@@ -32,12 +32,12 @@ ApplicationWindow {
 
     initialPage: firstpage();
 
-    PackageManager{
-        id: packageManager
-    }
-
     PackageDatabase{
         id: pkgDb
+    }
+
+    PackageTransaction{
+        id: pkgTa
     }
 
     function firstpage() {

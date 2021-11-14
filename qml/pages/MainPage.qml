@@ -91,6 +91,14 @@ Page {
         function onGetUpdatesReady(packages) {
             refreshButton.counterValue = packages.length
         }
+
+        function onDbRefreshed() {
+            pageStack.pop()
+            refreshButton.counterValue = packages.length
+            if(searchLine.text != "") {
+                pkgDb.searchPackages(searchLine.text)
+            }
+        }
     }
 
     Component.onCompleted: {

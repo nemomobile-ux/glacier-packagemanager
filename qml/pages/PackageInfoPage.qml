@@ -38,6 +38,7 @@ Page {
                 id: removeButton
                 iconSource: "image://theme/trash"
                 visible: item.installed
+                onClicked: pkgTa.remove(item.name)
             },
             ToolButton {
                 id: updateButton
@@ -48,6 +49,7 @@ Page {
                 id: installButton
                 iconSource: "image://theme/download"
                 visible: !item.installed
+                onClicked: pkgTa.install(item.name)
             }
         ]
     }
