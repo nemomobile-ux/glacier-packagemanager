@@ -38,6 +38,7 @@ public:
 
 Q_SIGNALS:
     void getAuthorizationReady(bool authorized);
+    void authorizationFail();
     void transactionStarted();
     void transactionFinished();
     void emitActionProgress(const QString& emitAction,const QString& status, double progress);
@@ -61,6 +62,9 @@ private:
     static void transactionFinish(GObject *source_object, GAsyncResult *res, gpointer user_data);
 
     void debug(const QString& emitAction,const QString& status, double progress);
+    void run(bool auth);
+
+    bool m_authInProgress = false;
 };
 
 #endif // TRANSACTION_H

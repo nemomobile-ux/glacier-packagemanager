@@ -93,6 +93,8 @@ Transaction::Transaction(QObject *parent) : QObject(parent)
                      reinterpret_cast<GCallback>(+[](GObject* obj,Transaction* t){
                          Q_EMIT t->stopDownloading();
                      }),this);
+
+    connect(this, &Transaction::getAuthorizationReady, this, &Transaction::run);
 }
 
 Transaction::~Transaction(){
@@ -100,8 +102,10 @@ Transaction::~Transaction(){
 }
 
 void Transaction::getAuthorization(){
-    qDebug() << Q_FUNC_INFO;
-    pamac_transaction_get_authorization_async(m_pmTransaction,getAuthorizationFinish,this);
+    if(!m_authInProgress) {
+        m_authInProgress = true;
+        pamac_transaction_get_authorization_async(m_pmTransaction,getAuthorizationFinish,this);
+    }
 }
 
 void Transaction::install(QStringList packages)
@@ -109,8 +113,7 @@ void Transaction::install(QStringList packages)
     for(int i=0; i < packages.size(); i++) {
         pamac_transaction_add_pkg_to_install(m_pmTransaction, packages.at(i).toUtf8());
     }
-    pamac_transaction_run_async(m_pmTransaction,transactionFinish,this);
-    Q_EMIT transactionStarted();
+    getAuthorization();
 }
 
 void Transaction::remove(QStringList packages)
@@ -118,8 +121,7 @@ void Transaction::remove(QStringList packages)
     for(int i=0; i < packages.size(); i++) {
         pamac_transaction_add_pkg_to_remove(m_pmTransaction, packages.at(i).toUtf8());
     }
-    pamac_transaction_run_async(m_pmTransaction,transactionFinish,this);
-    Q_EMIT transactionStarted();
+    getAuthorization();
 }
 
 void Transaction::upgrade()
@@ -130,8 +132,8 @@ void Transaction::upgrade()
 
 void Transaction::getAuthorizationFinish(GObject *source_object, GAsyncResult *res, gpointer user_data)
 {
-    qDebug() << Q_FUNC_INFO;
     Transaction *transaction = static_cast<Transaction*>(user_data);
+    transaction->m_authInProgress = false;
     Q_EMIT transaction->getAuthorizationReady(pamac_transaction_get_authorization_finish(transaction->m_pmTransaction, res));
 }
 
@@ -147,4 +149,15 @@ void Transaction::transactionFinish(GObject *source_object, GAsyncResult *res, g
     transaction->m_database->refresh();
 
     Q_EMIT transaction->transactionFinished();
+}
+
+void Transaction::run(bool auth)
+{
+    qDebug() << Q_FUNC_INFO;
+    if(!auth) {
+        Q_EMIT authorizationFail();
+    } else {
+        pamac_transaction_run_async(m_pmTransaction,transactionFinish,this);
+        Q_EMIT transactionStarted();
+    }
 }
