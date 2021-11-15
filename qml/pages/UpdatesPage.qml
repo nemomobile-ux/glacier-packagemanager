@@ -90,7 +90,7 @@ Page {
         function onGetUpdatesReady(packages) {
             updatesPage.updateListModel = packages
             if(packages.length == 0) {
-                updatesLabel.text = qsTr("System is updated")
+                updatesLabel.text = qsTr("System is up to date")
             }
         }
     }

@@ -186,7 +186,7 @@
     </message>
     <message>
         <location filename="../qml/pages/UpdatesPage.qml" line="93"/>
-        <source>System is updated</source>
+        <source>System is up to date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
