@@ -68,7 +68,8 @@ Page {
             text: qsTr("Update packages")
 
             anchors.bottom: parent.bottom
-            visible: false
+
+            onClicked: pkgTa.upgrade();
         }
 
         Label{
@@ -88,6 +89,9 @@ Page {
 
         function onGetUpdatesReady(packages) {
             updatesPage.updateListModel = packages
+            if(packages.length == 0) {
+                updatesLabel.text = qsTr("System is updated")
+            }
         }
     }
 
