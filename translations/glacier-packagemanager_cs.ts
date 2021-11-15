@@ -47,20 +47,56 @@
 <context>
     <name>MainPage</name>
     <message>
-        <location filename="../qml/pages/MainPage.qml" line="31"/>
+        <location filename="../qml/pages/MainPage.qml" line="34"/>
         <source>Package manager</source>
         <translation>Správce balíčků</translation>
     </message>
+</context>
+<context>
+    <name>OrphansPage</name>
     <message>
-        <location filename="../qml/pages/MainPage.qml" line="66"/>
-        <source>Updating repo...</source>
-        <translation>Aktualizuje se repozitář...</translation>
+        <location filename="../qml/pages/OrphansPage.qml" line="36"/>
+        <source>Orphans packages</source>
+        <translation>Osiřelé balíčky</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/OrphansPage.qml" line="63"/>
+        <source>Cleanup</source>
+        <translation>Vyčištění</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/OrphansPage.qml" line="80"/>
+        <source>Loading orphans packages list</source>
+        <translation>Načítá seznam osiřelých balíčků</translation>
+    </message>
+</context>
+<context>
+    <name>PackageInfoPage</name>
+    <message>
+        <location filename="../qml/pages/PackageInfoPage.qml" line="121"/>
+        <source>New version</source>
+        <translation>Nová verze</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PackageInfoPage.qml" line="121"/>
+        <source>Version</source>
+        <translation>Verze</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PackageInfoPage.qml" line="133"/>
+        <source>Installed version</source>
+        <translation>Nainstalovaná verze</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PackageInfoPage.qml" line="147"/>
+        <source>Repo</source>
+        <translation>Repozitář</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/main.cpp" line="74"/>
+        <location filename="../src/main.cpp" line="75"/>
         <source>Package manager</source>
         <translation>Správce balíčků</translation>
     </message>
@@ -106,68 +142,77 @@
     </message>
 </context>
 <context>
+    <name>TransactionPage</name>
+    <message>
+        <location filename="../qml/pages/TransactionPage.qml" line="32"/>
+        <location filename="../qml/pages/TransactionPage.qml" line="47"/>
+        <source>Package manager working...</source>
+        <translation>Správce balíčků pracuje...</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/TransactionPage.qml" line="81"/>
+        <source>Waiting...</source>
+        <translation>Čeká se...</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/TransactionPage.qml" line="88"/>
+        <source>Downloading...</source>
+        <translation>Stahuje se...</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/TransactionPage.qml" line="95"/>
+        <source>Preparing...</source>
+        <translation>Připravuje se...</translation>
+    </message>
+</context>
+<context>
     <name>UpdatesPage</name>
     <message>
-        <location filename="../qml/pages/UpdatesPage.qml" line="36"/>
+        <location filename="../qml/pages/UpdatesPage.qml" line="37"/>
         <source>Updates: %1</source>
         <translation>Aktualizace: %1</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UpdatesPage.qml" line="37"/>
+        <location filename="../qml/pages/UpdatesPage.qml" line="38"/>
         <source>Updates</source>
         <translation>Aktualizace</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UpdatesPage.qml" line="88"/>
+        <location filename="../qml/pages/UpdatesPage.qml" line="68"/>
         <source>Update packages</source>
         <translation>Aktualizovat balíčky</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UpdatesPage.qml" line="47"/>
-        <source>System is up to date</source>
+        <location filename="../qml/pages/UpdatesPage.qml" line="93"/>
+        <source>System is updated</source>
         <translation>Systém je aktuální</translation>
     </message>
     <message>
-        <location filename="../qml/pages/UpdatesPage.qml" line="102"/>
+        <location filename="../qml/pages/UpdatesPage.qml" line="78"/>
         <source>Loading updates list</source>
         <translation>Načítá se seznam aktualizací</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/UpdatesPage.qml" line="133"/>
-        <source>Updating...</source>
-        <translation>Aktualizuje se...</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/UpdatesPage.qml" line="145"/>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/UpdatesPage.qml" line="146"/>
-        <source>Packages updated</source>
-        <translation>Balíčky byli aktualizovány</translation>
     </message>
 </context>
 <context>
     <name>main</name>
     <message>
-        <location filename="../src/main.cpp" line="52"/>
+        <location filename="../src/main.cpp" line="53"/>
         <source>Install &lt;package&gt;.</source>
         <translation>Nainstalovat %1</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="52"/>
-        <location filename="../src/main.cpp" line="54"/>
+        <location filename="../src/main.cpp" line="53"/>
+        <location filename="../src/main.cpp" line="55"/>
         <source>package</source>
         <translation>balíček</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="53"/>
+        <location filename="../src/main.cpp" line="54"/>
         <source>Update packages.</source>
         <translation>Aktualizovat balíčky.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="54"/>
+        <location filename="../src/main.cpp" line="55"/>
         <source>Remove &lt;package&gt;</source>
         <translation>Odstranit %1</translation>
     </message>
