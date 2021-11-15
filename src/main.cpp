@@ -31,13 +31,14 @@
 
 #include <glacierapp.h>
 
-#include "packagemanager.h"
-#include "models/updateslistmodel.h"
+#include "pamac/database.h"
+#include "pamac/config.h"
+#include "pamac/transaction.h"
 
 int main(int argc, char *argv[])
 {
-    qmlRegisterType<PackageManager>("org.glacier.packagemanager",1,0,"PackageManager");
-    qmlRegisterType<UpdatesListModel>("org.glacier.packagemanager",1,0,"UpdatesListModel");
+    qmlRegisterType<DataBase>("org.glacier.packagemanager",1,0,"PackageDatabase");
+    qmlRegisterType<Transaction>("org.glacier.packagemanager",1,0,"PackageTransaction");
 
     QGuiApplication *app = GlacierApp::app(argc, argv);
     app->setOrganizationName("NemoMobile");

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2021 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2021 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -28,30 +28,27 @@ import Nemo.Dialogs 1.0
 import "../components"
 
 Page {
-    id: updatesPage
-    property var updateListModel: []
+    id: orphansPage
+    property var orphansListModel: []
 
     headerTools: HeaderToolsLayout {
         id: tools
-        title: updatesListView.count > 0
-               ? qsTr("Updates: %1").arg(updatesListView.count)
-               : qsTr("Updates")
-
-        showBackButton: action == "update" ? false : true
+        title: qsTr("Orphans packages")
+        showBackButton: true
     }
 
     Item{
-        id: updatesView
+        id: orphansView
         anchors.fill: parent
 
         ListView{
-            id: updatesListView
-            model: updateListModel
+            id: orphansListView
+            model: orphansListModel
             width: parent.width
-            height: parent.height-startUpdateButton.height-Theme.itemSpacingSmall
+            height: parent.height-startCleanupButton.height-Theme.itemSpacingSmall
 
             anchors.top: parent.top
-            visible: updateListModel.length > 0
+            visible: orphansListModel.length > 0
             clip: true
 
             delegate: PackageListDelegate{
@@ -60,46 +57,40 @@ Page {
         }
 
         Button{
-            id: startUpdateButton
+            id: startCleanupButton
             width: parent.width
             height: Theme.itemHeightExtraLarge
-
-            enabled: updatesListView.count > 0
-            text: qsTr("Update packages")
+            text: qsTr("Cleanup")
 
             anchors.bottom: parent.bottom
+            visible: orphansListModel.length > 0
 
-            onClicked: pkgTa.upgrade();
+            onClicked: {
+                var toRemove = []
+                for(var i = 0; i < orphansListModel.length; i++) {
+                    toRemove.push(orphansListModel[i].name)
+                    pkgTa.remove(toRemove)
+                }
+            }
         }
 
         Label{
-            id: updatesLabel
+            id: orphansLabel
             anchors.centerIn: parent
-            text: qsTr("Loading updates list")
-            visible: updateListModel.length == 0
+            text: qsTr("Loading orphans packages list")
+            visible: orphansListModel.length == 0
         }
     }
 
     Component.onCompleted: {
-        pkgDb.getUpdates();
+        pkgDb.getOrphansPackages();
     }
 
     Connections{
         target: pkgDb
 
-        function onGetUpdatesReady(packages) {
-            updatesPage.updateListModel = packages
-            if(packages.length == 0) {
-                updatesLabel.text = qsTr("System is updated")
-            }
-        }
-    }
-
-    function back(){
-        if(action === "update"){
-            Qt.quit()
-        } else {
-            pageStack.pop()
+        function onGetOrphansPackagesReady(packages) {
+            orphansPage.orphansListModel = packages
         }
     }
 }
