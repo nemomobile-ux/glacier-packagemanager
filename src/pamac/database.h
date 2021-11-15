@@ -32,7 +32,7 @@ class DataBase : public QObject
 public:
     explicit DataBase(QObject *parent = nullptr);
 
-    QVariantMap getPackage(const QString &name);
+    Q_INVOKABLE QVariantMap getPackage(const QString &name);
 
     Q_INVOKABLE QStringList getRepos();
     Q_INVOKABLE QStringList getGroups();
@@ -40,6 +40,7 @@ public:
     Q_INVOKABLE void getGroupPackages(const QString &group);
     Q_INVOKABLE void getRepoPackages(const QString &repo);
     Q_INVOKABLE void getInstalledApps();
+    Q_INVOKABLE void getOrphansPackages();
 
     Q_INVOKABLE void searchPackages(const QString &name);
 
@@ -55,6 +56,7 @@ Q_SIGNALS:
     void getGroupPackagesReady(QList<QVariantMap> packages);
     void getRepoPackagesReady(QList<QVariantMap> packages);
     void getInstalledAppsReady(QList<QVariantMap> packages);
+    void getOrphansPackagesReady(QList<QVariantMap> packages);
     void getUpdatesReady(QList<QVariantMap> packages);
     void dbRefreshed();
 
@@ -75,6 +77,7 @@ private:
     static void getGroupPackagesFinish(GObject *source_object, GAsyncResult *res, gpointer user_data);
     static void getRepoPackagesFinish(GObject *source_object, GAsyncResult *res, gpointer user_data);
     static void getInstalledAppsFinish(GObject *source_object, GAsyncResult *res, gpointer user_data);
+    static void getOrphansPackagesFinish(GObject *source_object, GAsyncResult *res, gpointer user_data);
     static void getUpdatesFinish(GObject *source_object, GAsyncResult *res, gpointer user_data);
 };
 

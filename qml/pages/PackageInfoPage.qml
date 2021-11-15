@@ -156,4 +156,11 @@ Page {
             }
         }
     }
+
+    Connections{
+        target: pkgTa
+        function onTransactionFinished() {
+            item = pkgDb.getPackage(item.name)
+        }
+    }
 }

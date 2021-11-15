@@ -40,6 +40,13 @@ Page {
                 onClicked: pageStack.push(Qt.resolvedUrl("/usr/share/glacier-packagemanager/qml/pages/UpdatesPage.qml"));
                 showCounter: counterValue != 0
                 counterValue: 0
+            },
+            ToolButton {
+                id: orphansButton
+                iconSource: "image://theme/exclamation-circle"
+                onClicked: pageStack.push(Qt.resolvedUrl("/usr/share/glacier-packagemanager/qml/pages/OrphansPage.qml"));
+                showCounter: counterValue != 0
+                counterValue: 0
             }
         ]
     }
@@ -92,6 +99,10 @@ Page {
             refreshButton.counterValue = packages.length
         }
 
+        function onGetOrphansPackagesReady(packages) {
+            orphansButton.counterValue = packages.length;
+        }
+
         function onDbRefreshed() {
             pageStack.pop()
             refreshButton.counterValue = packages.length
@@ -103,6 +114,7 @@ Page {
 
     Component.onCompleted: {
         pkgDb.getUpdates();
+        pkgDb.getOrphansPackages();
     }
 }
 

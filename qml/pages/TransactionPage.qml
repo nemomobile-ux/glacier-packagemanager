@@ -36,15 +36,8 @@ Page {
         anchors.centerIn: parent
 
         spacing:Theme.itemSpacingLarge
-        width: parent.width
+        width: parent.width-Theme.itemSpacingLarge*2
         height: childrenRect.height
-
-        anchors{
-            top: parent.top
-            topMargin: Theme.itemSpacingLarge
-            left: parent.left
-            leftMargin: Theme.itemSpacingLarge
-        }
 
         Label{
             id: emitActionLabel
@@ -63,7 +56,7 @@ Page {
 
         ProgressBar {
             id: progressbar
-            width: parent.width - Theme.itemSpacingLarge*2
+            width: parent.width
             indeterminate: true
         }
     }

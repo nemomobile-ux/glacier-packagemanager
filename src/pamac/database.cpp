@@ -52,13 +52,14 @@ void DataBase::refresh()
 
 QVariantMap DataBase::getPackage(const QString &name)
 {
+    QVariantMap rPkg;
     PamacAlpmPackage *pkg = pamac_database_get_pkg(m_pmDatabase, name.toUtf8());
     if(pkg != nullptr) {
-        return getPkg(&pkg->parent_instance);
+        rPkg = getPkg(&pkg->parent_instance);
     } else {
-        qDebug() << "Not found";
+        qWarning() << "Not found";
     }
-    return QVariantMap();
+    return rPkg;
 }
 
 QStringList DataBase::getRepos()
@@ -99,6 +100,11 @@ void DataBase::getRepoPackages(const QString &repo)
 void DataBase::getInstalledApps()
 {
     pamac_database_get_installed_apps_async(m_pmDatabase, getInstalledAppsFinish, this);
+}
+
+void DataBase::getOrphansPackages()
+{
+    pamac_database_get_orphans_async(m_pmDatabase, getOrphansPackagesFinish, this);
 }
 
 QVariantMap DataBase::getPkg(PamacPackage *p)
@@ -216,6 +222,13 @@ void DataBase::getInstalledAppsFinish(GObject *source_object, GAsyncResult *res,
     DataBase *db = static_cast<DataBase*>(user_data);
     QList<QVariantMap> packages = db->gptrToPackageList(pamac_database_get_installed_pkgs_finish(db->m_pmDatabase, res));
     Q_EMIT db->getInstalledAppsReady(packages);
+}
+
+void DataBase::getOrphansPackagesFinish(GObject *source_object, GAsyncResult *res, gpointer user_data)
+{
+    DataBase *db = static_cast<DataBase*>(user_data);
+    QList<QVariantMap> packages = db->gptrToPackageList(pamac_database_get_orphans_finish(db->m_pmDatabase, res));
+    Q_EMIT db->getOrphansPackagesReady(packages);
 }
 
 void DataBase::getUpdatesFinish(GObject *source_object, GAsyncResult *res, gpointer user_data)
