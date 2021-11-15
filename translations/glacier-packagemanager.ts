@@ -49,20 +49,56 @@
 <context>
     <name>MainPage</name>
     <message>
-        <location filename="../qml/pages/MainPage.qml" line="31"/>
+        <location filename="../qml/pages/MainPage.qml" line="34"/>
         <source>Package manager</source>
         <translation type="unfinished"></translation>
     </message>
+</context>
+<context>
+    <name>OrphansPage</name>
     <message>
-        <location filename="../qml/pages/MainPage.qml" line="66"/>
-        <source>Updating repo...</source>
+        <location filename="../qml/pages/OrphansPage.qml" line="36"/>
+        <source>Orphans packages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/OrphansPage.qml" line="63"/>
+        <source>Cleanup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/OrphansPage.qml" line="80"/>
+        <source>Loading orphans packages list</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PackageInfoPage</name>
+    <message>
+        <location filename="../qml/pages/PackageInfoPage.qml" line="121"/>
+        <source>New version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PackageInfoPage.qml" line="121"/>
+        <source>Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PackageInfoPage.qml" line="133"/>
+        <source>Installed version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/PackageInfoPage.qml" line="147"/>
+        <source>Repo</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/main.cpp" line="74"/>
+        <location filename="../src/main.cpp" line="75"/>
         <source>Package manager</source>
         <translation type="unfinished"></translation>
     </message>
@@ -108,68 +144,77 @@
     </message>
 </context>
 <context>
+    <name>TransactionPage</name>
+    <message>
+        <location filename="../qml/pages/TransactionPage.qml" line="32"/>
+        <location filename="../qml/pages/TransactionPage.qml" line="47"/>
+        <source>Package manager working...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/TransactionPage.qml" line="81"/>
+        <source>Waiting...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/TransactionPage.qml" line="88"/>
+        <source>Downloading...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/TransactionPage.qml" line="95"/>
+        <source>Preparing...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>UpdatesPage</name>
     <message>
-        <location filename="../qml/pages/UpdatesPage.qml" line="36"/>
+        <location filename="../qml/pages/UpdatesPage.qml" line="37"/>
         <source>Updates: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/UpdatesPage.qml" line="37"/>
+        <location filename="../qml/pages/UpdatesPage.qml" line="38"/>
         <source>Updates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/UpdatesPage.qml" line="88"/>
+        <location filename="../qml/pages/UpdatesPage.qml" line="68"/>
         <source>Update packages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/UpdatesPage.qml" line="47"/>
-        <source>System is up to date</source>
+        <location filename="../qml/pages/UpdatesPage.qml" line="93"/>
+        <source>System is updated</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/UpdatesPage.qml" line="102"/>
+        <location filename="../qml/pages/UpdatesPage.qml" line="78"/>
         <source>Loading updates list</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/UpdatesPage.qml" line="133"/>
-        <source>Updating...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/UpdatesPage.qml" line="145"/>
-        <source>Ok</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/UpdatesPage.qml" line="146"/>
-        <source>Packages updated</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>main</name>
     <message>
-        <location filename="../src/main.cpp" line="52"/>
+        <location filename="../src/main.cpp" line="53"/>
         <source>Install &lt;package&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="52"/>
-        <location filename="../src/main.cpp" line="54"/>
+        <location filename="../src/main.cpp" line="53"/>
+        <location filename="../src/main.cpp" line="55"/>
         <source>package</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="53"/>
+        <location filename="../src/main.cpp" line="54"/>
         <source>Update packages.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="54"/>
+        <location filename="../src/main.cpp" line="55"/>
         <source>Remove &lt;package&gt;</source>
         <translation type="unfinished"></translation>
     </message>
