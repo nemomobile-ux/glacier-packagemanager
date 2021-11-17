@@ -29,6 +29,13 @@ DataBase::DataBase(QObject *parent) : QObject(parent)
     m_pmDatabase = pamac_database_new(m_config->get());
 
     pamac_database_enable_appstream(m_pmDatabase);
+
+    g_signal_connect(m_pmDatabase,"get_updates_progress",
+                     reinterpret_cast<GCallback>(+[](GObject* obj,uint percent,DataBase* t){
+                         Q_UNUSED(obj);
+                         Q_EMIT t->getUpdatesProgress(percent);
+                     }),this);
+
 }
 
 void DataBase::searchPackages(const QString &name)
@@ -37,6 +44,16 @@ void DataBase::searchPackages(const QString &name)
     m_serching = 0;
     pamac_database_search_pkgs_async(m_pmDatabase, name.toUtf8(), searchFinish, this);
     pamac_database_search_installed_pkgs_async(m_pmDatabase, name.toUtf8(), searchFinish, this);
+}
+
+void DataBase::getMirrorsCountries()
+{
+    pamac_database_get_mirrors_countries_async(m_pmDatabase, getMirrorsCountriesFinish, this);
+}
+
+void DataBase::getMirrorsChoosenCountry()
+{
+    pamac_database_get_mirrors_countries_async(m_pmDatabase, getMirrorsChoosenCountryFinish, this);
 }
 
 void DataBase::getUpdates()
@@ -60,6 +77,20 @@ QVariantMap DataBase::getPackage(const QString &name)
         qWarning() << "Not found";
     }
     return rPkg;
+}
+
+QStringList DataBase::getPackageFiles(const QString &name)
+{
+    QStringList pkgFiles;
+    PamacAlpmPackage *pkg = pamac_database_get_pkg(m_pmDatabase, name.toUtf8());
+    if(pkg != nullptr) {
+        GPtrArray *filesList = pamac_alpm_package_get_files(pkg);
+        for(int i = 0; i < filesList->len; i++) {
+            pkgFiles << (gchar*)(g_ptr_array_index(filesList, i));
+        }
+    }
+
+    return pkgFiles;
 }
 
 QStringList DataBase::getRepos()
@@ -239,3 +270,24 @@ void DataBase::getUpdatesFinish(GObject *source_object, GAsyncResult *res, gpoin
     QList<QVariantMap> packages = db->gptrToPackageList(upd.get());
     Q_EMIT db->getUpdatesReady(packages);
 }
+
+void DataBase::getMirrorsCountriesFinish(GObject *source_object, GAsyncResult *res, gpointer user_data)
+{
+    QStringList countries;
+    DataBase *db = static_cast<DataBase*>(user_data);
+    GPtrArray *countryList = pamac_database_get_mirrors_countries_finish(db->m_pmDatabase, res);
+    for(int i = 0; i < countryList->len; i++) {
+        countries << (gchar*)(g_ptr_array_index(countryList, i));
+    }
+    countries.push_front("Worldwide");
+    Q_EMIT db->getMirrorsCountriesReady(countries);
+}
+
+void DataBase::getMirrorsChoosenCountryFinish(GObject *source_object, GAsyncResult *res, gpointer user_data)
+{
+    DataBase *db = static_cast<DataBase*>(user_data);
+    QString country = pamac_database_get_mirrors_choosen_country_finish(db->m_pmDatabase, res);
+
+    Q_EMIT db->getMirrorsChoosenCountryReady(country);
+}
+

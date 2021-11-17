@@ -33,6 +33,7 @@ public:
     explicit DataBase(QObject *parent = nullptr);
 
     Q_INVOKABLE QVariantMap getPackage(const QString &name);
+    Q_INVOKABLE QStringList getPackageFiles(const QString &name);
 
     Q_INVOKABLE QStringList getRepos();
     Q_INVOKABLE QStringList getGroups();
@@ -43,6 +44,9 @@ public:
     Q_INVOKABLE void getOrphansPackages();
 
     Q_INVOKABLE void searchPackages(const QString &name);
+
+    Q_INVOKABLE void getMirrorsCountries();
+    Q_INVOKABLE void getMirrorsChoosenCountry();
 
     Q_INVOKABLE void getUpdates();
     Q_INVOKABLE void refresh();
@@ -58,7 +62,10 @@ Q_SIGNALS:
     void getInstalledAppsReady(QList<QVariantMap> packages);
     void getOrphansPackagesReady(QList<QVariantMap> packages);
     void getUpdatesReady(QList<QVariantMap> packages);
+    void getMirrorsCountriesReady(QStringList countries);
+    void getMirrorsChoosenCountryReady(QString country);
     void dbRefreshed();
+    void getUpdatesProgress(uint percent);
 
 private:
     PamacDatabase* m_pmDatabase;
@@ -79,6 +86,8 @@ private:
     static void getInstalledAppsFinish(GObject *source_object, GAsyncResult *res, gpointer user_data);
     static void getOrphansPackagesFinish(GObject *source_object, GAsyncResult *res, gpointer user_data);
     static void getUpdatesFinish(GObject *source_object, GAsyncResult *res, gpointer user_data);
+    static void getMirrorsCountriesFinish(GObject *source_object, GAsyncResult *res, gpointer user_data);
+    static void getMirrorsChoosenCountryFinish(GObject *source_object, GAsyncResult *res, gpointer user_data);
 };
 
 #endif // DATABASE_H
