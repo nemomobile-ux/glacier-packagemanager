@@ -46,6 +46,8 @@ public:
     Q_INVOKABLE QStringList getIgnorePkgs();
     Q_INVOKABLE void save();
     Q_INVOKABLE void reload();
+    Q_INVOKABLE void addIgnorePkg(QString name);
+    Q_INVOKABLE void removeIgnorePkg(QString name);
 
     QString configPath() {return m_configPath;}
     bool recurse() {return m_recurse;}

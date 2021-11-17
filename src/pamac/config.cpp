@@ -63,6 +63,16 @@ void Config::reload()
     pamac_config_reload(m_pmConfig);
 }
 
+void Config::addIgnorePkg(QString name)
+{
+    pamac_config_add_ignorepkg(m_pmConfig, name.toUtf8());
+}
+
+void Config::removeIgnorePkg(QString name)
+{
+    pamac_config_remove_ignorepkg(m_pmConfig, name.toUtf8());
+}
+
 void Config::setRecurse(bool recurse)
 {
     if(recurse != m_recurse) {
