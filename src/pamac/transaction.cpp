@@ -42,14 +42,13 @@ Transaction::Transaction(QObject *parent) : QObject(parent)
     g_signal_connect(static_cast<PamacTransaction*>(m_pmTransaction),"emit_error",
                      reinterpret_cast<GCallback>(+[](GObject* obj,char* message,char** details,int size,Transaction* t){
                          Q_UNUSED(obj);
-                         qDebug() << "Error" << message << details;
-                         Q_EMIT t->emitError(QString::fromUtf8(message));
+                         qWarning() << "Error" << message << details;
                      }),this);
 
     g_signal_connect(static_cast<PamacTransaction*>(m_pmTransaction),"emit_warning",
                      reinterpret_cast<GCallback>(+[](GObject* obj,char* warning,Transaction* t){
                          Q_UNUSED(obj);
-                         qDebug() << "Warning" << warning;
+                         qWarning() << "Warning" << warning;
                      }),this);
     g_signal_connect(static_cast<PamacTransaction*>(m_pmTransaction),"start_preparing",
                      reinterpret_cast<GCallback>(+[](GObject* obj,Transaction* t){
@@ -137,11 +136,6 @@ void Transaction::getAuthorizationFinish(GObject *source_object, GAsyncResult *r
     Q_EMIT transaction->getAuthorizationReady(pamac_transaction_get_authorization_finish(transaction->m_pmTransaction, res));
 }
 
-void Transaction::askCommitFinish(GObject *source_object, GAsyncResult *res, gpointer user_data)
-{
-    qDebug() << Q_FUNC_INFO;
-}
-
 void Transaction::transactionFinish(GObject *source_object, GAsyncResult *res, gpointer user_data)
 {
     Transaction *transaction = static_cast<Transaction*>(user_data);
@@ -153,9 +147,9 @@ void Transaction::transactionFinish(GObject *source_object, GAsyncResult *res, g
 
 void Transaction::run(bool auth)
 {
-    qDebug() << Q_FUNC_INFO;
     if(!auth) {
         Q_EMIT authorizationFail();
+        pamac_transaction_cancel(m_pmTransaction);
     } else {
         pamac_transaction_run_async(m_pmTransaction,transactionFinish,this);
         Q_EMIT transactionStarted();

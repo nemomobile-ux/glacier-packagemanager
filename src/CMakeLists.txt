@@ -7,6 +7,10 @@ set(SRC
     pamac/updates.h
     pamac/transaction.cpp
     pamac/transaction.h
+    pamac/historyitem.cpp
+    pamac/historyitem.h
+    pamac/historyitemmodel.cpp
+    pamac/historyitemmodel.h
     main.cpp
 )
 

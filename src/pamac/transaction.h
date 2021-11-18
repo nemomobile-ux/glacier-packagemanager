@@ -58,7 +58,6 @@ private:
     PamacTransactionSummary* m_pmTransactionSummary;
 
     static void getAuthorizationFinish(GObject *source_object, GAsyncResult *res, gpointer user_data);
-    static void askCommitFinish(GObject *source_object, GAsyncResult *res, gpointer user_data);
     static void transactionFinish(GObject *source_object, GAsyncResult *res, gpointer user_data);
 
     void debug(const QString& emitAction,const QString& status, double progress);

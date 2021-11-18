@@ -68,22 +68,55 @@ Page {
                 leftMargin: Theme.itemSpacingLarge
             }
 
+            Label{
+                text: qsTr("Search packages:")
+                width: parent.width
+                wrapMode: Text.WordWrap
+                font.bold: true
+            }
+
             TextField{
                 id: searchLine
                 width: parent.width
                 onTextChanged: {
-                    pkgDb.searchPackages(searchLine.text)
+                    if(searchLine.text != "") {
+                        pkgDb.searchPackages(searchLine.text)
+                    }
                 }
+            }
+
+            Label{
+                text: qsTr("Last actions:")
+                width: parent.width
+                wrapMode: Text.WordWrap
+                visible: searchLine.text == ""
+                font.bold: true
             }
 
             ListView{
                 id: searchListView
                 width: parent.width
-                height: parent.height - searchLine.height
+                height: visible ? parent.height - searchLine.height : 0
                 clip: true
+                visible: searchLine.text != ""
                 model: searchPackages
                 delegate: PackageListDelegate{
                     pkg: modelData
+                }
+            }
+
+            ListView{
+                id: historyListView
+                width: parent.width
+                height: visible ? parent.height - searchLine.height : 0
+                clip: true
+                visible: searchLine.text == ""
+                model: historyItemModel
+                delegate: HistoryItemDelegate{
+                    pkgName: name
+                    pkgAction: type
+                    pkgVersion: version
+                    pkgDate: date
                 }
             }
         }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2021 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2021 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -23,33 +23,22 @@ import QtQuick.Controls 1.0
 import QtQuick.Controls.Nemo 1.0
 import QtQuick.Controls.Styles.Nemo 1.0
 
-import "pages"
+import "../components"
 
-import org.glacier.packagemanager 1.0
+Page {
+    id: mainPage
 
-ApplicationWindow {
-    id: root
-
-    initialPage: MainPage{
+    headerTools: HeaderToolsLayout {
+        id: tools
+        title: qsTr("Package manager")
+        showBackButton: true
     }
 
-    PackageDatabase{
-        id: pkgDb
-    }
-
-    HistoryItemModel{
-        id: historyItemModel
-    }
-
-    PackageTransaction{
-        id: pkgTa
-        onTransactionStarted: {
-            pageStack.push(Qt.resolvedUrl("/usr/share/glacier-packagemanager/qml/pages/TransactionPage.qml"))
-            root.show()
-        }
-        onAuthorizationFail: {
-            pageStack.push(Qt.resolvedUrl("/usr/share/glacier-packagemanager/qml/pages/AuthorizationFailPage.qml"))
-            root.show()
-        }
+    Label {
+        anchors.centerIn: parent
+        width: parent.width
+        text: qsTr("Authorization failed")
+        wrapMode: Text.WordWrap
+        horizontalAlignment: Text.AlignHCenter
     }
 }
