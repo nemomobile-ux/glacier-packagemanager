@@ -1,47 +1,53 @@
 <?xml version="1.0" ?><!DOCTYPE TS><TS language="ru" version="2.1">
 <context>
-    <name>InstallPackagePage</name>
+    <name>AuthorizationFailPage</name>
     <message>
-        <location filename="../qml/pages/InstallPackagePage.qml" line="33"/>
-        <location filename="../qml/pages/InstallPackagePage.qml" line="47"/>
-        <source>Install package</source>
-        <translation>Установить пакет</translation>
+        <location filename="../qml/pages/AuthorizationFailPage.qml" line="33"/>
+        <source>Package manager</source>
+        <translation>Управление пакетами</translation>
     </message>
     <message>
-        <location filename="../qml/pages/InstallPackagePage.qml" line="82"/>
-        <source>Install</source>
-        <translation>Установить</translation>
+        <location filename="../qml/pages/AuthorizationFailPage.qml" line="40"/>
+        <source>Authorization failed</source>
+        <translation>Ошибка авторизации</translation>
+    </message>
+</context>
+<context>
+    <name>HistoryItemDelegate</name>
+    <message numerus="yes">
+        <location filename="../qml/components/HistoryItemDelegate.qml" line="51"/>
+        <source>%n year(s) ago</source>
+        <comment>actions</comment>
+        <translation><numerusform>%n год назад</numerusform><numerusform>%n лет назад</numerusform><numerusform>%n лет назад</numerusform><numerusform>%n лет назад</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../qml/components/HistoryItemDelegate.qml" line="53"/>
+        <source>%n months(s) ago</source>
+        <comment>actions</comment>
+        <translation><numerusform>%n месяц назад</numerusform><numerusform>%n месяцев назад</numerusform><numerusform>% месяцев назад</numerusform><numerusform>% месяцев назад</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../qml/components/HistoryItemDelegate.qml" line="55"/>
+        <source>%n day(s) ago</source>
+        <comment>actions</comment>
+        <translation><numerusform>%n день назад</numerusform><numerusform>%n дней назад</numerusform><numerusform>%n дней назад</numerusform><numerusform>%n дней назад</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../qml/components/HistoryItemDelegate.qml" line="57"/>
+        <source>%n hours(s) ago</source>
+        <comment>actions</comment>
+        <translation><numerusform>%n час назад</numerusform><numerusform>%n часов назад</numerusform><numerusform>%n часов назад</numerusform><numerusform>%n часов назад</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../qml/components/HistoryItemDelegate.qml" line="59"/>
+        <source>%n minutes(s) ago</source>
+        <comment>actions</comment>
+        <translation><numerusform>%n минуту назад</numerusform><numerusform>%n минут назад</numerusform><numerusform>%n минут назад</numerusform><numerusform>%n минут назад</numerusform></translation>
     </message>
     <message>
-        <location filename="../qml/pages/InstallPackagePage.qml" line="90"/>
-        <source>Installing package</source>
-        <translation>Устанавливается пакет</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/InstallPackagePage.qml" line="99"/>
-        <source>Cancel</source>
-        <translation>Отмена</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/InstallPackagePage.qml" line="115"/>
-        <location filename="../qml/pages/InstallPackagePage.qml" line="129"/>
-        <source>Ok</source>
-        <translation>Ок</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/InstallPackagePage.qml" line="116"/>
-        <source>Package installed</source>
-        <translation>Пакет установлен</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/InstallPackagePage.qml" line="130"/>
-        <source>Error!</source>
-        <translation>Ошибка!</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/InstallPackagePage.qml" line="131"/>
-        <source>We have some error</source>
-        <translation>У нас ошибка</translation>
+        <location filename="../qml/components/HistoryItemDelegate.qml" line="61"/>
+        <source>Just now</source>
+        <translation>Только что</translation>
     </message>
 </context>
 <context>
@@ -50,6 +56,16 @@
         <location filename="../qml/pages/MainPage.qml" line="34"/>
         <source>Package manager</source>
         <translation>Управление пакетами</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/MainPage.qml" line="72"/>
+        <source>Search packages:</source>
+        <translation>Поиск пакетов:</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/MainPage.qml" line="89"/>
+        <source>Last actions:</source>
+        <translation>Последние действия:</translation>
     </message>
 </context>
 <context>
@@ -96,49 +112,9 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/main.cpp" line="75"/>
+        <location filename="../src/main.cpp" line="77"/>
         <source>Package manager</source>
         <translation>Управление пакетами</translation>
-    </message>
-</context>
-<context>
-    <name>RemovePackagePage</name>
-    <message>
-        <location filename="../qml/pages/RemovePackagePage.qml" line="33"/>
-        <location filename="../qml/pages/RemovePackagePage.qml" line="47"/>
-        <source>Remove package</source>
-        <translation>Удалить пакет</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/RemovePackagePage.qml" line="82"/>
-        <source>Remove</source>
-        <translation>Удалить</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/RemovePackagePage.qml" line="98"/>
-        <source>Cancel</source>
-        <translation>Отмена</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/RemovePackagePage.qml" line="114"/>
-        <location filename="../qml/pages/RemovePackagePage.qml" line="129"/>
-        <source>Ok</source>
-        <translation>Ок</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/RemovePackagePage.qml" line="115"/>
-        <source>Package removed</source>
-        <translation>Пакет удалён</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/RemovePackagePage.qml" line="130"/>
-        <source>Error!</source>
-        <translation>Ошибка!</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/RemovePackagePage.qml" line="131"/>
-        <source>We have some error</source>
-        <translation>У нас ошибка</translation>
     </message>
 </context>
 <context>
@@ -196,23 +172,23 @@
 <context>
     <name>main</name>
     <message>
-        <location filename="../src/main.cpp" line="53"/>
+        <location filename="../src/main.cpp" line="55"/>
         <source>Install &lt;package&gt;.</source>
         <translation>Установить&lt;package&gt;</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="53"/>
         <location filename="../src/main.cpp" line="55"/>
+        <location filename="../src/main.cpp" line="57"/>
         <source>package</source>
         <translation>пакет</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="54"/>
+        <location filename="../src/main.cpp" line="56"/>
         <source>Update packages.</source>
         <translation>Обновить пакеты.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="55"/>
+        <location filename="../src/main.cpp" line="57"/>
         <source>Remove &lt;package&gt;</source>
         <translation>Удалить &lt;package&gt;</translation>
     </message>
