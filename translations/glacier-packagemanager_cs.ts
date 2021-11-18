@@ -1,47 +1,53 @@
 <?xml version="1.0" ?><!DOCTYPE TS><TS language="cs" version="2.1">
 <context>
-    <name>InstallPackagePage</name>
+    <name>AuthorizationFailPage</name>
     <message>
-        <location filename="../qml/pages/InstallPackagePage.qml" line="33"/>
-        <location filename="../qml/pages/InstallPackagePage.qml" line="47"/>
-        <source>Install package</source>
-        <translation>Nainstalovat balíček</translation>
+        <location filename="../qml/pages/AuthorizationFailPage.qml" line="33"/>
+        <source>Package manager</source>
+        <translation>Správce balíčků</translation>
     </message>
     <message>
-        <location filename="../qml/pages/InstallPackagePage.qml" line="82"/>
-        <source>Install</source>
-        <translation>Nainstalovat</translation>
+        <location filename="../qml/pages/AuthorizationFailPage.qml" line="40"/>
+        <source>Authorization failed</source>
+        <translation>Autorizace selhala</translation>
+    </message>
+</context>
+<context>
+    <name>HistoryItemDelegate</name>
+    <message numerus="yes">
+        <location filename="../qml/components/HistoryItemDelegate.qml" line="51"/>
+        <source>%n year(s) ago</source>
+        <comment>actions</comment>
+        <translation><numerusform>loni</numerusform><numerusform>před %n lety</numerusform><numerusform>před %n lety</numerusform><numerusform>před %n lety</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../qml/components/HistoryItemDelegate.qml" line="53"/>
+        <source>%n months(s) ago</source>
+        <comment>actions</comment>
+        <translation><numerusform>před měsícem</numerusform><numerusform>před %n měsíci</numerusform><numerusform>před %n měsíci</numerusform><numerusform>před %n měsíci</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../qml/components/HistoryItemDelegate.qml" line="55"/>
+        <source>%n day(s) ago</source>
+        <comment>actions</comment>
+        <translation><numerusform>včera</numerusform><numerusform>před %n dny</numerusform><numerusform>před %n dny</numerusform><numerusform>před %n dny</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../qml/components/HistoryItemDelegate.qml" line="57"/>
+        <source>%n hours(s) ago</source>
+        <comment>actions</comment>
+        <translation><numerusform>před hodinou</numerusform><numerusform>před %n hodinami</numerusform><numerusform>před %n hodinami</numerusform><numerusform>před %n hodinami</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../qml/components/HistoryItemDelegate.qml" line="59"/>
+        <source>%n minutes(s) ago</source>
+        <comment>actions</comment>
+        <translation><numerusform>před minutou</numerusform><numerusform>před %n minutami</numerusform><numerusform>před %n minutami</numerusform><numerusform>před %n minutami</numerusform></translation>
     </message>
     <message>
-        <location filename="../qml/pages/InstallPackagePage.qml" line="90"/>
-        <source>Installing package</source>
-        <translation>Instaluje se balíček</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/InstallPackagePage.qml" line="99"/>
-        <source>Cancel</source>
-        <translation>Zrušit</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/InstallPackagePage.qml" line="115"/>
-        <location filename="../qml/pages/InstallPackagePage.qml" line="129"/>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/InstallPackagePage.qml" line="116"/>
-        <source>Package installed</source>
-        <translation>Nainstalovat balíček</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/InstallPackagePage.qml" line="130"/>
-        <source>Error!</source>
-        <translation>Chyba!</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/InstallPackagePage.qml" line="131"/>
-        <source>We have some error</source>
-        <translation>Máme nějakou chybu</translation>
+        <location filename="../qml/components/HistoryItemDelegate.qml" line="61"/>
+        <source>Just now</source>
+        <translation>Právě teď</translation>
     </message>
 </context>
 <context>
@@ -50,6 +56,16 @@
         <location filename="../qml/pages/MainPage.qml" line="34"/>
         <source>Package manager</source>
         <translation>Správce balíčků</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/MainPage.qml" line="72"/>
+        <source>Search packages:</source>
+        <translation>Hledat balíčky:</translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/MainPage.qml" line="89"/>
+        <source>Last actions:</source>
+        <translation>Poslední akce:</translation>
     </message>
 </context>
 <context>
@@ -96,49 +112,9 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/main.cpp" line="75"/>
+        <location filename="../src/main.cpp" line="77"/>
         <source>Package manager</source>
         <translation>Správce balíčků</translation>
-    </message>
-</context>
-<context>
-    <name>RemovePackagePage</name>
-    <message>
-        <location filename="../qml/pages/RemovePackagePage.qml" line="33"/>
-        <location filename="../qml/pages/RemovePackagePage.qml" line="47"/>
-        <source>Remove package</source>
-        <translation>Odstranit balíček</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/RemovePackagePage.qml" line="82"/>
-        <source>Remove</source>
-        <translation>Odstranit</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/RemovePackagePage.qml" line="98"/>
-        <source>Cancel</source>
-        <translation>Zrušit</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/RemovePackagePage.qml" line="114"/>
-        <location filename="../qml/pages/RemovePackagePage.qml" line="129"/>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/RemovePackagePage.qml" line="115"/>
-        <source>Package removed</source>
-        <translation>Balíček byl odstraněn</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/RemovePackagePage.qml" line="130"/>
-        <source>Error!</source>
-        <translation>Chyba!</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/RemovePackagePage.qml" line="131"/>
-        <source>We have some error</source>
-        <translation>Máme nějakou chybu</translation>
     </message>
 </context>
 <context>
@@ -196,23 +172,23 @@
 <context>
     <name>main</name>
     <message>
-        <location filename="../src/main.cpp" line="53"/>
+        <location filename="../src/main.cpp" line="55"/>
         <source>Install &lt;package&gt;.</source>
         <translation>Nainstalovat %1</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="53"/>
         <location filename="../src/main.cpp" line="55"/>
+        <location filename="../src/main.cpp" line="57"/>
         <source>package</source>
         <translation>balíček</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="54"/>
+        <location filename="../src/main.cpp" line="56"/>
         <source>Update packages.</source>
         <translation>Aktualizovat balíčky.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="55"/>
+        <location filename="../src/main.cpp" line="57"/>
         <source>Remove &lt;package&gt;</source>
         <translation>Odstranit %1</translation>
     </message>
