@@ -31,17 +31,8 @@
 
 #include <glacierapp.h>
 
-#include "pamac/database.h"
-#include "pamac/config.h"
-#include "pamac/transaction.h"
-#include "pamac/historyitemmodel.h"
-
 int main(int argc, char *argv[])
 {
-    qmlRegisterType<DataBase>("org.glacier.packagemanager",1,0,"PackageDatabase");
-    qmlRegisterType<Transaction>("org.glacier.packagemanager",1,0,"PackageTransaction");
-    qmlRegisterType<HistoryItemModel>("org.glacier.packagemanager",1,0,"HistoryItemModel");
-
     QGuiApplication *app = GlacierApp::app(argc, argv);
     app->setOrganizationName("NemoMobile");
 
