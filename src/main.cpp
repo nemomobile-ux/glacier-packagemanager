@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
     }
 
     QQuickWindow *window = GlacierApp::showWindow();
-    window->setTitle(QObject::tr("Package manager"));
+    window->setTitle(QObject::tr("Packages"));
 
     return app->exec();
 }

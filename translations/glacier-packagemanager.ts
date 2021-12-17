@@ -129,8 +129,8 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/main.cpp" line="77"/>
-        <source>Package manager</source>
+        <location filename="../src/main.cpp" line="68"/>
+        <source>Packages</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -189,23 +189,23 @@
 <context>
     <name>main</name>
     <message>
-        <location filename="../src/main.cpp" line="55"/>
+        <location filename="../src/main.cpp" line="46"/>
         <source>Install &lt;package&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="55"/>
-        <location filename="../src/main.cpp" line="57"/>
+        <location filename="../src/main.cpp" line="46"/>
+        <location filename="../src/main.cpp" line="48"/>
         <source>package</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="56"/>
+        <location filename="../src/main.cpp" line="47"/>
         <source>Update packages.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="57"/>
+        <location filename="../src/main.cpp" line="48"/>
         <source>Remove &lt;package&gt;</source>
         <translation type="unfinished"></translation>
     </message>
