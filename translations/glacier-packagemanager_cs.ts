@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="cs" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="cs">
 <context>
     <name>AuthorizationFailPage</name>
     <message>
@@ -112,9 +112,9 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/main.cpp" line="77"/>
-        <source>Package manager</source>
-        <translation>Správce balíčků</translation>
+        <location filename="../src/main.cpp" line="68"/>
+        <source>Packages</source>
+        <translation>Balíčky</translation>
     </message>
 </context>
 <context>
@@ -172,23 +172,23 @@
 <context>
     <name>main</name>
     <message>
-        <location filename="../src/main.cpp" line="55"/>
+        <location filename="../src/main.cpp" line="46"/>
         <source>Install &lt;package&gt;.</source>
         <translation>Nainstalovat %1</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="55"/>
-        <location filename="../src/main.cpp" line="57"/>
+        <location filename="../src/main.cpp" line="46"/>
+        <location filename="../src/main.cpp" line="48"/>
         <source>package</source>
         <translation>balíček</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="56"/>
+        <location filename="../src/main.cpp" line="47"/>
         <source>Update packages.</source>
         <translation>Aktualizovat balíčky.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="57"/>
+        <location filename="../src/main.cpp" line="48"/>
         <source>Remove &lt;package&gt;</source>
         <translation>Odstranit %1</translation>
     </message>
