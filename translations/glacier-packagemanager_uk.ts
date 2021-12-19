@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="uk">
 <context>
     <name>AuthorizationFailPage</name>
     <message>
@@ -18,31 +18,31 @@
         <location filename="../qml/components/HistoryItemDelegate.qml" line="51"/>
         <source>%n year(s) ago</source>
         <comment>actions</comment>
-        <translation><numerusform>%n рік(років) тому</numerusform><numerusform>%n рік(років) тому</numerusform><numerusform>%n рік(років) тому</numerusform><numerusform>%n рік(років) тому</numerusform></translation>
+        <translation><numerusform>%n рік тому</numerusform><numerusform>%n ріки тому</numerusform><numerusform>%n років тому</numerusform><numerusform>%n років тому</numerusform></translation>
     </message>
     <message numerus="yes">
         <location filename="../qml/components/HistoryItemDelegate.qml" line="53"/>
         <source>%n months(s) ago</source>
         <comment>actions</comment>
-        <translation><numerusform>%n місяць(місяців) тому</numerusform><numerusform>%n місяць(місяців) тому</numerusform><numerusform>%n місяць(місяців) тому</numerusform><numerusform>%n місяць(місяців) тому</numerusform></translation>
+        <translation><numerusform>%n місяць тому</numerusform><numerusform>%n місяця тому</numerusform><numerusform>%n місяців тому</numerusform><numerusform>%n місяців тому</numerusform></translation>
     </message>
     <message numerus="yes">
         <location filename="../qml/components/HistoryItemDelegate.qml" line="55"/>
         <source>%n day(s) ago</source>
         <comment>actions</comment>
-        <translation><numerusform>%n день(днів) тому</numerusform><numerusform>%n день(днів) тому</numerusform><numerusform>%n день(днів) тому</numerusform><numerusform>%n день(днів) тому</numerusform></translation>
+        <translation><numerusform>%n день тому</numerusform><numerusform>%n дня тому</numerusform><numerusform>%n днів тому</numerusform><numerusform>%n днів тому</numerusform></translation>
     </message>
     <message numerus="yes">
         <location filename="../qml/components/HistoryItemDelegate.qml" line="57"/>
         <source>%n hours(s) ago</source>
         <comment>actions</comment>
-        <translation><numerusform>%n годину(годин) тому</numerusform><numerusform>%n годину(годин) тому</numerusform><numerusform>%n годину(годин) тому</numerusform><numerusform>%n годину(годин) тому</numerusform></translation>
+        <translation><numerusform>%n годину тому</numerusform><numerusform>%n години тому</numerusform><numerusform>%n годин тому</numerusform><numerusform>%n годин тому</numerusform></translation>
     </message>
     <message numerus="yes">
         <location filename="../qml/components/HistoryItemDelegate.qml" line="59"/>
         <source>%n minutes(s) ago</source>
         <comment>actions</comment>
-        <translation><numerusform>%n хвилину(хвилин) тому</numerusform><numerusform>%n хвилину(хвилин) тому</numerusform><numerusform>%n хвилину(хвилин) тому</numerusform><numerusform>%n хвилину(хвилин) тому</numerusform></translation>
+        <translation><numerusform>%n хвилину тому</numerusform><numerusform>%n хвилини тому</numerusform><numerusform>%n хвилин тому</numerusform><numerusform>%n хвилин тому</numerusform></translation>
     </message>
     <message>
         <location filename="../qml/components/HistoryItemDelegate.qml" line="61"/>
@@ -112,9 +112,9 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/main.cpp" line="77"/>
-        <source>Package manager</source>
-        <translation>Менеджер пакетів</translation>
+        <location filename="../src/main.cpp" line="68"/>
+        <source>Packages</source>
+        <translation>Пакети</translation>
     </message>
 </context>
 <context>
@@ -172,23 +172,23 @@
 <context>
     <name>main</name>
     <message>
-        <location filename="../src/main.cpp" line="55"/>
+        <location filename="../src/main.cpp" line="46"/>
         <source>Install &lt;package&gt;.</source>
         <translation>Встановити &lt;package&gt;</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="55"/>
-        <location filename="../src/main.cpp" line="57"/>
+        <location filename="../src/main.cpp" line="46"/>
+        <location filename="../src/main.cpp" line="48"/>
         <source>package</source>
         <translation>пакет</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="56"/>
+        <location filename="../src/main.cpp" line="47"/>
         <source>Update packages.</source>
         <translation>Оновлення пакетів.</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="57"/>
+        <location filename="../src/main.cpp" line="48"/>
         <source>Remove &lt;package&gt;</source>
         <translation>Видалити &lt;package&gt;</translation>
     </message>
