@@ -89,7 +89,7 @@
     <name>OrphansPage</name>
     <message>
         <location filename="../qml/pages/OrphansPage.qml" line="36"/>
-        <source>Orphans packages</source>
+        <source>Orphaned packages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -99,7 +99,7 @@
     </message>
     <message>
         <location filename="../qml/pages/OrphansPage.qml" line="80"/>
-        <source>Loading orphans packages list</source>
+        <source>Loading orphaned packages list</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

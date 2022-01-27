@@ -33,7 +33,7 @@ Page {
 
     headerTools: HeaderToolsLayout {
         id: tools
-        title: qsTr("Orphans packages")
+        title: qsTr("Orphaned packages")
         showBackButton: true
     }
 
@@ -77,7 +77,7 @@ Page {
         Label{
             id: orphansLabel
             anchors.centerIn: parent
-            text: qsTr("Loading orphans packages list")
+            text: qsTr("Loading orphaned packages list")
             visible: orphansListModel.length == 0
         }
     }
