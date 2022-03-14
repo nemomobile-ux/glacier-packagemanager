@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>glacier-packagemanager.qml</file>
+        <file>pages/AuthorizationFailPage.qml</file>
+        <file>pages/MainPage.qml</file>
+        <file>pages/OrphansPage.qml</file>
+        <file>pages/PackageInfoPage.qml</file>
+        <file>pages/TransactionPage.qml</file>
+        <file>pages/UpdatesPage.qml</file>
+        <file>components/HistoryItemDelegate.qml</file>
+        <file>components/PackageListDelegate.qml</file>
+    </qresource>
+</RCC>

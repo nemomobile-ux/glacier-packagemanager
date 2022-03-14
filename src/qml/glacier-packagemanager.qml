@@ -44,11 +44,11 @@ ApplicationWindow {
     PackageTransaction{
         id: pkgTa
         onTransactionStarted: {
-            pageStack.push(Qt.resolvedUrl("/usr/share/glacier-packagemanager/qml/pages/TransactionPage.qml"))
+            pageStack.push(Qt.resolvedUrl("pages/TransactionPage.qml"))
             root.show()
         }
         onAuthorizationFail: {
-            pageStack.push(Qt.resolvedUrl("/usr/share/glacier-packagemanager/qml/pages/AuthorizationFailPage.qml"))
+            pageStack.push(Qt.resolvedUrl("pages/AuthorizationFailPage.qml"))
             root.show()
         }
     }

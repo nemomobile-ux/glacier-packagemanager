@@ -37,14 +37,14 @@ Page {
             ToolButton {
                 id: refreshButton
                 iconSource: "image://theme/refresh"
-                onClicked: pageStack.push(Qt.resolvedUrl("/usr/share/glacier-packagemanager/qml/pages/UpdatesPage.qml"));
+                onClicked: pageStack.push(Qt.resolvedUrl("UpdatesPage.qml"));
                 showCounter: counterValue != 0
                 counterValue: 0
             },
             ToolButton {
                 id: orphansButton
                 iconSource: "image://theme/exclamation-circle"
-                onClicked: pageStack.push(Qt.resolvedUrl("/usr/share/glacier-packagemanager/qml/pages/OrphansPage.qml"));
+                onClicked: pageStack.push(Qt.resolvedUrl("OrphansPage.qml"));
                 showCounter: counterValue != 0
                 counterValue: 0
             }

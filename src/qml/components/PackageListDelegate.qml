@@ -35,7 +35,7 @@ ListViewItemWithActions {
     iconColorized: false
 
     onClicked: {
-        pageStack.push(Qt.resolvedUrl("/usr/share/glacier-packagemanager/qml/pages/PackageInfoPage.qml"), {item: pkg});
+        pageStack.push(Qt.resolvedUrl("../pages/PackageInfoPage.qml"), {item: pkg});
     }
 
     function calcIcon(item) {

@@ -1,12 +1,9 @@
-set(SRC
-    main.cpp
-)
+set(SRC main.cpp)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${XPACKAGEKIT_INCLUDE_DIRS})
 
-add_subdirectory(pamac)
-
-add_executable(glacier-packagemanager ${SRC})
+qtquick_compiler_add_resources(RESOURCES qml/glacier-pacmagemanager.qrc)
+add_executable(glacier-packagemanager ${SRC} ${RESOURCES})
 
 target_link_libraries(glacier-packagemanager
 	Qt5::Gui
