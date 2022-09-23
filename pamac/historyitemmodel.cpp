@@ -20,18 +20,19 @@
 #include "historyitemmodel.h"
 #include <QFile>
 
-HistoryItemModel::HistoryItemModel(QObject *parent) : QAbstractListModel(parent)
+HistoryItemModel::HistoryItemModel(QObject* parent)
+    : QAbstractListModel(parent)
 {
     QFile file("/var/log/pacman.log");
-    if(!file.exists()) {
+    if (!file.exists()) {
         return;
     }
 
     file.open(QFile::ReadOnly);
     QStringList list;
-    while(!file.atEnd()){
+    while (!file.atEnd()) {
         QString line = QString::fromUtf8(file.readLine());
-        if(line.contains("[ALPM]")){
+        if (line.contains("[ALPM]")) {
             list.prepend(line);
         }
     }
@@ -40,10 +41,10 @@ HistoryItemModel::HistoryItemModel(QObject *parent) : QAbstractListModel(parent)
     HistoryItem itm;
     m_historyList = itm.fromStringList(list);
 
-    m_hash.insert(Qt::UserRole ,QByteArray("name"));
-    m_hash.insert(Qt::UserRole+1 ,QByteArray("type"));
-    m_hash.insert(Qt::UserRole+2 ,QByteArray("date"));
-    m_hash.insert(Qt::UserRole+3 ,QByteArray("version"));
+    m_hash.insert(Qt::UserRole, QByteArray("name"));
+    m_hash.insert(Qt::UserRole + 1, QByteArray("type"));
+    m_hash.insert(Qt::UserRole + 2, QByteArray("date"));
+    m_hash.insert(Qt::UserRole + 3, QByteArray("version"));
 }
 
 QList<HistoryItem> HistoryItemModel::historyList() const
@@ -51,42 +52,42 @@ QList<HistoryItem> HistoryItemModel::historyList() const
     return m_historyList;
 }
 
-int HistoryItemModel::rowCount(const QModelIndex &parent) const
+int HistoryItemModel::rowCount(const QModelIndex& parent) const
 {
     Q_UNUSED(parent)
     return m_historyList.length();
 }
 
-int HistoryItemModel::columnCount(const QModelIndex &parent) const
+int HistoryItemModel::columnCount(const QModelIndex& parent) const
 {
     Q_UNUSED(parent)
     return m_hash.count();
 }
 
-QVariant HistoryItemModel::data(const QModelIndex &index, int role) const
+QVariant HistoryItemModel::data(const QModelIndex& index, int role) const
 {
     if (!index.isValid())
         return QVariant();
     if (index.row() >= m_historyList.size())
-            return QVariant();
+        return QVariant();
 
     HistoryItem hItem = m_historyList.at(index.row());
 
-    if(role==Qt::UserRole){
+    if (role == Qt::UserRole) {
         return hItem.name();
     }
 
-    if(role==Qt::UserRole+1){
+    if (role == Qt::UserRole + 1) {
         return hItem.typeToString(hItem.type());
     }
 
-    if(role==Qt::UserRole+2){
+    if (role == Qt::UserRole + 2) {
         return hItem.time().toMSecsSinceEpoch();
     }
 
-    if(role==Qt::UserRole+3){
+    if (role == Qt::UserRole + 3) {
         return hItem.version();
     }
 
-    return  QVariant();
+    return QVariant();
 }

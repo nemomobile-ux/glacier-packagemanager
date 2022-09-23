@@ -25,11 +25,10 @@
 
 #include "database.h"
 
-class Transaction : public QObject
-{
+class Transaction : public QObject {
     Q_OBJECT
 public:
-    explicit Transaction(QObject *parent = nullptr);
+    explicit Transaction(QObject* parent = nullptr);
     ~Transaction();
     Q_INVOKABLE void getAuthorization();
     Q_INVOKABLE void install(QStringList packages);
@@ -41,7 +40,7 @@ Q_SIGNALS:
     void authorizationFail();
     void transactionStarted();
     void transactionFinished();
-    void emitActionProgress(const QString& emitAction,const QString& status, double progress);
+    void emitActionProgress(const QString& emitAction, const QString& status, double progress);
     void emitAction(const QString& emitAction);
     void emitError(const QString& error);
 
@@ -57,10 +56,10 @@ private:
     PamacTransaction* m_pmTransaction;
     PamacTransactionSummary* m_pmTransactionSummary;
 
-    static void getAuthorizationFinish(GObject *source_object, GAsyncResult *res, gpointer user_data);
-    static void transactionFinish(GObject *source_object, GAsyncResult *res, gpointer user_data);
+    static void getAuthorizationFinish(GObject* source_object, GAsyncResult* res, gpointer user_data);
+    static void transactionFinish(GObject* source_object, GAsyncResult* res, gpointer user_data);
 
-    void debug(const QString& emitAction,const QString& status, double progress);
+    void debug(const QString& emitAction, const QString& status, double progress);
     void run(bool auth);
 
     bool m_authInProgress = false;

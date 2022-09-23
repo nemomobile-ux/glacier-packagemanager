@@ -20,7 +20,7 @@
 #include "config.h"
 #include <QDebug>
 
-Config::Config(const QString &str, QObject *parent)
+Config::Config(const QString& str, QObject* parent)
 {
     m_pmConfig = pamac_config_new(str.toUtf8());
     m_configPath = str;
@@ -75,7 +75,7 @@ void Config::removeIgnorePkg(QString name)
 
 void Config::setRecurse(bool recurse)
 {
-    if(recurse != m_recurse) {
+    if (recurse != m_recurse) {
         pamac_config_set_recurse(m_pmConfig, recurse);
         m_recurse = recurse;
         Q_EMIT recurseChanged();
@@ -84,7 +84,7 @@ void Config::setRecurse(bool recurse)
 
 void Config::setNoUpdateHideIcon(bool noUpdateHideIcon)
 {
-    if(noUpdateHideIcon != m_noUpdateHideIcon) {
+    if (noUpdateHideIcon != m_noUpdateHideIcon) {
         pamac_config_set_no_update_hide_icon(m_pmConfig, noUpdateHideIcon);
         m_noUpdateHideIcon = noUpdateHideIcon;
         Q_EMIT noUpdateHideIconChanged();
@@ -93,7 +93,7 @@ void Config::setNoUpdateHideIcon(bool noUpdateHideIcon)
 
 void Config::setDownloadUpdates(bool downloadUpdates)
 {
-    if(downloadUpdates != m_downloadUpdates) {
+    if (downloadUpdates != m_downloadUpdates) {
         pamac_config_set_download_updates(m_pmConfig, downloadUpdates);
         m_downloadUpdates = downloadUpdates;
         Q_EMIT downloadUpdatesChanged();
@@ -102,7 +102,7 @@ void Config::setDownloadUpdates(bool downloadUpdates)
 
 void Config::setCleanRmOnlyUninstalled(bool cleanRmOnlyUninstalled)
 {
-    if(cleanRmOnlyUninstalled != m_cleanRmOnlyUninstalled) {
+    if (cleanRmOnlyUninstalled != m_cleanRmOnlyUninstalled) {
         pamac_config_set_clean_rm_only_uninstalled(m_pmConfig, cleanRmOnlyUninstalled);
         m_cleanRmOnlyUninstalled = cleanRmOnlyUninstalled;
         Q_EMIT cleanRmOnlyUninstalledChanged();
@@ -111,7 +111,7 @@ void Config::setCleanRmOnlyUninstalled(bool cleanRmOnlyUninstalled)
 
 void Config::setMaxParallelDownloads(int maxParallelDownloads)
 {
-    if(maxParallelDownloads != m_maxParallelDownloads) {
+    if (maxParallelDownloads != m_maxParallelDownloads) {
         pamac_config_set_max_parallel_downloads(m_pmConfig, maxParallelDownloads);
         m_maxParallelDownloads = maxParallelDownloads;
         Q_EMIT maxParallelDownloadsChanged();
@@ -120,7 +120,7 @@ void Config::setMaxParallelDownloads(int maxParallelDownloads)
 
 void Config::setEnableDowngrade(bool enableDowngrade)
 {
-    if(enableDowngrade != m_enableDowngrade) {
+    if (enableDowngrade != m_enableDowngrade) {
         pamac_config_set_enable_downgrade(m_pmConfig, enableDowngrade);
         m_enableDowngrade = enableDowngrade;
         Q_EMIT enableDowngradeChanged();
@@ -129,7 +129,7 @@ void Config::setEnableDowngrade(bool enableDowngrade)
 
 void Config::setRefreshPeriod(int refreshPeriod)
 {
-    if(refreshPeriod != m_refreshPeriod) {
+    if (refreshPeriod != m_refreshPeriod) {
         pamac_config_set_refresh_period(m_pmConfig, refreshPeriod);
         m_refreshPeriod = refreshPeriod;
         Q_EMIT refreshPeriodChanged();
@@ -138,7 +138,7 @@ void Config::setRefreshPeriod(int refreshPeriod)
 
 void Config::setCleanKeepNumPkgs(int cleanKeepNumPkgs)
 {
-    if(cleanKeepNumPkgs != m_cleanKeepNumPkgs) {
+    if (cleanKeepNumPkgs != m_cleanKeepNumPkgs) {
         pamac_config_set_clean_keep_num_pkgs(m_pmConfig, cleanKeepNumPkgs);
         m_cleanKeepNumPkgs = cleanKeepNumPkgs;
         Q_EMIT cleanKeepNumPkgsChanged();
@@ -147,7 +147,7 @@ void Config::setCleanKeepNumPkgs(int cleanKeepNumPkgs)
 
 void Config::setCheckspace(bool checkspace)
 {
-    if(checkspace != m_checkspace) {
+    if (checkspace != m_checkspace) {
         pamac_config_set_checkspace(m_pmConfig, checkspace);
         m_checkspace = checkspace;
         Q_EMIT checkspaceChanged();
