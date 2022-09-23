@@ -5,8 +5,8 @@
 
 #include <bits/shared_ptr.h>
 
-Updates::Updates(PamacUpdates *upd)
-    :m_updates(upd)
+Updates::Updates(PamacUpdates* upd)
+    : m_updates(upd)
 {
 }
 

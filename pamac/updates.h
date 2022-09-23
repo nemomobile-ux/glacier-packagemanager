@@ -1,16 +1,15 @@
 #ifndef UPDATES_H
 #define UPDATES_H
 
-#include <QObject>
 #include "pamac.h"
+#include <QObject>
 
-class Updates : public QObject
-{
+class Updates : public QObject {
     Q_GADGET
 public:
-    Updates()=default;
+    Updates() = default;
     Updates(PamacUpdates* upd);
-    GPtrArray *get();
+    GPtrArray* get();
 
 private:
     PamacUpdates* m_updates;

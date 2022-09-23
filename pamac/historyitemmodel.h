@@ -26,28 +26,27 @@
 
 #include "historyitem.h"
 
-class HistoryItemModel : public QAbstractListModel
-{
+class HistoryItemModel : public QAbstractListModel {
     Q_OBJECT
     Q_PROPERTY(QList<HistoryItem> historyList READ historyList NOTIFY historyListChanged)
     Q_PROPERTY(int columnCount READ columnCount CONSTANT)
     Q_PROPERTY(int rowCount READ rowCount CONSTANT)
 public:
-    explicit HistoryItemModel(QObject *parent = nullptr);
+    explicit HistoryItemModel(QObject* parent = nullptr);
 
     QList<HistoryItem> historyList() const;
 
 public:
-    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
-    QVariant data(const QModelIndex &index, int role) const override;
-    QHash<int, QByteArray> roleNames() const override {return m_hash;}
+    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+    int columnCount(const QModelIndex& parent = QModelIndex()) const override;
+    QVariant data(const QModelIndex& index, int role) const override;
+    QHash<int, QByteArray> roleNames() const override { return m_hash; }
 
 Q_SIGNALS:
     void historyListChanged(const QList<HistoryItem>& historyList);
 
 private:
-    QHash<int,QByteArray> m_hash;
+    QHash<int, QByteArray> m_hash;
     QList<HistoryItem> m_historyList;
 };
 

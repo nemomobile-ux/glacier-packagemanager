@@ -17,35 +17,34 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#include "database.h"
 #include "config.h"
-#include "transaction.h"
+#include "database.h"
 #include "historyitemmodel.h"
+#include "transaction.h"
 
-#include <QtQml>
-#include <QtGlobal>
 #include <QQmlEngine>
 #include <QQmlExtensionPlugin>
+#include <QtGlobal>
+#include <QtQml>
 
-class Q_DECL_EXPORT GlacierPackageManagerPlugin : public QQmlExtensionPlugin
-{
+class Q_DECL_EXPORT GlacierPackageManagerPlugin : public QQmlExtensionPlugin {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "org.glacier.packagemanager")
 public:
     virtual ~GlacierPackageManagerPlugin() { }
 
-    void initializeEngine(QQmlEngine *, const char *uri)
+    void initializeEngine(QQmlEngine*, const char* uri)
     {
         Q_ASSERT(uri == QLatin1String("org.glacier.packagemanager"));
         qmlRegisterModule(uri, 1, 0);
     }
 
-    void registerTypes(const char *uri)
+    void registerTypes(const char* uri)
     {
         Q_ASSERT(uri == QLatin1String("org.glacier.packagemanager"));
-        qmlRegisterType<DataBase>(uri,1,0,"PackageDatabase");
-        qmlRegisterType<Transaction>(uri,1,0,"PackageTransaction");
-        qmlRegisterType<HistoryItemModel>(uri,1,0,"HistoryItemModel");
+        qmlRegisterType<DataBase>(uri, 1, 0, "PackageDatabase");
+        qmlRegisterType<Transaction>(uri, 1, 0, "PackageTransaction");
+        qmlRegisterType<HistoryItemModel>(uri, 1, 0, "HistoryItemModel");
     }
 };
 

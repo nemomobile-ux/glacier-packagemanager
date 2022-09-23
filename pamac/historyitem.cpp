@@ -17,17 +17,16 @@
  * Boston, MA 02110-1301, USA.
  */
 
-
 #include "historyitem.h"
 
 #include <QRegularExpression>
 
 HistoryItem::~HistoryItem()
 {
-
 }
 
-QString HistoryItem::typeToString(PackageType t) const{
+QString HistoryItem::typeToString(PackageType t) const
+{
     switch (t) {
     case Installed:
         return "Installed";
@@ -40,33 +39,35 @@ QString HistoryItem::typeToString(PackageType t) const{
     }
 }
 
-HistoryItem::PackageType HistoryItem::typeFromString(const QString &s){
+HistoryItem::PackageType HistoryItem::typeFromString(const QString& s)
+{
     QString lowS = s.toLower();
-    if(lowS=="installed"){
+    if (lowS == "installed") {
         return Installed;
     }
-    if(lowS=="removed"){
+    if (lowS == "removed") {
         return Removed;
     }
-    if(lowS=="upgraded"){
+    if (lowS == "upgraded") {
         return Upgraded;
     }
     return Unknown;
 }
 
-void HistoryItem::setType(const QString &type){
+void HistoryItem::setType(const QString& type)
+{
     m_type = typeFromString(type);
 }
 
-QList<HistoryItem> HistoryItem::fromStringList(const QStringList &list)
+QList<HistoryItem> HistoryItem::fromStringList(const QStringList& list)
 {
     QList<HistoryItem> result;
     const QRegularExpression exp("\\[(.+)\\] \\[ALPM\\] (\\S+) (\\S+) \\((.+)\\)");
-    for(const QString& el:list){
+    for (const QString& el : list) {
         QRegularExpressionMatch match;
-        if((match = exp.match(el)).hasMatch()){
+        if ((match = exp.match(el)).hasMatch()) {
             HistoryItem item;
-            item.m_time = QDateTime::fromString(match.captured(1),Qt::ISODate);
+            item.m_time = QDateTime::fromString(match.captured(1), Qt::ISODate);
             item.m_type = typeFromString(match.captured(2));
             item.m_name = match.captured(3);
             item.m_version = match.captured(4);

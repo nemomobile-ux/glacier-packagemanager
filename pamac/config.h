@@ -20,13 +20,12 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#include "pamac.h"
 #include <QObject>
 #include <QString>
 #include <QVariant>
-#include "pamac.h"
 
-class Config : public QObject
-{
+class Config : public QObject {
     Q_OBJECT
     Q_PROPERTY(bool recurse READ recurse WRITE setRecurse NOTIFY recurseChanged)
     Q_PROPERTY(bool noUpdateHideIcon READ noUpdateHideIcon WRITE setNoUpdateHideIcon NOTIFY noUpdateHideIconChanged)
@@ -39,26 +38,26 @@ class Config : public QObject
     Q_PROPERTY(bool checkspace READ checkspace WRITE setCheckspace NOTIFY checkspaceChanged)
 
 public:
-    Config(const QString& str,QObject* parent = nullptr);
+    Config(const QString& str, QObject* parent = nullptr);
     ~Config();
 
-    PamacConfig* get() {return m_pmConfig;}
+    PamacConfig* get() { return m_pmConfig; }
     Q_INVOKABLE QStringList getIgnorePkgs();
     Q_INVOKABLE void save();
     Q_INVOKABLE void reload();
     Q_INVOKABLE void addIgnorePkg(QString name);
     Q_INVOKABLE void removeIgnorePkg(QString name);
 
-    QString configPath() {return m_configPath;}
-    bool recurse() {return m_recurse;}
-    bool noUpdateHideIcon() {return m_noUpdateHideIcon;}
-    bool downloadUpdates() {return m_downloadUpdates;}
-    bool cleanRmOnlyUninstalled() {return m_cleanRmOnlyUninstalled;}
-    int maxParallelDownloads() {return m_maxParallelDownloads;}
-    bool enableDowngrade() {return m_enableDowngrade;}
-    int refreshPeriod() {return m_refreshPeriod;}
-    int cleanKeepNumPkgs() {return m_cleanKeepNumPkgs;}
-    bool checkspace() {return m_checkspace;}
+    QString configPath() { return m_configPath; }
+    bool recurse() { return m_recurse; }
+    bool noUpdateHideIcon() { return m_noUpdateHideIcon; }
+    bool downloadUpdates() { return m_downloadUpdates; }
+    bool cleanRmOnlyUninstalled() { return m_cleanRmOnlyUninstalled; }
+    int maxParallelDownloads() { return m_maxParallelDownloads; }
+    bool enableDowngrade() { return m_enableDowngrade; }
+    int refreshPeriod() { return m_refreshPeriod; }
+    int cleanKeepNumPkgs() { return m_cleanKeepNumPkgs; }
+    bool checkspace() { return m_checkspace; }
 
     void setRecurse(bool recurse);
     void setNoUpdateHideIcon(bool noUpdateHideIcon);

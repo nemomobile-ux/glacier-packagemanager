@@ -26,24 +26,23 @@
 #include "config.h"
 #include "updates.h"
 
-class DataBase : public QObject
-{
+class DataBase : public QObject {
     Q_OBJECT
 public:
-    explicit DataBase(QObject *parent = nullptr);
+    explicit DataBase(QObject* parent = nullptr);
 
-    Q_INVOKABLE QVariantMap getPackage(const QString &name);
-    Q_INVOKABLE QStringList getPackageFiles(const QString &name);
+    Q_INVOKABLE QVariantMap getPackage(const QString& name);
+    Q_INVOKABLE QStringList getPackageFiles(const QString& name);
 
     Q_INVOKABLE QStringList getRepos();
     Q_INVOKABLE QStringList getGroups();
-    Q_INVOKABLE void getCategoryPackages(const QString &category);
-    Q_INVOKABLE void getGroupPackages(const QString &group);
-    Q_INVOKABLE void getRepoPackages(const QString &repo);
+    Q_INVOKABLE void getCategoryPackages(const QString& category);
+    Q_INVOKABLE void getGroupPackages(const QString& group);
+    Q_INVOKABLE void getRepoPackages(const QString& repo);
     Q_INVOKABLE void getInstalledApps();
     Q_INVOKABLE void getOrphansPackages();
 
-    Q_INVOKABLE void searchPackages(const QString &name);
+    Q_INVOKABLE void searchPackages(const QString& name);
 
     Q_INVOKABLE void getMirrorsCountries();
     Q_INVOKABLE void getMirrorsChoosenCountry();
@@ -51,8 +50,8 @@ public:
     Q_INVOKABLE void getUpdates();
     Q_INVOKABLE void refresh();
 
-    PamacDatabase* db() {return m_pmDatabase;}
-    Config* config() {return m_config;}
+    PamacDatabase* db() { return m_pmDatabase; }
+    Config* config() { return m_config; }
 
 Q_SIGNALS:
     void categoryPackagesReady(QList<QVariantMap> packages);
@@ -73,21 +72,21 @@ private:
     Config* m_config;
     int m_serching;
 
-    QList<QVariantMap> gptrToPackageList(GPtrArray *pkgList);
-    QVariantMap getPkg(PamacPackage *p);
-    QVariantMap getPkg(PamacAlpmPackage *p);
+    QList<QVariantMap> gptrToPackageList(GPtrArray* pkgList);
+    QVariantMap getPkg(PamacPackage* p);
+    QVariantMap getPkg(PamacAlpmPackage* p);
 
     QList<QVariantMap> m_results;
 
-    static void searchFinish(GObject *source_object, GAsyncResult *res, gpointer user_data);
-    static void getCategoryPackagesFinish(GObject *source_object, GAsyncResult *res, gpointer user_data);
-    static void getGroupPackagesFinish(GObject *source_object, GAsyncResult *res, gpointer user_data);
-    static void getRepoPackagesFinish(GObject *source_object, GAsyncResult *res, gpointer user_data);
-    static void getInstalledAppsFinish(GObject *source_object, GAsyncResult *res, gpointer user_data);
-    static void getOrphansPackagesFinish(GObject *source_object, GAsyncResult *res, gpointer user_data);
-    static void getUpdatesFinish(GObject *source_object, GAsyncResult *res, gpointer user_data);
-    static void getMirrorsCountriesFinish(GObject *source_object, GAsyncResult *res, gpointer user_data);
-    static void getMirrorsChoosenCountryFinish(GObject *source_object, GAsyncResult *res, gpointer user_data);
+    static void searchFinish(GObject* source_object, GAsyncResult* res, gpointer user_data);
+    static void getCategoryPackagesFinish(GObject* source_object, GAsyncResult* res, gpointer user_data);
+    static void getGroupPackagesFinish(GObject* source_object, GAsyncResult* res, gpointer user_data);
+    static void getRepoPackagesFinish(GObject* source_object, GAsyncResult* res, gpointer user_data);
+    static void getInstalledAppsFinish(GObject* source_object, GAsyncResult* res, gpointer user_data);
+    static void getOrphansPackagesFinish(GObject* source_object, GAsyncResult* res, gpointer user_data);
+    static void getUpdatesFinish(GObject* source_object, GAsyncResult* res, gpointer user_data);
+    static void getMirrorsCountriesFinish(GObject* source_object, GAsyncResult* res, gpointer user_data);
+    static void getMirrorsChoosenCountryFinish(GObject* source_object, GAsyncResult* res, gpointer user_data);
 };
 
 #endif // DATABASE_H

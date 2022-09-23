@@ -20,12 +20,11 @@
 #ifndef HISTORYITEM_H
 #define HISTORYITEM_H
 
+#include <QDateTime>
 #include <QObject>
 #include <QVariant>
-#include <QDateTime>
 
-class HistoryItem
-{
+class HistoryItem {
     Q_GADGET
     Q_PROPERTY(QString name READ name)
     Q_PROPERTY(QString version READ version)
@@ -38,7 +37,7 @@ public:
     HistoryItem(const HistoryItem& other) = default;
     HistoryItem& operator=(const HistoryItem& other) = default;
 
-    enum PackageType{
+    enum PackageType {
         Installed,
         Removed,
         Upgraded,
@@ -46,11 +45,10 @@ public:
     };
     Q_ENUM(PackageType)
 
-
-    QString name() const {return m_name;}
-    QString version() const {return m_version;}
-    const QDateTime time() const {return m_time;}
-    PackageType type() const {return m_type;}
+    QString name() const { return m_name; }
+    QString version() const { return m_version; }
+    const QDateTime time() const { return m_time; }
+    PackageType type() const { return m_type; }
 
     QString typeToString(PackageType t) const;
     PackageType typeFromString(const QString& s);
