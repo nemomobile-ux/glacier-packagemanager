@@ -80,7 +80,7 @@ Page {
                     Image{
                         width: height
                         height: appName.height
-                        source: item.icon != "" ? item.icon : "/usr/share/glacier-packagemanager/images/glacier-packagemanager.png"
+                        source: item.icon != "" ? item.icon : "file:///usr/share/glacier-packagemanager/images/glacier-packagemanager.png"
                     }
 
                     Label{
