@@ -1,6 +1,6 @@
 ### Sets QT_INSTALL_QML to the directory where QML Plugins should be installed
 function(FindQtInstallQml)
-    find_program(QMAKE NAMES qmake-qt5 qmake)
+    find_program(QMAKE NAMES qmake6)
     if(NOT QMAKE)
     message(FATAL_ERROR "qmake not found")
     endif()
@@ -34,9 +34,9 @@ set(HEADERS
 add_library(glacierpackagemanager SHARED ${SRC})
 
 target_link_libraries(glacierpackagemanager
-    Qt5::Core
-    Qt5::Qml
-    Qt5::Quick
+    Qt6::Core
+    Qt6::Qml
+    Qt6::Quick
     PkgConfig::PAMAC
     PkgConfig::GLIB2
     PkgConfig::GOBJECT2)
