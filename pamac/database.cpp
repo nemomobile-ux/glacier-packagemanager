@@ -26,10 +26,11 @@
 DataBase::DataBase(QObject* parent)
     : QObject(parent)
 {
-    m_config = new Config("/etc/pamac.conf");
-    m_pmDatabase = pamac_database_new(m_config->get());
-
-    pamac_database_enable_appstream(m_pmDatabase);
+    m_config = pamac_config_new("/etc/pamac.conf");
+    if(!m_config) {
+        qFatal() << "config not found";
+    }
+    m_pmDatabase = pamac_database_new(m_config);
 
     g_signal_connect(m_pmDatabase, "get_updates_progress",
         reinterpret_cast<GCallback>(+[](GObject* obj, uint percent, DataBase* t) {

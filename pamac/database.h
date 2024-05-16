@@ -51,7 +51,7 @@ public:
     Q_INVOKABLE void refresh();
 
     PamacDatabase* db() { return m_pmDatabase; }
-    Config* config() { return m_config; }
+    PamacConfig* config() { return m_config; }
 
 Q_SIGNALS:
     void categoryPackagesReady(QList<QVariantMap> packages);
@@ -68,8 +68,8 @@ Q_SIGNALS:
 
 private:
     PamacDatabase* m_pmDatabase;
+    PamacConfig* m_config;
 
-    Config* m_config;
     int m_serching;
 
     QList<QVariantMap> gptrToPackageList(GPtrArray* pkgList);
