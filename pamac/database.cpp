@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2021-2025 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -60,12 +60,12 @@ void DataBase::getMirrorsChoosenCountry()
 
 void DataBase::getUpdates()
 {
-    pamac_database_get_updates_async(m_pmDatabase, false, getUpdatesFinish, this);
+    pamac_database_get_updates_async(m_pmDatabase, getUpdatesFinish, this);
 }
 
 void DataBase::refresh()
 {
-    pamac_database_refresh(m_pmDatabase);
+    pamac_database_need_refresh(m_pmDatabase);
     Q_EMIT dbRefreshed();
 }
 
