@@ -27,7 +27,7 @@ DataBase::DataBase(QObject* parent)
     : QObject(parent)
 {
     m_config = pamac_config_new("/etc/pamac.conf");
-    if(!m_config) {
+    if (!m_config) {
         qFatal() << "config not found";
     }
     m_pmDatabase = pamac_database_new(m_config);
