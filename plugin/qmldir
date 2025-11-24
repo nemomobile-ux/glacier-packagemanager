@@ -1,0 +1,2 @@
+module Glacier.PackageManager
+plugin glacierpackagemanager
