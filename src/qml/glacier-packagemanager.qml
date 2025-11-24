@@ -22,7 +22,7 @@ import Nemo.Controls
 
 import "pages"
 
-import org.glacier.packagemanager 1.0
+import Glacier.PackageManager
 
 ApplicationWindow {
     id: root
@@ -34,7 +34,7 @@ ApplicationWindow {
         id: pkgDb
     }
 
-    HistoryItemModel{
+/*    HistoryItemModel{
         id: historyItemModel
     }
 
@@ -48,5 +48,5 @@ ApplicationWindow {
             pageStack.push(Qt.resolvedUrl("pages/AuthorizationFailPage.qml"))
             root.show()
         }
-    }
+    }*/
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2021 Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2018-2025 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -18,6 +18,7 @@
  */
 
 import QtQuick
+import Nemo
 import Nemo.Controls
 
 import "../components"
@@ -133,7 +134,7 @@ Page {
             orphansButton.counterValue = packages.length;
         }
 
-        function onDbRefreshed() {
+        function onDbRefrehed() {
             pageStack.pop()
             refreshButton.counterValue = packages.length
             if(searchLine.text != "") {
