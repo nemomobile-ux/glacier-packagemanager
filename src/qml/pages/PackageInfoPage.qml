@@ -33,13 +33,21 @@ Page {
 
         tools: [
             ToolButton {
+                id: upgradeButton
+                visible: item.installed && item.haveUpdates
+                iconSource: "image://theme/refresh"
+                onClicked: {
+                    pkgDb.upgrade(item.name)
+                }
+            },
+            ToolButton {
                 id: actionButton
                 iconSource: item.installed ? "image://theme/trash" : "image://theme/download"
                 onClicked: {
-                    if(item.installed) {
-                        pkgTa.remove(item.name)
+                    if (item.installed) {
+                        pkgDb.remove(item.name)
                     } else {
-                        pkgTa.install(item.name)
+                        pkgDb.install(item.name)
                     }
                 }
             }
@@ -76,14 +84,16 @@ Page {
                     spacing:Theme.itemSpacingLarge
 
                     Image{
-                        width: height
-                        height: appName.height
-                        source: item.icon != "" ? item.icon : "file:///usr/share/glacier-packagemanager/images/glacier-packagemanager.png"
+                        id: packageIcon
+                        width: Theme.itemHeightExtraLarge
+                        height: Theme.itemHeightExtraLarge
+                        source: item && item.icon ? item.icon : "file:///usr/share/glacier-packagemanager/images/glacier-packagemanager.png"
+                        fillMode: Image.PreserveAspectFit
                     }
 
                     Label{
                         id: appName
-                        width: parent.width
+                        width: parent.width - packageIcon.width - appInfoRow.spacing
                         text: item.name
                         wrapMode: Text.WordWrap
                     }
@@ -99,9 +109,9 @@ Page {
                     id: screenShotListview
                     width: parent.width
                     height: parent.width*3/4
-                    model: item.screenshots
+                    model: (item && item.screenshots) ? item.screenshots : []
                     clip: true
-                    visible: item.screenshots.length > 0
+                    visible: item && item.screenshots ? item.screenshots.length > 0 : false
                     orientation: ListView.Horizontal
                     snapMode: ListView.SnapOneItem
                     highlightRangeMode: ListView.StrictlyEnforceRange
@@ -155,10 +165,19 @@ Page {
         }
     }
 
-    Connections{
-        target: pkgTa
+    Connections {
+        target: pkgDb
         function onTransactionFinished() {
-            item = pkgDb.getPackage(item.name)
+            pkgDb.getPackage(item.name)
+        }
+    }
+
+    Connections {
+        target: pkgDb
+        function onGetPackageReady(pkg) {
+            if (pkg && pkg.name === item.name) {
+                item = pkg
+            }
         }
     }
 }

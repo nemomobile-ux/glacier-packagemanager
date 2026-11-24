@@ -25,7 +25,7 @@ ListViewItemWithActions {
 
     property var pkg
 
-    label: modelData.name
+    label: pkg.name
     description: pkg.description
     icon: calcIcon(pkg)
     iconColorized: false

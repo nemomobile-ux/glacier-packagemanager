@@ -20,7 +20,6 @@
 import QtQuick
 import Nemo
 import Nemo.Controls
-import Nemo.Dialogs
 
 import "../components"
 
@@ -40,7 +39,7 @@ Page {
 
         ListView{
             id: orphansListView
-            model: orphansListModel
+            model: orphansListModel ? orphansListModel : []
             width: parent.width
             height: parent.height-startCleanupButton.height-Theme.itemSpacingSmall
 
@@ -63,10 +62,11 @@ Page {
             visible: orphansListModel.length > 0
 
             onClicked: {
-                var toRemove = []
-                for(var i = 0; i < orphansListModel.length; i++) {
-                    toRemove.push(orphansListModel[i].name)
-                    pkgTa.remove(toRemove)
+                if (false) {
+                    return
+                }
+                for (var i = 0; i < orphansListModel.length; i++) {
+                    pkgDb.remove(orphansListModel[i].name)
                 }
             }
         }

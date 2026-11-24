@@ -25,7 +25,8 @@ import "../components"
 
 Page {
     id: mainPage
-    property var searchPackages: []
+
+    property bool startupUpdatesChecked: false
 
     headerTools: HeaderToolsLayout {
         id: tools
@@ -33,84 +34,58 @@ Page {
 
         tools: [
             ToolButton {
+                id: searchButton
+                iconSource: "image://theme/search"
+                onClicked: pageStack.push(Qt.resolvedUrl("SearchPage.qml"))
+            },
+            ToolButton {
                 id: refreshButton
                 iconSource: "image://theme/refresh"
-                onClicked: pageStack.push(Qt.resolvedUrl("UpdatesPage.qml"));
+                onClicked: pageStack.push(Qt.resolvedUrl("UpdatesPage.qml"))
                 showCounter: counterValue != 0
                 counterValue: 0
             },
             ToolButton {
                 id: orphansButton
                 iconSource: "image://theme/exclamation-circle"
-                onClicked: pageStack.push(Qt.resolvedUrl("OrphansPage.qml"));
+                onClicked: pageStack.push(Qt.resolvedUrl("OrphansPage.qml"))
                 showCounter: counterValue != 0
                 counterValue: 0
             }
         ]
     }
 
-    Item{
+    Item {
         id: rootView
         anchors.fill: parent
 
-        Column{
+        Column {
             id: rootColumn
-            spacing:Theme.itemSpacingLarge
-            width: parent.width - Theme.itemSpacingLarge*2
-            height: parent.height - Theme.itemSpacingLarge *2
+            spacing: Theme.itemSpacingLarge
+            width: parent.width - Theme.itemSpacingLarge * 2
+            height: parent.height - Theme.itemSpacingLarge * 2
 
-            anchors{
+            anchors {
                 top: parent.top
                 topMargin: Theme.itemSpacingLarge
                 left: parent.left
                 leftMargin: Theme.itemSpacingLarge
             }
 
-            Label{
-                text: qsTr("Search packages:")
-                width: parent.width
-                wrapMode: Text.WordWrap
-                font.bold: true
-            }
-
-            TextField{
-                id: searchLine
-                width: parent.width
-                onTextChanged: {
-                    if(searchLine.text != "") {
-                        pkgDb.searchPackages(searchLine.text)
-                    }
-                }
-            }
-
-            Label{
+            Label {
                 text: qsTr("Last actions:")
                 width: parent.width
                 wrapMode: Text.WordWrap
-                visible: searchLine.text == ""
                 font.bold: true
             }
 
-            ListView{
-                id: searchListView
-                width: parent.width
-                height: visible ? parent.height - searchLine.height : 0
-                clip: true
-                visible: searchLine.text != ""
-                model: searchPackages
-                delegate: PackageListDelegate{
-                    pkg: modelData
-                }
-            }
-
-            ListView{
+            ListView {
                 id: historyListView
                 width: parent.width
-                height: visible ? parent.height - searchLine.height : 0
+                height: parent.height - parent.spacing
                 clip: true
-                visible: searchLine.text == ""
-                model: historyItemModel
-                delegate: HistoryItemDelegate{
+                model: typeof historyItemModel !== "undefined" ? historyItemModel : null
+                delegate: HistoryItemDelegate {
                     pkgName: name
                     pkgAction: type
                     pkgVersion: version
@@ -120,32 +95,33 @@ Page {
         }
     }
 
-    Connections{
+    Connections {
         target: pkgDb
-        function onSearchPackagesReady(packages) {
-            searchPackages = packages
-        }
-
         function onGetUpdatesReady(packages) {
             refreshButton.counterValue = packages.length
+            if (!mainPage.startupUpdatesChecked) {
+                mainPage.startupUpdatesChecked = true
+                if (packages.length > 0 || (typeof action !== "undefined" && action === "update")) {
+                    pageStack.push(Qt.resolvedUrl("UpdatesPage.qml"))
+                }
+            }
         }
 
         function onGetOrphansPackagesReady(packages) {
-            orphansButton.counterValue = packages.length;
+            orphansButton.counterValue = packages.length
         }
 
-        function onDbRefrehed() {
-            pageStack.pop()
-            refreshButton.counterValue = packages.length
-            if(searchLine.text != "") {
-                pkgDb.searchPackages(searchLine.text)
+        function onDbRefreshed() {
+            if (pageStack.depth > 1) {
+                pageStack.pop()
             }
+            pkgDb.getUpdates()
+            pkgDb.getOrphansPackages()
         }
     }
 
     Component.onCompleted: {
-        pkgDb.getUpdates();
-        pkgDb.getOrphansPackages();
+        pkgDb.getUpdates()
+        pkgDb.getOrphansPackages()
     }
 }
-

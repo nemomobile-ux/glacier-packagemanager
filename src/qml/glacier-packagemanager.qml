@@ -36,17 +36,17 @@ ApplicationWindow {
 
 /*    HistoryItemModel{
         id: historyItemModel
-    }
+    }*/
 
-    PackageTransaction{
-        id: pkgTa
-        onTransactionStarted: {
+    Connections {
+        target: pkgDb
+        function onTransactionStarted() {
             pageStack.push(Qt.resolvedUrl("pages/TransactionPage.qml"))
             root.show()
         }
-        onAuthorizationFail: {
+        function onAuthorizationFail() {
             pageStack.push(Qt.resolvedUrl("pages/AuthorizationFailPage.qml"))
             root.show()
         }
-    }*/
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018-2025пше срус Chupligin Sergey <neochapay@gmail.com>
+ * Copyright (C) 2018-2025 Chupligin Sergey <neochapay@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -20,7 +20,6 @@
 import QtQuick
 import Nemo
 import Nemo.Controls
-import Nemo.Dialogs
 
 import "../components"
 
@@ -43,7 +42,7 @@ Page {
 
         ListView{
             id: updatesListView
-            model: updateListModel
+            model: updateListModel ? updateListModel : []
             width: parent.width
             height: parent.height-startUpdateButton.height-Theme.itemSpacingSmall
 
@@ -62,11 +61,15 @@ Page {
             height: Theme.itemHeightExtraLarge
 
             enabled: updatesListView.count > 0
-            text: qsTr("Update packages")
+            text: qsTr("Update all packages")
 
             anchors.bottom: parent.bottom
 
-            onClicked: pkgTa.upgrade();
+            onClicked: {
+                if (typeof pkgDb !== "undefined") {
+                    pkgDb.upgrade()
+                }
+            }
         }
 
         Label{

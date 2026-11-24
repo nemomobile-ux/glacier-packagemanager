@@ -60,7 +60,7 @@ Page {
     }
 
     Connections{
-        target: pkgTa
+        target: pkgDb
         function onEmitActionProgress(emitAction, status, progress) {
             emitActionLabel.text = emitAction
             statusLabel.text = status
