@@ -20,8 +20,8 @@
 #ifndef GLACIERPMBACKEND_H
 #define GLACIERPMBACKEND_H
 
-#include "glacierpm_global.h"
 #include "glacierpackage.h"
+#include "glacierpm_global.h"
 #include <QMetaObject>
 #include <QObject>
 #include <QVariantList>

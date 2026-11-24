@@ -54,7 +54,7 @@ int main(int argc, char* argv[])
                                                   << "update",
         QCoreApplication::translate("main", "Update packages."));
     QCommandLineOption removeOption(QStringList() << "r"
-                                                   << "remove",
+                                                  << "remove",
         QCoreApplication::translate("main", "Remove <package>"), QCoreApplication::translate("main", "package"));
     parser.addOption(installOption);
     parser.addOption(updateOption);
