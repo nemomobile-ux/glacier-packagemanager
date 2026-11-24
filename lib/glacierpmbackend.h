@@ -21,7 +21,10 @@
 #define GLACIERPMBACKEND_H
 
 #include "glacierpm_global.h"
+#include "glacierpackage.h"
+#include <QMetaObject>
 #include <QObject>
+#include <QVariantList>
 
 class GLACIERPM_EXPORT GlacierPMBackend : public QObject {
     Q_OBJECT
@@ -34,8 +37,33 @@ public:
     virtual void upgrade(QString packageName) = 0;
     virtual void update() = 0;
 
+    virtual void searchPackages(const QString& name)
+    {
+        Q_UNUSED(name)
+        QMetaObject::invokeMethod(this, [this]() { emit searchPackagesReady(QVariantList()); }, Qt::QueuedConnection);
+    }
+    virtual void getUpdates()
+    {
+        QMetaObject::invokeMethod(this, [this]() { emit getUpdatesReady(QVariantList()); }, Qt::QueuedConnection);
+    }
+    virtual void getOrphansPackages()
+    {
+        QMetaObject::invokeMethod(this, [this]() { emit getOrphansPackagesReady(QVariantList()); }, Qt::QueuedConnection);
+    }
+    virtual void getPackage(const QString& name)
+    {
+        Q_UNUSED(name)
+        QMetaObject::invokeMethod(this, [this]() { emit getPackageReady(GlacierPackage()); }, Qt::QueuedConnection);
+    }
+
 signals:
-    void dbRefrehed();
+    void dbRefreshed();
+    void searchPackagesReady(QVariantList packages);
+    void getUpdatesReady(QVariantList packages);
+    void getOrphansPackagesReady(QVariantList packages);
+    void getPackageReady(GlacierPackage package);
+    void emitAction(const QString& action);
+    void emitActionProgress(const QString& action, const QString& status, double progress);
 };
 
 Q_DECLARE_INTERFACE(GlacierPMBackend, "GlacierPackageManager.Backend")

@@ -43,5 +43,5 @@ void EmptyBackend::upgrade(QString packageName)
 
 void EmptyBackend::update()
 {
-    emit dbRefrehed();
+    emit dbRefreshed();
 }

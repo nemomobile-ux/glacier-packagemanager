@@ -17,4 +17,4 @@ target_link_libraries(${PLUGINNAME} PUBLIC
     Glacier::PackageManager)
 
 install(TARGETS ${PLUGINNAME}
-    LIBRARY DESTINATION /usr/lib/glacier-pacmagemanager/backend/)
+    LIBRARY DESTINATION /usr/lib/glacier-packagemanager/backend/)

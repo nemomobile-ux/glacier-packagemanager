@@ -21,6 +21,8 @@
 #define DATABASE_H
 
 #include <QObject>
+#include <QVariantList>
+#include <glacierpackage.h>
 #include <glacierpmbackend.h>
 
 class DataBase : public QObject {
@@ -29,11 +31,38 @@ public:
     explicit DataBase(QObject* parent = nullptr);
     ~DataBase();
 
+    Q_INVOKABLE void searchPackages(const QString& name);
+    Q_INVOKABLE void getUpdates();
+    Q_INVOKABLE void getOrphansPackages();
+    Q_INVOKABLE void getPackage(const QString& name);
+
+    Q_INVOKABLE void install(const QString& packageName);
+    Q_INVOKABLE void remove(const QString& packageName);
+    Q_INVOKABLE void upgrade(const QString& packageName = QString());
+    Q_INVOKABLE void refresh();
+
 signals:
-    void dbRefrehed();
+    void dbRefreshed();
+    void searchPackagesReady(QVariantList packages);
+    void getUpdatesReady(QVariantList packages);
+    void getOrphansPackagesReady(QVariantList packages);
+    void getPackageReady(GlacierPackage package);
+
+    void transactionStarted();
+    void transactionFinished();
+    void authorizationFail();
+    void emitAction(const QString& action);
+    void emitActionProgress(const QString& action, const QString& status, double progress);
+    void startWaiting();
+    void stopWaiting();
+    void startDownloading();
+    void stopDownloading();
+    void startPreparing();
+    void stopPreparing();
 
 private:
-    GlacierPMBackend* m_backend;
+    GlacierPMBackend* m_backend = nullptr;
+    bool m_transactionActive = false;
 };
 
 #endif // DATABASE_H
