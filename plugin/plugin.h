@@ -24,7 +24,7 @@
 
 class GlacierPackageManagerPlugin : public QQmlExtensionPlugin {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "Glacier.PackageManager" FILE "glacier.packagemanajer.json")
+    Q_PLUGIN_METADATA(IID "Glacier.PackageManager" FILE "glacier.packagemanager.json")
 
 public:
     void registerTypes(const char* uri);

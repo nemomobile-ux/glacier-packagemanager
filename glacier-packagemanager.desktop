@@ -1,11 +1,12 @@
 [Desktop Entry]
 Type=Application
 Name=Packages
-Exec=/usr/bin/glacier-packagemanager
+Exec=glacier-packagemanager
 Icon=/usr/share/glacier-packagemanager/images/glacier-packagemanager.png
+Categories=System;PackageManager;
 X-Desktop-File-Install-Version=0.20
 Name[cs]=Balíčky
-Name[uk]=Пакети
-Name[ru]=Пакеты
+Name[de]=Pakete
 Name[pl]=Pakiety
-Name[de]=Packete
+Name[ru]=Пакеты
+Name[uk]=Пакети

@@ -17,22 +17,23 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef GLACIERPMMABAGER_H
-#define GLACIERPMMABAGER_H
+#ifndef GLACIERPMMANAGER_H
+#define GLACIERPMMANAGER_H
 
 #include <QObject>
+#include <QPluginLoader>
 #include <glacierpmbackend.h>
 
 class GlacierPMManager : public QObject {
     Q_OBJECT
 public:
     explicit GlacierPMManager(QObject* parent = nullptr);
+    ~GlacierPMManager();
     GlacierPMBackend* getBackend();
-
-signals:
 
 private:
     GlacierPMBackend* m_backend;
+    QPluginLoader m_pluginLoader;
 };
 
-#endif // GLACIERPMMABAGER_H
+#endif // GLACIERPMMANAGER_H

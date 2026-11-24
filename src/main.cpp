@@ -20,18 +20,23 @@
 #ifdef QT_QML_DEBUG
 #include <QtQuick>
 #endif
-#include <QtGui/QGuiApplication>
 
+#include <QCommandLineParser>
 #include <QCoreApplication>
-#include <QScreen>
-#include <QtCore/QString>
-#include <QtQml>
-#include <QtQuick/QQuickView>
+#include <QGuiApplication>
+#include <QIcon>
+#include <QQmlApplicationEngine>
+#include <QQmlContext>
+#include <QQuickWindow>
+
+#include <cstdlib>
 
 #include <glacierapp.h>
 
 int main(int argc, char* argv[])
 {
+    setenv("QT_QUICK_CONTROLS_STYLE", "Nemo", 1);
+
     QGuiApplication* app = GlacierApp::app(argc, argv);
     app->setOrganizationName("NemoMobile");
 
@@ -39,7 +44,7 @@ int main(int argc, char* argv[])
     QQmlContext* context = engine->rootContext();
 
     QCommandLineParser parser;
-    parser.setApplicationDescription("Test helper");
+    parser.setApplicationDescription(QObject::tr("Glacier Package Manager"));
     parser.addHelpOption();
     parser.addVersionOption();
     QCommandLineOption installOption(QStringList() << "i"
@@ -49,7 +54,7 @@ int main(int argc, char* argv[])
                                                   << "update",
         QCoreApplication::translate("main", "Update packages."));
     QCommandLineOption removeOption(QStringList() << "r"
-                                                  << "remove",
+                                                   << "remove",
         QCoreApplication::translate("main", "Remove <package>"), QCoreApplication::translate("main", "package"));
     parser.addOption(installOption);
     parser.addOption(updateOption);
@@ -58,20 +63,22 @@ int main(int argc, char* argv[])
     parser.process(*app);
 
     if (parser.isSet(installOption)) {
-        context->setContextProperty("action", "install");
+        context->setContextProperty("action", QStringLiteral("install"));
         context->setContextProperty("pkgname", parser.value(installOption));
     } else if (parser.isSet(updateOption)) {
-        context->setContextProperty("action", "update");
+        context->setContextProperty("action", QStringLiteral("update"));
     } else if (parser.isSet(removeOption)) {
-        context->setContextProperty("action", "remove");
+        context->setContextProperty("action", QStringLiteral("remove"));
         context->setContextProperty("pkgname", parser.value(removeOption));
     } else {
-        context->setContextProperty("action", "");
+        context->setContextProperty("action", QString());
     }
 
     QQuickWindow* window = GlacierApp::showWindow();
-    window->setTitle(QObject::tr("Packages"));
-    window->setIcon(QIcon("/usr/share/glacier-packagemanager/images/glacier-packagemanager.png"));
+    if (window) {
+        window->setTitle(QObject::tr("Packages"));
+        window->setIcon(QIcon(QStringLiteral("/usr/share/glacier-packagemanager/images/glacier-packagemanager.png")));
+    }
 
     return app->exec();
 }

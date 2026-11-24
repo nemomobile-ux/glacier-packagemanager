@@ -29,13 +29,9 @@ qt6_add_qml_module(glacierpackagemanager
     PLUGIN_TARGET glacierpackagemanager
     NO_GENERATE_PLUGIN_SOURCE
     SOURCES
-        ${SOURCES}
         ${HEADERS}
-    QML_FILES
-        ${QML}
     OUTPUT_DIRECTORY
         ${CMAKE_BINARY_DIR}/Glacier/PackageManager
-        RESOURCES qmldir
 )
 
 target_link_libraries(glacierpackagemanager PUBLIC

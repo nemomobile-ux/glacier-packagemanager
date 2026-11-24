@@ -1,21 +1,20 @@
 cmake_minimum_required(VERSION 3.10.0)
 
 project(glacier-packagemanager
-        VERSION 0.2.0
-	DESCRIPTION "The Glacier packagemanager")
+	VERSION 0.2.0
+	DESCRIPTION "The Glacier package manager")
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_INSTALL_PREFIX /usr)
+set(CMAKE_INSTALL_PREFIX "/usr" CACHE PATH "..." FORCE)
 
 set(PACKAGE_BACKEND "empty")
 
 include(FeatureSummary)
 include(GNUInstallDirs)
 
-set(QT_MIN_VERSION "6.0.0")
 find_package(Qt6 COMPONENTS Gui Qml Quick LinguistTools REQUIRED)
 find_package(Glacier 0.8.0 COMPONENTS App REQUIRED)
 find_package(PkgConfig)
@@ -38,3 +37,5 @@ install(FILES glacier-packagemanager.desktop
 	DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/applications)
 install(FILES glacier-packagemanager.png
 	DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/glacier-packagemanager/images)
+install(FILES org.nemomobile.glacier.packagemanager.policy
+	DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/polkit-1/actions)
