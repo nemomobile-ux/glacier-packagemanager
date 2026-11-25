@@ -12,12 +12,16 @@ function(FindQtInstallQml)
     set(QT_INSTALL_QML ${PROC_RESULT} PARENT_SCOPE)
 endfunction()
 
+find_package(Qt6 COMPONENTS DBus REQUIRED)
+
 set(SRC
     plugin.cpp
-    database.cpp)
+    database.cpp
+    packagemanagerdbus.cpp)
 
 set(HEADERS
-    database.h)
+    database.h
+    packagemanagerdbus.h)
 
 include_directories("../lib")
 
@@ -36,6 +40,7 @@ qt6_add_qml_module(glacierpackagemanager
 
 target_link_libraries(glacierpackagemanager PUBLIC
     Qt6::Core
+    Qt6::DBus
     Qt6::Qml
     Qt6::Quick
     Glacier::PackageManager)

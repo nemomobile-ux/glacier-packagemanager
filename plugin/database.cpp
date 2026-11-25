@@ -19,6 +19,7 @@
 
 #include "database.h"
 #include "glacierpmmanager.h"
+#include "packagemanagerdbus.h"
 
 #include <QDebug>
 
@@ -47,6 +48,8 @@ DataBase::DataBase(QObject* parent)
         connect(backend, &GlacierPMBackend::emitAction, this, &DataBase::emitAction);
         connect(backend, &GlacierPMBackend::emitActionProgress, this, &DataBase::emitActionProgress);
     }
+
+    new PackageManagerDBus(this, this);
 }
 
 DataBase::~DataBase() = default;
