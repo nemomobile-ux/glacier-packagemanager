@@ -19,9 +19,14 @@ find_package(Qt6 COMPONENTS Gui Qml Quick LinguistTools REQUIRED)
 find_package(Glacier 0.8.0 COMPONENTS App REQUIRED)
 find_package(PkgConfig)
 
+option(BUILD_SETTINGS_PLUGIN "Build Glacier Settings plugin" ON)
+
 add_subdirectory(lib)
 add_subdirectory(src)
 add_subdirectory(plugin)
+if(BUILD_SETTINGS_PLUGIN)
+    add_subdirectory(settingsplugin)
+endif()
 #add_subdirectory(pamac)
 
 # Translations
