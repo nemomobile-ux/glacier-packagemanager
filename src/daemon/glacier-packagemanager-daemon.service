@@ -1,11 +1,8 @@
 [Unit]
-Description=Glacier Package Manager update checker
-After=network.target
+Description=Glacier Package Manager update check
+After=network-online.target
+Wants=network-online.target
 
 [Service]
-Type=simple
+Type=oneshot
 ExecStart=/usr/bin/glacier-packagemanager-daemon
-Restart=on-failure
-
-[Install]
-WantedBy=default.target

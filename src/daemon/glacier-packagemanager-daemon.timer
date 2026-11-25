@@ -1,0 +1,10 @@
+[Unit]
+Description=Check for Glacier Package Manager updates daily
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=1d
+Persistent=true
+
+[Install]
+WantedBy=timers.target

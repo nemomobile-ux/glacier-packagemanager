@@ -36,8 +36,6 @@ Item {
 
     NetworkManager {
         id: networkManager
-        onConnectedWifiChanged: root.maybeCheck()
-        onConnectedEthernetChanged: root.maybeCheck()
     }
 
     PackageDatabase {
@@ -49,6 +47,7 @@ Item {
                 updateNotification.itemCount = packages.length
                 updateNotification.publish()
             }
+            quitTimer.start()
         }
     }
 
@@ -66,17 +65,33 @@ Item {
         }]
     }
 
+    Timer {
+        id: quitTimer
+        interval: 3000
+        repeat: false
+        onTriggered: Qt.quit()
+    }
+
+    Timer {
+        id: startTimer
+        interval: 1000
+        repeat: false
+        onTriggered: root.maybeCheck()
+    }
+
     function isConnectedByWifiOrEthernet() {
         return networkManager.connectedWifi !== null || networkManager.connectedEthernet !== null
     }
 
     function maybeCheck() {
         if (!isConnectedByWifiOrEthernet()) {
+            Qt.quit()
             return
         }
         var now = Date.now()
         var last = Number(lastCheckValue.value)
         if (last > 0 && (now - last) < 24 * 60 * 60 * 1000) {
+            Qt.quit()
             return
         }
         lastCheckValue.value = now
@@ -84,6 +99,6 @@ Item {
     }
 
     Component.onCompleted: {
-        maybeCheck()
+        startTimer.start()
     }
 }

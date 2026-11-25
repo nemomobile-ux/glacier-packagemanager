@@ -13,3 +13,5 @@ install(TARGETS glacier-packagemanager-daemon RUNTIME
 
 install(FILES glacier-packagemanager-daemon.service
     DESTINATION /usr/lib/systemd/user)
+install(FILES glacier-packagemanager-daemon.timer
+    DESTINATION /usr/lib/systemd/user)
