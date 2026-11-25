@@ -74,10 +74,18 @@ int main(int argc, char* argv[])
         context->setContextProperty("action", QString());
     }
 
+    const bool dbusActivated = qEnvironmentVariableIsSet("DBUS_STARTER_ADDRESS")
+        || qEnvironmentVariableIsSet("DBUS_STARTER_BUS_TYPE");
+    const bool hasAction = parser.isSet(installOption) || parser.isSet(updateOption) || parser.isSet(removeOption);
+
     QQuickWindow* window = GlacierApp::showWindow();
     if (window) {
         window->setTitle(QObject::tr("Packages"));
         window->setIcon(QIcon(QStringLiteral("/usr/share/glacier-packagemanager/images/glacier-packagemanager.png")));
+        if (dbusActivated && !hasAction) {
+            window->hide();
+            app->setQuitOnLastWindowClosed(false);
+        }
     }
 
     return app->exec();
