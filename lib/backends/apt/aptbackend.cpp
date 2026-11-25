@@ -21,9 +21,10 @@
 #include "aptbackendworker.h"
 
 #include <QDir>
+#include <QFile>
 #include <QFileInfo>
-#include <QProcess>
 #include <QStandardPaths>
+#include <QTextStream>
 
 AptBackend::AptBackend()
 {
@@ -175,31 +176,30 @@ GlacierPackage AptBackend::findPackageByFile(const QString& filePath)
         return result;
     }
 
-    QProcess proc;
-    proc.start(QStringLiteral("dpkg-query"), { QStringLiteral("-S"), info.absoluteFilePath() });
-    if (!proc.waitForFinished(3000)) {
-        proc.kill();
-        return result;
-    }
-    if (proc.exitStatus() != QProcess::NormalExit || proc.exitCode() != 0) {
-        return result;
+    const QString target = info.absoluteFilePath();
+    const QDir infoDir(QStringLiteral("/var/lib/dpkg/info"));
+    const QStringList listFiles = infoDir.entryList({ QStringLiteral("*.list") }, QDir::Files);
+    for (const QString& listFile : listFiles) {
+        QFile f(infoDir.absoluteFilePath(listFile));
+        if (!f.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            continue;
+        }
+        QTextStream in(&f);
+        while (!in.atEnd()) {
+            const QString line = in.readLine();
+            if (line == target) {
+                QString pkgName = listFile.left(listFile.size() - 5);
+                const int colon = pkgName.indexOf(QLatin1Char(':'));
+                if (colon > 0) {
+                    pkgName = pkgName.left(colon);
+                }
+                result.name = pkgName;
+                result.repo = QStringLiteral("apt");
+                result.installed = true;
+                return result;
+            }
+        }
     }
 
-    const QString out = QString::fromLocal8Bit(proc.readAllStandardOutput());
-    const QString line = out.split(QLatin1Char('\n'), Qt::SkipEmptyParts).value(0);
-    const int colon = line.indexOf(QLatin1Char(':'));
-    if (colon <= 0) {
-        return result;
-    }
-
-    QString pkgName = line.left(colon).trimmed();
-    const int comma = pkgName.indexOf(QLatin1Char(','));
-    if (comma > 0) {
-        pkgName = pkgName.left(comma).trimmed();
-    }
-
-    result.name = pkgName;
-    result.repo = QStringLiteral("apt");
-    result.installed = true;
     return result;
 }

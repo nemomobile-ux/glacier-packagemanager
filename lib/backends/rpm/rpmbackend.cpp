@@ -22,8 +22,12 @@
 
 #include <QDir>
 #include <QFileInfo>
-#include <QProcess>
 #include <QStandardPaths>
+
+#include <rpm/header.h>
+#include <rpm/rpmdb.h>
+#include <rpm/rpmlib.h>
+#include <rpm/rpmts.h>
 
 RpmBackend::RpmBackend()
 {
@@ -157,23 +161,31 @@ GlacierPackage RpmBackend::findPackageByFile(const QString& filePath)
         return result;
     }
 
-    QProcess proc;
-    proc.start(QStringLiteral("rpm"), { QStringLiteral("-qf"), QStringLiteral("--qf"), QStringLiteral("%{NAME}"), info.absoluteFilePath() });
-    if (!proc.waitForFinished(3000)) {
-        proc.kill();
-        return result;
+    static bool rpmConfigured = false;
+    if (!rpmConfigured) {
+        rpmReadConfigFiles(NULL, NULL);
+        rpmConfigured = true;
     }
-    if (proc.exitStatus() != QProcess::NormalExit || proc.exitCode() != 0) {
+
+    rpmts ts = rpmtsCreate();
+    if (!ts) {
         return result;
     }
 
-    const QString pkgName = QString::fromLocal8Bit(proc.readAllStandardOutput()).trimmed();
-    if (pkgName.isEmpty()) {
-        return result;
+    const QByteArray pathBytes = info.absoluteFilePath().toLocal8Bit();
+    rpmdbMatchIterator mi = rpmtsInitIterator(ts, RPMDBI_INSTFILENAMES, pathBytes.constData(), 0);
+    if (mi) {
+        Header h = rpmdbNextIterator(mi);
+        if (h) {
+            const char* name = headerGetString(h, RPMTAG_NAME);
+            if (name) {
+                result.name = QString::fromUtf8(name);
+                result.repo = QStringLiteral("rpm");
+                result.installed = true;
+            }
+        }
+        rpmdbFreeIterator(mi);
     }
-
-    result.name = pkgName;
-    result.repo = QStringLiteral("rpm");
-    result.installed = true;
+    rpmtsFree(ts);
     return result;
 }
