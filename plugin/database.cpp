@@ -188,6 +188,27 @@ void DataBase::getPackage(const QString& name, const QString& repo)
     }
 }
 
+QVariantMap DataBase::findPackageByFile(const QString& filePath)
+{
+    QVariantMap result;
+    if (filePath.isEmpty()) {
+        return result;
+    }
+
+    for (GlacierPMBackend* backend : m_backends) {
+        const GlacierPackage pkg = backend->findPackageByFile(filePath);
+        if (!pkg.name.isEmpty()) {
+            result.insert(QStringLiteral("name"), pkg.name);
+            result.insert(QStringLiteral("repo"), pkg.repo);
+            result.insert(QStringLiteral("installed"), pkg.installed);
+            result.insert(QStringLiteral("version"), pkg.installedVersion.isEmpty() ? pkg.version : pkg.installedVersion);
+            return result;
+        }
+    }
+
+    return result;
+}
+
 void DataBase::install(const QString& packageName, const QString& repo)
 {
     GlacierPMBackend* backend = backendForRepo(repo);

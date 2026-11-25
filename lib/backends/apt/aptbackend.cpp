@@ -20,6 +20,11 @@
 #include "aptbackend.h"
 #include "aptbackendworker.h"
 
+#include <QDir>
+#include <QFileInfo>
+#include <QProcess>
+#include <QStandardPaths>
+
 AptBackend::AptBackend()
 {
     m_worker = new AptBackendWorker();
@@ -132,4 +137,69 @@ void AptBackend::upgrade(QString packageName)
 void AptBackend::update()
 {
     emit requestUpdate();
+}
+
+GlacierPackage AptBackend::findPackageByFile(const QString& filePath)
+{
+    GlacierPackage result;
+    if (filePath.isEmpty()) {
+        return result;
+    }
+
+    QString resolved = filePath;
+    QFileInfo info(resolved);
+    if (!info.isAbsolute() || !info.exists()) {
+        if (resolved.endsWith(QStringLiteral(".desktop"))) {
+            const QStringList appDirs = {
+                QStringLiteral("/usr/share/applications"),
+                QStringLiteral("/usr/local/share/applications"),
+                QDir::homePath() + QStringLiteral("/.local/share/applications")
+            };
+            for (const QString& dir : appDirs) {
+                const QString candidate = dir + QLatin1Char('/') + QFileInfo(resolved).fileName();
+                if (QFileInfo::exists(candidate)) {
+                    resolved = candidate;
+                    break;
+                }
+            }
+        } else {
+            const QString exe = QStandardPaths::findExecutable(resolved);
+            if (!exe.isEmpty()) {
+                resolved = exe;
+            }
+        }
+    }
+
+    info = QFileInfo(resolved);
+    if (!info.exists()) {
+        return result;
+    }
+
+    QProcess proc;
+    proc.start(QStringLiteral("dpkg-query"), { QStringLiteral("-S"), info.absoluteFilePath() });
+    if (!proc.waitForFinished(3000)) {
+        proc.kill();
+        return result;
+    }
+    if (proc.exitStatus() != QProcess::NormalExit || proc.exitCode() != 0) {
+        return result;
+    }
+
+    const QString out = QString::fromLocal8Bit(proc.readAllStandardOutput());
+    const QString line = out.split(QLatin1Char('\n'), Qt::SkipEmptyParts).value(0);
+    const int colon = line.indexOf(QLatin1Char(':'));
+    if (colon <= 0) {
+        return result;
+    }
+
+    QString pkgName = line.left(colon).trimmed();
+    const int comma = pkgName.indexOf(QLatin1Char(','));
+    if (comma > 0) {
+        pkgName = pkgName.left(comma).trimmed();
+    }
+
+    result.name = pkgName;
+    result.repo = QStringLiteral("apt");
+    result.installed = true;
+    return result;
 }

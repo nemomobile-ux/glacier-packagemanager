@@ -47,6 +47,7 @@ public:
     void getOrphansPackages() override;
     void getPackage(const QString& name) override;
     void listRepositories() override;
+    GlacierPackage findPackageByFile(const QString& filePath) override;
 
     ~FlatpakBackend();
 

@@ -22,6 +22,7 @@
 
 #include <QObject>
 #include <QString>
+#include <QVariantMap>
 
 class DataBase;
 
@@ -38,6 +39,7 @@ public slots:
     void Upgrade(const QString& packageName, const QString& repo);
     void Refresh();
     void ShowUpdates();
+    QVariantMap FindPackageByFile(const QString& filePath);
 
 signals:
     void TransactionStarted();

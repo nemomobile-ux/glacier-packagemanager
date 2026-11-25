@@ -50,6 +50,7 @@ public:
     void addRepository(const QString& url, const QString& name) override;
     void removeRepository(const QString& id) override;
     void setRepositoryEnabled(const QString& id, bool enabled) override;
+    GlacierPackage findPackageByFile(const QString& filePath) override;
 
     ~AptBackend();
 

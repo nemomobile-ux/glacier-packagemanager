@@ -36,6 +36,7 @@ public:
     Q_INVOKABLE void getUpdates();
     Q_INVOKABLE void getOrphansPackages();
     Q_INVOKABLE void getPackage(const QString& name, const QString& repo = QString());
+    Q_INVOKABLE QVariantMap findPackageByFile(const QString& filePath);
     Q_INVOKABLE void listRepositories();
 
     Q_INVOKABLE void install(const QString& packageName, const QString& repo = QString());

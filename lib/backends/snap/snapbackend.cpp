@@ -20,6 +20,9 @@
 #include "snapbackend.h"
 #include "snapbackendworker.h"
 
+#include <QFileInfo>
+#include <QStandardPaths>
+
 SnapBackend::SnapBackend()
 {
     m_worker = new SnapBackendWorker();
@@ -114,4 +117,52 @@ void SnapBackend::upgrade(QString packageName)
 void SnapBackend::update()
 {
     emit requestUpdate();
+}
+
+GlacierPackage SnapBackend::findPackageByFile(const QString& filePath)
+{
+    GlacierPackage result;
+    if (filePath.isEmpty()) {
+        return result;
+    }
+
+    QString resolved = filePath;
+    QFileInfo info(resolved);
+    if (!info.isAbsolute() || !info.exists()) {
+        const QString exe = QStandardPaths::findExecutable(resolved);
+        if (!exe.isEmpty()) {
+            resolved = exe;
+            info = QFileInfo(resolved);
+        } else if (resolved.endsWith(QStringLiteral(".desktop"))) {
+            const QString candidate = QStringLiteral("/var/lib/snapd/desktop/applications/") + QFileInfo(resolved).fileName();
+            if (QFileInfo::exists(candidate)) {
+                resolved = candidate;
+                info = QFileInfo(resolved);
+            }
+        }
+    }
+
+    const QString abs = info.absoluteFilePath();
+    if (abs.startsWith(QStringLiteral("/snap/"))) {
+        const QStringList parts = abs.split(QLatin1Char('/'), Qt::SkipEmptyParts);
+        if (parts.size() >= 2) {
+            result.name = parts.at(1);
+            result.repo = QStringLiteral("snap");
+            result.installed = true;
+            return result;
+        }
+    }
+
+    const QString fileName = info.fileName();
+    if (abs.startsWith(QStringLiteral("/var/lib/snapd/desktop/applications/")) && fileName.endsWith(QStringLiteral(".desktop"))) {
+        const QString base = fileName.left(fileName.size() - 8);
+        const int us = base.indexOf(QLatin1Char('_'));
+        if (us > 0) {
+            result.name = base.left(us);
+            result.repo = QStringLiteral("snap");
+            result.installed = true;
+        }
+    }
+
+    return result;
 }

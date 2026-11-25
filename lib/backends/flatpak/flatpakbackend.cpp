@@ -20,6 +20,10 @@
 #include "flatpakbackend.h"
 #include "flatpakbackendworker.h"
 
+#include <QDir>
+#include <QFileInfo>
+#include <QStandardPaths>
+
 FlatpakBackend::FlatpakBackend()
 {
     m_worker = new FlatpakBackendWorker();
@@ -114,4 +118,76 @@ void FlatpakBackend::upgrade(QString packageName)
 void FlatpakBackend::update()
 {
     emit requestUpdate();
+}
+
+GlacierPackage FlatpakBackend::findPackageByFile(const QString& filePath)
+{
+    GlacierPackage result;
+    if (filePath.isEmpty()) {
+        return result;
+    }
+
+    QString resolved = filePath;
+    QFileInfo info(resolved);
+    if (!info.isAbsolute() || !info.exists()) {
+        if (resolved.endsWith(QStringLiteral(".desktop"))) {
+            const QStringList appDirs = {
+                QDir::homePath() + QStringLiteral("/.local/share/flatpak/exports/share/applications"),
+                QStringLiteral("/var/lib/flatpak/exports/share/applications")
+            };
+            for (const QString& dir : appDirs) {
+                const QString candidate = dir + QLatin1Char('/') + QFileInfo(resolved).fileName();
+                if (QFileInfo::exists(candidate)) {
+                    resolved = candidate;
+                    info = QFileInfo(candidate);
+                    break;
+                }
+            }
+        } else {
+            const QString exe = QStandardPaths::findExecutable(resolved);
+            if (!exe.isEmpty()) {
+                resolved = exe;
+                info = QFileInfo(resolved);
+            }
+        }
+    }
+
+    const QString abs = info.absoluteFilePath();
+    const QStringList roots = {
+        QStringLiteral("/var/lib/flatpak/app/"),
+        QDir::homePath() + QStringLiteral("/.local/share/flatpak/app/")
+    };
+    for (const QString& root : roots) {
+        if (abs.startsWith(root)) {
+            const QString rest = abs.mid(root.size());
+            const QString appId = rest.section(QLatin1Char('/'), 0, 0);
+            if (!appId.isEmpty()) {
+                result.name = appId;
+                result.repo = QStringLiteral("flatpak");
+                result.installed = true;
+                return result;
+            }
+        }
+    }
+
+    const QString fileName = info.fileName();
+    if (fileName.endsWith(QStringLiteral(".desktop"))) {
+        const QString base = fileName.left(fileName.size() - 8);
+        if (base.contains(QLatin1Char('.'))) {
+            const QStringList exportDirs = {
+                QStringLiteral("/var/lib/flatpak/exports/share/applications/"),
+                QDir::homePath() + QStringLiteral("/.local/share/flatpak/exports/share/applications/")
+            };
+            for (const QString& dir : exportDirs) {
+                if (abs.startsWith(dir)) {
+                    result.name = base;
+                    result.repo = QStringLiteral("flatpak");
+                    result.installed = true;
+                    return result;
+                }
+            }
+        }
+    }
+
+    return result;
 }

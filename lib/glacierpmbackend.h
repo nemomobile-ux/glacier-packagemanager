@@ -75,6 +75,11 @@ public:
         Q_UNUSED(id)
         Q_UNUSED(enabled)
     }
+    virtual GlacierPackage findPackageByFile(const QString& filePath)
+    {
+        Q_UNUSED(filePath)
+        return GlacierPackage();
+    }
 
 signals:
     void dbRefreshed();

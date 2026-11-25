@@ -77,3 +77,11 @@ void PackageManagerDBus::ShowUpdates()
 {
     emit ShowUpdatesRequested();
 }
+
+QVariantMap PackageManagerDBus::FindPackageByFile(const QString& filePath)
+{
+    if (m_database) {
+        return m_database->findPackageByFile(filePath);
+    }
+    return QVariantMap();
+}

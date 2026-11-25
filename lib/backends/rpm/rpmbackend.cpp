@@ -20,6 +20,11 @@
 #include "rpmbackend.h"
 #include "rpmbackendworker.h"
 
+#include <QDir>
+#include <QFileInfo>
+#include <QProcess>
+#include <QStandardPaths>
+
 RpmBackend::RpmBackend()
 {
     m_worker = new RpmBackendWorker();
@@ -114,4 +119,61 @@ void RpmBackend::upgrade(QString packageName)
 void RpmBackend::update()
 {
     emit requestUpdate();
+}
+
+GlacierPackage RpmBackend::findPackageByFile(const QString& filePath)
+{
+    GlacierPackage result;
+    if (filePath.isEmpty()) {
+        return result;
+    }
+
+    QString resolved = filePath;
+    QFileInfo info(resolved);
+    if (!info.isAbsolute() || !info.exists()) {
+        if (resolved.endsWith(QStringLiteral(".desktop"))) {
+            const QStringList appDirs = {
+                QStringLiteral("/usr/share/applications"),
+                QStringLiteral("/usr/local/share/applications"),
+                QDir::homePath() + QStringLiteral("/.local/share/applications")
+            };
+            for (const QString& dir : appDirs) {
+                const QString candidate = dir + QLatin1Char('/') + QFileInfo(resolved).fileName();
+                if (QFileInfo::exists(candidate)) {
+                    resolved = candidate;
+                    break;
+                }
+            }
+        } else {
+            const QString exe = QStandardPaths::findExecutable(resolved);
+            if (!exe.isEmpty()) {
+                resolved = exe;
+            }
+        }
+    }
+
+    info = QFileInfo(resolved);
+    if (!info.exists()) {
+        return result;
+    }
+
+    QProcess proc;
+    proc.start(QStringLiteral("rpm"), { QStringLiteral("-qf"), QStringLiteral("--qf"), QStringLiteral("%{NAME}"), info.absoluteFilePath() });
+    if (!proc.waitForFinished(3000)) {
+        proc.kill();
+        return result;
+    }
+    if (proc.exitStatus() != QProcess::NormalExit || proc.exitCode() != 0) {
+        return result;
+    }
+
+    const QString pkgName = QString::fromLocal8Bit(proc.readAllStandardOutput()).trimmed();
+    if (pkgName.isEmpty()) {
+        return result;
+    }
+
+    result.name = pkgName;
+    result.repo = QStringLiteral("rpm");
+    result.installed = true;
+    return result;
 }
