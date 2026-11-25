@@ -34,6 +34,7 @@ class SnapBackend : public GlacierPMBackend {
 public:
     SnapBackend();
 
+    QString backendId() const override;
     bool enabled() override;
     void install(QString packageName) override;
     void installFromLocalFile(QString patch) override;

@@ -34,6 +34,7 @@ class RpmBackend : public GlacierPMBackend {
 public:
     RpmBackend();
 
+    QString backendId() const override;
     bool enabled() override;
     void install(QString packageName) override;
     void installFromLocalFile(QString patch) override;

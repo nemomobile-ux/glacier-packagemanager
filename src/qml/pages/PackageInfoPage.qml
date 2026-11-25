@@ -37,7 +37,7 @@ Page {
                 visible: item.installed && item.haveUpdates
                 iconSource: "image://theme/refresh"
                 onClicked: {
-                    pkgDb.upgrade(item.name)
+                    pkgDb.upgrade(item.name, item.repo)
                 }
             },
             ToolButton {
@@ -45,9 +45,9 @@ Page {
                 iconSource: item.installed ? "image://theme/trash" : "image://theme/download"
                 onClicked: {
                     if (item.installed) {
-                        pkgDb.remove(item.name)
+                        pkgDb.remove(item.name, item.repo)
                     } else {
-                        pkgDb.install(item.name)
+                        pkgDb.install(item.name, item.repo)
                     }
                 }
             }
@@ -168,7 +168,7 @@ Page {
     Connections {
         target: pkgDb
         function onTransactionFinished() {
-            pkgDb.getPackage(item.name)
+            pkgDb.getPackage(item.name, item.repo)
         }
     }
 

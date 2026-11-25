@@ -26,8 +26,6 @@
 
 GlacierPMManager::GlacierPMManager(QObject* parent)
     : QObject { parent }
-    , m_backend(nullptr)
-    , m_pluginLoader(this)
 {
     QString backendDir = QStringLiteral("/usr/lib/glacier-packagemanager/backend");
     const QString envBackendDir = QProcessEnvironment::systemEnvironment().value(QStringLiteral("GLACIER_PM_BACKEND_DIR"));
@@ -37,8 +35,7 @@ GlacierPMManager::GlacierPMManager(QObject* parent)
     const QStringList candidates = {
         backendDir + QStringLiteral("/apt.so"),
         backendDir + QStringLiteral("/rpm.so"),
-        backendDir + QStringLiteral("/snap.so"),
-        backendDir + QStringLiteral("/empty.so")
+        backendDir + QStringLiteral("/snap.so")
     };
 
     for (const QString& candidate : candidates) {
@@ -46,38 +43,71 @@ GlacierPMManager::GlacierPMManager(QObject* parent)
             continue;
         }
 
-        m_pluginLoader.setFileName(candidate);
-        QObject* plugin = m_pluginLoader.instance();
+        QPluginLoader* loader = new QPluginLoader(candidate, this);
+        QObject* plugin = loader->instance();
         if (!plugin) {
-            qWarning() << "Cannot load backend plugin file:" << candidate << m_pluginLoader.errorString();
-            m_pluginLoader.unload();
+            qWarning() << "Cannot load backend plugin file:" << candidate << loader->errorString();
+            loader->unload();
+            delete loader;
             continue;
         }
 
         GlacierPMBackend* backend = qobject_cast<GlacierPMBackend*>(plugin);
         if (!backend) {
             qWarning() << "Cannot cast backend plugin:" << candidate;
-            m_pluginLoader.unload();
+            loader->unload();
+            delete loader;
             continue;
         }
 
         if (!backend->enabled()) {
             qWarning() << "Backend plugin disabled:" << candidate;
-            m_pluginLoader.unload();
+            loader->unload();
+            delete loader;
             continue;
         }
 
-        m_backend = backend;
+        m_backends.append(backend);
+        m_pluginLoaders.append(loader);
         qDebug() << "Loaded package manager backend:" << candidate;
-        return;
     }
 
-    qWarning() << "No package manager backend found in" << backendDir;
+    if (m_backends.isEmpty()) {
+        const QString emptyCandidate = backendDir + QStringLiteral("/empty.so");
+        if (QFileInfo::exists(emptyCandidate)) {
+            QPluginLoader* loader = new QPluginLoader(emptyCandidate, this);
+            QObject* plugin = loader->instance();
+            GlacierPMBackend* backend = qobject_cast<GlacierPMBackend*>(plugin);
+            if (backend && backend->enabled()) {
+                m_backends.append(backend);
+                m_pluginLoaders.append(loader);
+                qDebug() << "Loaded package manager backend:" << emptyCandidate;
+            } else {
+                if (!plugin) {
+                    qWarning() << "Cannot load backend plugin file:" << emptyCandidate << loader->errorString();
+                }
+                loader->unload();
+                delete loader;
+            }
+        }
+    }
+
+    if (m_backends.isEmpty()) {
+        qWarning() << "No package manager backend found in" << backendDir;
+    }
 }
 
-GlacierPMManager::~GlacierPMManager() = default;
-
-GlacierPMBackend* GlacierPMManager::getBackend()
+GlacierPMManager::~GlacierPMManager()
 {
-    return m_backend;
+    m_backends.clear();
+    for (QPluginLoader* loader : m_pluginLoaders) {
+        loader->unload();
+        delete loader;
+    }
+    m_pluginLoaders.clear();
+}
+
+QList<GlacierPMBackend*> GlacierPMManager::backends() const
+{
+    return m_backends;
 }

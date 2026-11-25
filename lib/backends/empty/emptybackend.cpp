@@ -25,6 +25,16 @@ EmptyBackend::EmptyBackend()
     qDebug() << "HELLO EMPTY BACKEND";
 }
 
+QString EmptyBackend::backendId() const
+{
+    return QStringLiteral("empty");
+}
+
+bool EmptyBackend::enabled()
+{
+    return true;
+}
+
 void EmptyBackend::install(QString packageName)
 {
 }

@@ -20,6 +20,7 @@
 #ifndef DATABASE_H
 #define DATABASE_H
 
+#include <QList>
 #include <QObject>
 #include <QVariantList>
 #include <glacierpackage.h>
@@ -34,11 +35,11 @@ public:
     Q_INVOKABLE void searchPackages(const QString& name);
     Q_INVOKABLE void getUpdates();
     Q_INVOKABLE void getOrphansPackages();
-    Q_INVOKABLE void getPackage(const QString& name);
+    Q_INVOKABLE void getPackage(const QString& name, const QString& repo = QString());
 
-    Q_INVOKABLE void install(const QString& packageName);
-    Q_INVOKABLE void remove(const QString& packageName);
-    Q_INVOKABLE void upgrade(const QString& packageName = QString());
+    Q_INVOKABLE void install(const QString& packageName, const QString& repo = QString());
+    Q_INVOKABLE void remove(const QString& packageName, const QString& repo = QString());
+    Q_INVOKABLE void upgrade(const QString& packageName = QString(), const QString& repo = QString());
     Q_INVOKABLE void refresh();
 
 signals:
@@ -61,8 +62,27 @@ signals:
     void stopPreparing();
 
 private:
-    GlacierPMBackend* m_backend = nullptr;
-    bool m_transactionActive = false;
+    GlacierPMBackend* backendForRepo(const QString& repo) const;
+
+    QList<GlacierPMBackend*> m_backends;
+    int m_transactionActiveCount = 0;
+
+    int m_searchGeneration = 0;
+    int m_searchPending = 0;
+    QVariantList m_searchResults;
+
+    int m_updatesGeneration = 0;
+    int m_updatesPending = 0;
+    QVariantList m_updatesResults;
+
+    int m_orphansGeneration = 0;
+    int m_orphansPending = 0;
+    QVariantList m_orphansResults;
+
+    int m_packageGeneration = 0;
+    int m_packagePending = 0;
+    GlacierPackage m_packageResult;
+    bool m_packageFound = false;
 };
 
 #endif // DATABASE_H

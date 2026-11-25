@@ -34,6 +34,7 @@ class AptBackend : public GlacierPMBackend {
 public:
     AptBackend();
 
+    QString backendId() const override;
     bool enabled() override;
     void install(QString packageName) override;
     void installFromLocalFile(QString patch) override;

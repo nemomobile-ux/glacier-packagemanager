@@ -54,6 +54,11 @@ SnapBackend::~SnapBackend()
     m_worker = nullptr;
 }
 
+QString SnapBackend::backendId() const
+{
+    return QStringLiteral("snap");
+}
+
 bool SnapBackend::enabled()
 {
     return true;

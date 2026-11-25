@@ -20,6 +20,7 @@
 #ifndef GLACIERPMMANAGER_H
 #define GLACIERPMMANAGER_H
 
+#include <QList>
 #include <QObject>
 #include <QPluginLoader>
 #include <glacierpmbackend.h>
@@ -29,11 +30,11 @@ class GlacierPMManager : public QObject {
 public:
     explicit GlacierPMManager(QObject* parent = nullptr);
     ~GlacierPMManager();
-    GlacierPMBackend* getBackend();
+    QList<GlacierPMBackend*> backends() const;
 
 private:
-    GlacierPMBackend* m_backend;
-    QPluginLoader m_pluginLoader;
+    QList<GlacierPMBackend*> m_backends;
+    QList<QPluginLoader*> m_pluginLoaders;
 };
 
 #endif // GLACIERPMMANAGER_H

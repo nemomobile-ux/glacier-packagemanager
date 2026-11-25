@@ -54,6 +54,11 @@ RpmBackend::~RpmBackend()
     m_worker = nullptr;
 }
 
+QString RpmBackend::backendId() const
+{
+    return QStringLiteral("rpm");
+}
+
 bool RpmBackend::enabled()
 {
     return true;

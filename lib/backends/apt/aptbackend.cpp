@@ -54,6 +54,11 @@ AptBackend::~AptBackend()
     m_worker = nullptr;
 }
 
+QString AptBackend::backendId() const
+{
+    return QStringLiteral("apt");
+}
+
 bool AptBackend::enabled()
 {
     return true;

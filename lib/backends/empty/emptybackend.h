@@ -30,12 +30,13 @@ class EmptyBackend : public GlacierPMBackend {
 
 public:
     EmptyBackend();
-    bool enabled() { return true; }
-    void install(QString packageName);
-    void installFromLocalFile(QString patch);
-    void remove(QString packageName);
-    void upgrade(QString packageName);
-    void update();
+    QString backendId() const override;
+    bool enabled() override;
+    void install(QString packageName) override;
+    void installFromLocalFile(QString patch) override;
+    void remove(QString packageName) override;
+    void upgrade(QString packageName) override;
+    void update() override;
 };
 
 #endif // EMPTY_H

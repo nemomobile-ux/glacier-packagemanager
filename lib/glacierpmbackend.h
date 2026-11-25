@@ -30,6 +30,7 @@ class GLACIERPM_EXPORT GlacierPMBackend : public QObject {
     Q_OBJECT
 
 public:
+    virtual QString backendId() const = 0;
     virtual bool enabled() = 0;
     virtual void install(QString packageName) = 0;
     virtual void installFromLocalFile(QString patch) = 0;

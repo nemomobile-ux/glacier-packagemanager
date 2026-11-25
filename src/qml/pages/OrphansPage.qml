@@ -66,7 +66,7 @@ Page {
                     return
                 }
                 for (var i = 0; i < orphansListModel.length; i++) {
-                    pkgDb.remove(orphansListModel[i].name)
+                    pkgDb.remove(orphansListModel[i].name, orphansListModel[i].repo)
                 }
             }
         }
