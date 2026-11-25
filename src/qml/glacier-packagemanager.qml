@@ -53,4 +53,16 @@ ApplicationWindow {
             root.show()
         }
     }
+
+    Component.onCompleted: {
+        if (typeof action !== "undefined") {
+            if (action === "update") {
+                pageStack.push(Qt.resolvedUrl("pages/UpdatesPage.qml"))
+            } else if (action === "install" && typeof pkgname !== "undefined" && pkgname !== "") {
+                pkgDb.install(pkgname, "")
+            } else if (action === "remove" && typeof pkgname !== "undefined" && pkgname !== "") {
+                pkgDb.remove(pkgname, "")
+            }
+        }
+    }
 }
