@@ -24,7 +24,6 @@
 #include <QDebug>
 #include <QFileInfo>
 
-
 DataBase::DataBase(QObject* parent)
     : QObject { parent }
 {
