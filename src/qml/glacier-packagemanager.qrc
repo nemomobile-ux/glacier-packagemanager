@@ -5,6 +5,7 @@
         <file>pages/MainPage.qml</file>
         <file>pages/OrphansPage.qml</file>
         <file>pages/PackageInfoPage.qml</file>
+        <file>pages/RepositoriesPage.qml</file>
         <file>pages/SearchPage.qml</file>
         <file>pages/TransactionPage.qml</file>
         <file>pages/UpdatesPage.qml</file>

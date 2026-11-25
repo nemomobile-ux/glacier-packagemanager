@@ -17,22 +17,23 @@
 <context>
     <name>DataBase</name>
     <message>
-        <location filename="../plugin/database.cpp" line="96"/>
+        <location filename="../plugin/database.cpp" line="196"/>
         <source>Installing %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugin/database.cpp" line="107"/>
+        <location filename="../plugin/database.cpp" line="209"/>
         <source>Removing %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugin/database.cpp" line="119"/>
+        <location filename="../plugin/database.cpp" line="220"/>
+        <location filename="../plugin/database.cpp" line="232"/>
         <source>Upgrading all packages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../plugin/database.cpp" line="121"/>
+        <location filename="../plugin/database.cpp" line="234"/>
         <source>Upgrading %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -102,7 +103,7 @@
         <translation type="vanished">Pakete suchen:</translation>
     </message>
     <message>
-        <location filename="../src/qml/pages/MainPage.qml" line="76"/>
+        <location filename="../src/qml/pages/MainPage.qml" line="81"/>
         <source>Last actions:</source>
         <translation>Letzte Aktionen:</translation>
     </message>
@@ -159,6 +160,49 @@
         <location filename="../src/main.cpp" line="79"/>
         <source>Packages</source>
         <translation>Packete</translation>
+    </message>
+</context>
+<context>
+    <name>RepositoriesPage</name>
+    <message>
+        <location filename="../src/qml/pages/RepositoriesPage.qml" line="32"/>
+        <source>Repositories</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/pages/RepositoriesPage.qml" line="75"/>
+        <source>No repositories found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/pages/RepositoriesPage.qml" line="80"/>
+        <source>Add repository</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/pages/RepositoriesPage.qml" line="81"/>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/pages/RepositoriesPage.qml" line="82"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/pages/RepositoriesPage.qml" line="92"/>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/pages/RepositoriesPage.qml" line="98"/>
+        <source>URL or source line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/qml/pages/RepositoriesPage.qml" line="104"/>
+        <source>Backend (apt/rpm)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

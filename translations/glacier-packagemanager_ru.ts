@@ -17,22 +17,23 @@
 <context>
     <name>DataBase</name>
     <message>
-        <location filename="../plugin/database.cpp" line="96"/>
+        <location filename="../plugin/database.cpp" line="196"/>
         <source>Installing %1</source>
         <translation>Установка %1</translation>
     </message>
     <message>
-        <location filename="../plugin/database.cpp" line="107"/>
+        <location filename="../plugin/database.cpp" line="209"/>
         <source>Removing %1</source>
         <translation>Удаление %1</translation>
     </message>
     <message>
-        <location filename="../plugin/database.cpp" line="119"/>
+        <location filename="../plugin/database.cpp" line="220"/>
+        <location filename="../plugin/database.cpp" line="232"/>
         <source>Upgrading all packages</source>
         <translation>Обновление всех пакетов</translation>
     </message>
     <message>
-        <location filename="../plugin/database.cpp" line="121"/>
+        <location filename="../plugin/database.cpp" line="234"/>
         <source>Upgrading %1</source>
         <translation>Обновление %1</translation>
     </message>
@@ -107,7 +108,7 @@
         <translation type="vanished">Поиск пакетов:</translation>
     </message>
     <message>
-        <location filename="../src/qml/pages/MainPage.qml" line="76"/>
+        <location filename="../src/qml/pages/MainPage.qml" line="81"/>
         <source>Last actions:</source>
         <translation>Последние действия:</translation>
     </message>
@@ -164,6 +165,49 @@
         <location filename="../src/main.cpp" line="79"/>
         <source>Packages</source>
         <translation>Пакеты</translation>
+    </message>
+</context>
+<context>
+    <name>RepositoriesPage</name>
+    <message>
+        <location filename="../src/qml/pages/RepositoriesPage.qml" line="32"/>
+        <source>Repositories</source>
+        <translation>Репозитории</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/pages/RepositoriesPage.qml" line="75"/>
+        <source>No repositories found</source>
+        <translation>Репозитории не найдены</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/pages/RepositoriesPage.qml" line="80"/>
+        <source>Add repository</source>
+        <translation>Добавить репозиторий</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/pages/RepositoriesPage.qml" line="81"/>
+        <source>Add</source>
+        <translation>Добавить</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/pages/RepositoriesPage.qml" line="82"/>
+        <source>Cancel</source>
+        <translation>Отмена</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/pages/RepositoriesPage.qml" line="92"/>
+        <source>Name</source>
+        <translation>Имя</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/pages/RepositoriesPage.qml" line="98"/>
+        <source>URL or source line</source>
+        <translation>URL или строка источника</translation>
+    </message>
+    <message>
+        <location filename="../src/qml/pages/RepositoriesPage.qml" line="104"/>
+        <source>Backend (apt/rpm)</source>
+        <translation>Бэкенд (apt/rpm)</translation>
     </message>
 </context>
 <context>

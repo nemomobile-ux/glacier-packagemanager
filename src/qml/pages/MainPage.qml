@@ -51,6 +51,11 @@ Page {
                 onClicked: pageStack.push(Qt.resolvedUrl("OrphansPage.qml"))
                 showCounter: counterValue != 0
                 counterValue: 0
+            },
+            ToolButton {
+                id: reposButton
+                iconSource: "image://theme/folder"
+                onClicked: pageStack.push(Qt.resolvedUrl("RepositoriesPage.qml"))
             }
         ]
     }
