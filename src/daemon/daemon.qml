@@ -34,6 +34,12 @@ Item {
         defaultValue: 0
     }
 
+    ConfigurationValue {
+        id: connectionPolicyValue
+        key: "/home/glacier/packagemanager/updateConnectionPolicy"
+        defaultValue: "wifiEthernet"
+    }
+
     NetworkManager {
         id: networkManager
     }
@@ -79,12 +85,15 @@ Item {
         onTriggered: root.maybeCheck()
     }
 
-    function isConnectedByWifiOrEthernet() {
+    function isAllowedConnection() {
+        if (connectionPolicyValue.value === "any") {
+            return networkManager.connected
+        }
         return networkManager.connectedWifi !== null || networkManager.connectedEthernet !== null
     }
 
     function maybeCheck() {
-        if (!isConnectedByWifiOrEthernet()) {
+        if (!isAllowedConnection()) {
             Qt.quit()
             return
         }
