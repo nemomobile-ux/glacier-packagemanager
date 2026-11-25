@@ -53,4 +53,4 @@ desktop-file-install --delete-original \
 %{_datadir}/applications/glacier-packagemanager.desktop
 %{_datadir}/dbus-1/services/org.nemomobile.glacier.packagemanager.service
 %{_datadir}/polkit-1/actions/org.nemomobile.glacier.packagemanager.policy
-/usr/lib/systemd/user/glacier-packagemanager-daemon.service
+%{_libdir}/systemd/user/glacier-packagemanager-daemon.service

@@ -17,23 +17,23 @@
 <context>
     <name>DataBase</name>
     <message>
-        <location filename="../plugin/database.cpp" line="196"/>
+        <location filename="../plugin/database.cpp" line="200"/>
         <source>Installing %1</source>
         <translation>Đang cài đặt %1</translation>
     </message>
     <message>
-        <location filename="../plugin/database.cpp" line="209"/>
+        <location filename="../plugin/database.cpp" line="213"/>
         <source>Removing %1</source>
         <translation>Đang gỡ bỏ %1</translation>
     </message>
     <message>
-        <location filename="../plugin/database.cpp" line="220"/>
-        <location filename="../plugin/database.cpp" line="232"/>
+        <location filename="../plugin/database.cpp" line="224"/>
+        <location filename="../plugin/database.cpp" line="236"/>
         <source>Upgrading all packages</source>
         <translation>Đang nâng cấp tất cả gói</translation>
     </message>
     <message>
-        <location filename="../plugin/database.cpp" line="234"/>
+        <location filename="../plugin/database.cpp" line="238"/>
         <source>Upgrading %1</source>
         <translation>Đang nâng cấp %1</translation>
     </message>
@@ -264,6 +264,26 @@
         <location filename="../src/qml/pages/UpdatesPage.qml" line="93"/>
         <source>System is up to date</source>
         <translation>Hệ thống đã được cập nhật</translation>
+    </message>
+</context>
+<context>
+    <name>daemon</name>
+    <message>
+        <location filename="../src/daemon/daemon.qml" line="47"/>
+        <source>Updates available</source>
+        <translation>Có bản cập nhật</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/daemon/daemon.qml" line="48"/>
+        <source>%n update(s) available</source>
+        <translation>
+            <numerusform>Có %n bản cập nhật</numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../src/daemon/daemon.qml" line="58"/>
+        <source>Package manager</source>
+        <translation>Trình quản lý gói</translation>
     </message>
 </context>
 <context>

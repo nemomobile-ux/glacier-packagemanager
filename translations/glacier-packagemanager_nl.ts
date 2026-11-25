@@ -17,23 +17,23 @@
 <context>
     <name>DataBase</name>
     <message>
-        <location filename="../plugin/database.cpp" line="196"/>
+        <location filename="../plugin/database.cpp" line="200"/>
         <source>Installing %1</source>
         <translation>%1 installeren</translation>
     </message>
     <message>
-        <location filename="../plugin/database.cpp" line="209"/>
+        <location filename="../plugin/database.cpp" line="213"/>
         <source>Removing %1</source>
         <translation>%1 verwijderen</translation>
     </message>
     <message>
-        <location filename="../plugin/database.cpp" line="220"/>
-        <location filename="../plugin/database.cpp" line="232"/>
+        <location filename="../plugin/database.cpp" line="224"/>
+        <location filename="../plugin/database.cpp" line="236"/>
         <source>Upgrading all packages</source>
         <translation>Alle pakketten bijwerken</translation>
     </message>
     <message>
-        <location filename="../plugin/database.cpp" line="234"/>
+        <location filename="../plugin/database.cpp" line="238"/>
         <source>Upgrading %1</source>
         <translation>%1 bijwerken</translation>
     </message>
@@ -269,6 +269,27 @@
         <location filename="../src/qml/pages/UpdatesPage.qml" line="93"/>
         <source>System is up to date</source>
         <translation>Systeem is up-to-date</translation>
+    </message>
+</context>
+<context>
+    <name>daemon</name>
+    <message>
+        <location filename="../src/daemon/daemon.qml" line="47"/>
+        <source>Updates available</source>
+        <translation>Updates beschikbaar</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/daemon/daemon.qml" line="48"/>
+        <source>%n update(s) available</source>
+        <translation>
+            <numerusform>%n update(s) beschikbaar</numerusform></numerusform>
+            <numerusform>%n update(s) beschikbaar</numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../src/daemon/daemon.qml" line="58"/>
+        <source>Package manager</source>
+        <translation>Pakketbeheer</translation>
     </message>
 </context>
 <context>

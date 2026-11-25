@@ -11,29 +11,29 @@
     <message>
         <location filename="../src/qml/pages/AuthorizationFailPage.qml" line="38"/>
         <source>Authorization failed</source>
-        <translation>Échec de l'autorisation</translation>
+        <translation>Échec de l&apos;autorisation</translation>
     </message>
 </context>
 <context>
     <name>DataBase</name>
     <message>
-        <location filename="../plugin/database.cpp" line="196"/>
+        <location filename="../plugin/database.cpp" line="200"/>
         <source>Installing %1</source>
         <translation>Installation de %1</translation>
     </message>
     <message>
-        <location filename="../plugin/database.cpp" line="209"/>
+        <location filename="../plugin/database.cpp" line="213"/>
         <source>Removing %1</source>
         <translation>Suppression de %1</translation>
     </message>
     <message>
-        <location filename="../plugin/database.cpp" line="220"/>
-        <location filename="../plugin/database.cpp" line="232"/>
+        <location filename="../plugin/database.cpp" line="224"/>
+        <location filename="../plugin/database.cpp" line="236"/>
         <source>Upgrading all packages</source>
         <translation>Mise à jour de tous les paquets</translation>
     </message>
     <message>
-        <location filename="../plugin/database.cpp" line="234"/>
+        <location filename="../plugin/database.cpp" line="238"/>
         <source>Upgrading %1</source>
         <translation>Mise à jour de %1</translation>
     </message>
@@ -88,7 +88,7 @@
     <message>
         <location filename="../src/qml/components/HistoryItemDelegate.qml" line="57"/>
         <source>Just now</source>
-        <translation>À l'instant</translation>
+        <translation>À l&apos;instant</translation>
     </message>
 </context>
 <context>
@@ -269,6 +269,27 @@
         <location filename="../src/qml/pages/UpdatesPage.qml" line="93"/>
         <source>System is up to date</source>
         <translation>Le système est à jour</translation>
+    </message>
+</context>
+<context>
+    <name>daemon</name>
+    <message>
+        <location filename="../src/daemon/daemon.qml" line="47"/>
+        <source>Updates available</source>
+        <translation>Mises à jour disponibles</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/daemon/daemon.qml" line="48"/>
+        <source>%n update(s) available</source>
+        <translation>
+            <numerusform>%n mise(s) à jour disponible(s)</numerusform></numerusform>
+            <numerusform>%n mise(s) à jour disponible(s)</numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../src/daemon/daemon.qml" line="58"/>
+        <source>Package manager</source>
+        <translation>Gestionnaire de paquets</translation>
     </message>
 </context>
 <context>
