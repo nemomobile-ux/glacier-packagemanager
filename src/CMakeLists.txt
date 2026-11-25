@@ -12,4 +12,6 @@ target_link_libraries(glacier-packagemanager
 install(TARGETS glacier-packagemanager RUNTIME
 	DESTINATION ${CMAKE_INSTALL_BINDIR})
 
+add_subdirectory(daemon)
+
 add_definitions(-DQT_NO_KEYWORDS)
