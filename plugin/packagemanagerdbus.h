@@ -37,11 +37,13 @@ public slots:
     void Remove(const QString& packageName, const QString& repo);
     void Upgrade(const QString& packageName, const QString& repo);
     void Refresh();
+    void ShowUpdates();
 
 signals:
     void TransactionStarted();
     void TransactionFinished();
     void ActionProgress(const QString& action, const QString& status, double progress);
+    void ShowUpdatesRequested();
 
 private:
     DataBase* m_database = nullptr;

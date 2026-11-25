@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=org.nemomobile.glacier.packagemanager
+Exec=/usr/bin/glacier-packagemanager --update

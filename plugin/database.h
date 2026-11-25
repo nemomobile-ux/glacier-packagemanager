@@ -65,6 +65,7 @@ signals:
     void stopDownloading();
     void startPreparing();
     void stopPreparing();
+    void showUpdatesRequested();
 
 private:
     GlacierPMBackend* backendForRepo(const QString& repo) const;

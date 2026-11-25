@@ -39,3 +39,5 @@ install(FILES glacier-packagemanager.png
 	DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/glacier-packagemanager/images)
 install(FILES org.nemomobile.glacier.packagemanager.policy
 	DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/polkit-1/actions)
+install(FILES org.nemomobile.glacier.packagemanager.service
+	DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/dbus-1/services)

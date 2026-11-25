@@ -72,3 +72,8 @@ void PackageManagerDBus::Refresh()
         m_database->refresh();
     }
 }
+
+void PackageManagerDBus::ShowUpdates()
+{
+    emit ShowUpdatesRequested();
+}

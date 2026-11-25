@@ -49,7 +49,8 @@ DataBase::DataBase(QObject* parent)
         connect(backend, &GlacierPMBackend::emitActionProgress, this, &DataBase::emitActionProgress);
     }
 
-    new PackageManagerDBus(this, this);
+    PackageManagerDBus* dbus = new PackageManagerDBus(this, this);
+    connect(dbus, &PackageManagerDBus::ShowUpdatesRequested, this, &DataBase::showUpdatesRequested);
 }
 
 DataBase::~DataBase() = default;

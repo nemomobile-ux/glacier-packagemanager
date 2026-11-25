@@ -48,5 +48,9 @@ ApplicationWindow {
             pageStack.push(Qt.resolvedUrl("pages/AuthorizationFailPage.qml"))
             root.show()
         }
+        function onShowUpdatesRequested() {
+            pageStack.push(Qt.resolvedUrl("pages/UpdatesPage.qml"))
+            root.show()
+        }
     }
 }
