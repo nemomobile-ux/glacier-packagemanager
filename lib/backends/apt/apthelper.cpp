@@ -33,6 +33,10 @@
 #include <apt-pkg/update.h>
 #include <apt-pkg/upgrade.h>
 
+#include <algorithm>
+#include <cctype>
+#include <filesystem>
+#include <fstream>
 #include <iostream>
 #include <string>
 
@@ -298,10 +302,139 @@ static int runUpgradeAll()
     return 1;
 }
 
+static std::string slugify(const std::string& input)
+{
+    std::string out;
+    for (char c : input) {
+        if (std::isalnum(static_cast<unsigned char>(c))) {
+            out.push_back(static_cast<char>(std::tolower(static_cast<unsigned char>(c))));
+        } else if (!out.empty() && out.back() != '-') {
+            out.push_back('-');
+        }
+    }
+    while (!out.empty() && out.back() == '-') {
+        out.pop_back();
+    }
+    if (out.empty()) {
+        out = "repo";
+    }
+    return out;
+}
+
+static int runAddRepo(const std::string& name, const std::string& url)
+{
+    emitStatus("preparing", 0, "Adding repository");
+    const std::string slug = slugify(name.empty() ? url : name);
+    const std::filesystem::path dir = "/etc/apt/sources.list.d";
+    std::filesystem::create_directories(dir);
+    const std::filesystem::path file = dir / ("glacier-" + slug + ".list");
+
+    std::string line = url;
+    if (line.find(' ') == std::string::npos) {
+        line = "deb " + url + " stable main";
+    }
+
+    std::ofstream out(file, std::ios::app);
+    if (!out.is_open()) {
+        std::cerr << "Failed to open repo file: " << file << std::endl;
+        return 1;
+    }
+    out << line << std::endl;
+    out.close();
+    emitStatus("finished", 100, "Done");
+    return 0;
+}
+
+static int runRemoveRepo(const std::string& id)
+{
+    emitStatus("preparing", 0, "Removing repository");
+    const std::filesystem::path dir = "/etc/apt/sources.list.d";
+    bool removed = false;
+    if (std::filesystem::exists(dir)) {
+        for (const auto& entry : std::filesystem::directory_iterator(dir)) {
+            if (!entry.is_regular_file()) {
+                continue;
+            }
+            const std::string path = entry.path().string();
+            std::ifstream in(path);
+            if (!in.is_open()) {
+                continue;
+            }
+            std::string content((std::istreambuf_iterator<char>(in)), std::istreambuf_iterator<char>());
+            in.close();
+            if (content.find(id) != std::string::npos) {
+                std::filesystem::remove(entry.path());
+                removed = true;
+            }
+        }
+    }
+    if (!removed) {
+        std::cerr << "Repository not found in managed files: " << id << std::endl;
+    }
+    emitStatus("finished", 100, "Done");
+    return removed ? 0 : 1;
+}
+
+static int runSetRepoEnabled(const std::string& id, bool enabled)
+{
+    emitStatus("preparing", 0, "Updating repository");
+    const std::filesystem::path dir = "/etc/apt/sources.list.d";
+    bool changed = false;
+    if (std::filesystem::exists(dir)) {
+        for (const auto& entry : std::filesystem::directory_iterator(dir)) {
+            if (!entry.is_regular_file()) {
+                continue;
+            }
+            std::ifstream in(entry.path());
+            if (!in.is_open()) {
+                continue;
+            }
+            std::string line;
+            std::string outContent;
+            bool fileChanged = false;
+            while (std::getline(in, line)) {
+                if (line.find(id) != std::string::npos) {
+                    std::string trimmed = line;
+                    while (!trimmed.empty() && (trimmed.front() == ' ' || trimmed.front() == '\t')) {
+                        trimmed.erase(trimmed.begin());
+                    }
+                    if (enabled) {
+                        if (trimmed.rfind("#", 0) == 0) {
+                            while (!trimmed.empty() && (trimmed.front() == '#' || trimmed.front() == ' ' || trimmed.front() == '\t')) {
+                                trimmed.erase(trimmed.begin());
+                            }
+                            line = trimmed;
+                            fileChanged = true;
+                        }
+                    } else {
+                        if (trimmed.rfind("#", 0) != 0 && !trimmed.empty()) {
+                            line = "# " + trimmed;
+                            fileChanged = true;
+                        }
+                    }
+                }
+                outContent += line + "\n";
+            }
+            in.close();
+            if (fileChanged) {
+                std::ofstream out(entry.path(), std::ios::trunc);
+                out << outContent;
+                out.close();
+                changed = true;
+            }
+        }
+    }
+    if (!changed) {
+        std::cerr << "Repository not found or unchanged: " << id << std::endl;
+    }
+    emitStatus("finished", 100, "Done");
+    return changed ? 0 : 1;
+}
+
 int main(int argc, char** argv)
 {
     if (argc < 2) {
-        std::cerr << "Usage: glacier-packagemanager-helper --install|--remove|--upgrade|--update <package>" << std::endl;
+        std::cerr << "Usage: glacier-packagemanager-helper --install|--remove|--upgrade|--upgrade-all|--update|--add-repo|--remove-repo|--enable-repo|--disable-repo <args>" << std::endl;
         return 2;
     }
 
@@ -312,6 +445,30 @@ int main(int argc, char** argv)
 
     if (action == "--upgrade-all") {
         return runUpgradeAll();
+    }
+
+    if (action == "--add-repo") {
+        if (argc < 4) {
+            std::cerr << "Usage: --add-repo <name> <url>" << std::endl;
+            return 2;
+        }
+        return runAddRepo(argv[2], argv[3]);
+    }
+
+    if (action == "--remove-repo") {
+        if (argc < 3) {
+            std::cerr << "Repository id required" << std::endl;
+            return 2;
+        }
+        return runRemoveRepo(argv[2]);
+    }
+
+    if (action == "--enable-repo" || action == "--disable-repo") {
+        if (argc < 3) {
+            std::cerr << "Repository id required" << std::endl;
+            return 2;
+        }
+        return runSetRepoEnabled(argv[2], action == "--enable-repo");
     }
 
     if (argc < 3) {

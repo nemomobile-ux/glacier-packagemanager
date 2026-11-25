@@ -36,11 +36,15 @@ public:
     Q_INVOKABLE void getUpdates();
     Q_INVOKABLE void getOrphansPackages();
     Q_INVOKABLE void getPackage(const QString& name, const QString& repo = QString());
+    Q_INVOKABLE void listRepositories();
 
     Q_INVOKABLE void install(const QString& packageName, const QString& repo = QString());
     Q_INVOKABLE void remove(const QString& packageName, const QString& repo = QString());
     Q_INVOKABLE void upgrade(const QString& packageName = QString(), const QString& repo = QString());
     Q_INVOKABLE void refresh();
+    Q_INVOKABLE void addRepository(const QString& url, const QString& name, const QString& backend = QString());
+    Q_INVOKABLE void removeRepository(const QString& id, const QString& backend = QString());
+    Q_INVOKABLE void setRepositoryEnabled(const QString& id, bool enabled, const QString& backend = QString());
 
 signals:
     void dbRefreshed();
@@ -48,6 +52,7 @@ signals:
     void getUpdatesReady(QVariantList packages);
     void getOrphansPackagesReady(QVariantList packages);
     void getPackageReady(GlacierPackage package);
+    void listRepositoriesReady(QVariantList repositories);
 
     void transactionStarted();
     void transactionFinished();
@@ -83,6 +88,10 @@ private:
     int m_packagePending = 0;
     GlacierPackage m_packageResult;
     bool m_packageFound = false;
+
+    int m_reposGeneration = 0;
+    int m_reposPending = 0;
+    QVariantList m_reposResults;
 };
 
 #endif // DATABASE_H

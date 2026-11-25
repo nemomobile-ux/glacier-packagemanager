@@ -29,6 +29,10 @@ AptBackend::AptBackend()
     connect(this, &AptBackend::requestGetUpdates, m_worker, &AptBackendWorker::doGetUpdates, Qt::QueuedConnection);
     connect(this, &AptBackend::requestGetOrphansPackages, m_worker, &AptBackendWorker::doGetOrphansPackages, Qt::QueuedConnection);
     connect(this, &AptBackend::requestGetPackage, m_worker, &AptBackendWorker::doGetPackage, Qt::QueuedConnection);
+    connect(this, &AptBackend::requestListRepositories, m_worker, &AptBackendWorker::doListRepositories, Qt::QueuedConnection);
+    connect(this, &AptBackend::requestAddRepository, m_worker, &AptBackendWorker::doAddRepository, Qt::QueuedConnection);
+    connect(this, &AptBackend::requestRemoveRepository, m_worker, &AptBackendWorker::doRemoveRepository, Qt::QueuedConnection);
+    connect(this, &AptBackend::requestSetRepositoryEnabled, m_worker, &AptBackendWorker::doSetRepositoryEnabled, Qt::QueuedConnection);
     connect(this, &AptBackend::requestInstall, m_worker, &AptBackendWorker::doInstall, Qt::QueuedConnection);
     connect(this, &AptBackend::requestInstallFromLocalFile, m_worker, &AptBackendWorker::doInstallFromLocalFile, Qt::QueuedConnection);
     connect(this, &AptBackend::requestRemove, m_worker, &AptBackendWorker::doRemove, Qt::QueuedConnection);
@@ -40,6 +44,7 @@ AptBackend::AptBackend()
     connect(m_worker, &AptBackendWorker::getUpdatesReady, this, &AptBackend::getUpdatesReady, Qt::QueuedConnection);
     connect(m_worker, &AptBackendWorker::getOrphansPackagesReady, this, &AptBackend::getOrphansPackagesReady, Qt::QueuedConnection);
     connect(m_worker, &AptBackendWorker::getPackageReady, this, &AptBackend::getPackageReady, Qt::QueuedConnection);
+    connect(m_worker, &AptBackendWorker::listRepositoriesReady, this, &AptBackend::listRepositoriesReady, Qt::QueuedConnection);
     connect(m_worker, &AptBackendWorker::emitAction, this, &AptBackend::emitAction, Qt::QueuedConnection);
     connect(m_worker, &AptBackendWorker::emitActionProgress, this, &AptBackend::emitActionProgress, Qt::QueuedConnection);
 
@@ -82,6 +87,26 @@ void AptBackend::getOrphansPackages()
 void AptBackend::getPackage(const QString& name)
 {
     emit requestGetPackage(name);
+}
+
+void AptBackend::listRepositories()
+{
+    emit requestListRepositories();
+}
+
+void AptBackend::addRepository(const QString& url, const QString& name)
+{
+    emit requestAddRepository(url, name);
+}
+
+void AptBackend::removeRepository(const QString& id)
+{
+    emit requestRemoveRepository(id);
+}
+
+void AptBackend::setRepositoryEnabled(const QString& id, bool enabled)
+{
+    emit requestSetRepositoryEnabled(id, enabled);
 }
 
 void AptBackend::install(QString packageName)

@@ -5,6 +5,7 @@ set(HEADERS glacierpmmanager.h)
 set(PUBLIC_HEADERS
     glacierpmbackend.h
     glacierpackage.h
+    glacierrepo.h
     glacierpm_global.h)
 
 add_library(glacierpmmamager SHARED ${SRC} ${HEADERS} ${PUBLIC_HEADERS})

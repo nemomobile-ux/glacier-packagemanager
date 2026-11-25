@@ -22,6 +22,7 @@
 
 #include "glacierpackage.h"
 #include "glacierpm_global.h"
+#include "glacierrepo.h"
 #include <QMetaObject>
 #include <QObject>
 #include <QVariantList>
@@ -56,6 +57,24 @@ public:
         Q_UNUSED(name)
         QMetaObject::invokeMethod(this, [this]() { emit getPackageReady(GlacierPackage()); }, Qt::QueuedConnection);
     }
+    virtual void listRepositories()
+    {
+        QMetaObject::invokeMethod(this, [this]() { emit listRepositoriesReady(QVariantList()); }, Qt::QueuedConnection);
+    }
+    virtual void addRepository(const QString& url, const QString& name)
+    {
+        Q_UNUSED(url)
+        Q_UNUSED(name)
+    }
+    virtual void removeRepository(const QString& id)
+    {
+        Q_UNUSED(id)
+    }
+    virtual void setRepositoryEnabled(const QString& id, bool enabled)
+    {
+        Q_UNUSED(id)
+        Q_UNUSED(enabled)
+    }
 
 signals:
     void dbRefreshed();
@@ -63,6 +82,7 @@ signals:
     void getUpdatesReady(QVariantList packages);
     void getOrphansPackagesReady(QVariantList packages);
     void getPackageReady(GlacierPackage package);
+    void listRepositoriesReady(QVariantList repositories);
     void emitAction(const QString& action);
     void emitActionProgress(const QString& action, const QString& status, double progress);
 };

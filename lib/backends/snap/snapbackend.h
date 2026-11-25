@@ -46,6 +46,7 @@ public:
     void getUpdates() override;
     void getOrphansPackages() override;
     void getPackage(const QString& name) override;
+    void listRepositories() override;
 
     ~SnapBackend();
 
@@ -54,6 +55,7 @@ signals:
     void requestGetUpdates();
     void requestGetOrphansPackages();
     void requestGetPackage(const QString& name);
+    void requestListRepositories();
     void requestInstall(const QString& packageName);
     void requestInstallFromLocalFile(const QString& patch);
     void requestRemove(const QString& packageName);

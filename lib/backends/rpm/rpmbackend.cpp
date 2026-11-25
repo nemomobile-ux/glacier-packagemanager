@@ -29,6 +29,7 @@ RpmBackend::RpmBackend()
     connect(this, &RpmBackend::requestGetUpdates, m_worker, &RpmBackendWorker::doGetUpdates, Qt::QueuedConnection);
     connect(this, &RpmBackend::requestGetOrphansPackages, m_worker, &RpmBackendWorker::doGetOrphansPackages, Qt::QueuedConnection);
     connect(this, &RpmBackend::requestGetPackage, m_worker, &RpmBackendWorker::doGetPackage, Qt::QueuedConnection);
+    connect(this, &RpmBackend::requestListRepositories, m_worker, &RpmBackendWorker::doListRepositories, Qt::QueuedConnection);
     connect(this, &RpmBackend::requestInstall, m_worker, &RpmBackendWorker::doInstall, Qt::QueuedConnection);
     connect(this, &RpmBackend::requestInstallFromLocalFile, m_worker, &RpmBackendWorker::doInstallFromLocalFile, Qt::QueuedConnection);
     connect(this, &RpmBackend::requestRemove, m_worker, &RpmBackendWorker::doRemove, Qt::QueuedConnection);
@@ -40,6 +41,7 @@ RpmBackend::RpmBackend()
     connect(m_worker, &RpmBackendWorker::getUpdatesReady, this, &RpmBackend::getUpdatesReady, Qt::QueuedConnection);
     connect(m_worker, &RpmBackendWorker::getOrphansPackagesReady, this, &RpmBackend::getOrphansPackagesReady, Qt::QueuedConnection);
     connect(m_worker, &RpmBackendWorker::getPackageReady, this, &RpmBackend::getPackageReady, Qt::QueuedConnection);
+    connect(m_worker, &RpmBackendWorker::listRepositoriesReady, this, &RpmBackend::listRepositoriesReady, Qt::QueuedConnection);
     connect(m_worker, &RpmBackendWorker::emitAction, this, &RpmBackend::emitAction, Qt::QueuedConnection);
     connect(m_worker, &RpmBackendWorker::emitActionProgress, this, &RpmBackend::emitActionProgress, Qt::QueuedConnection);
 
@@ -82,6 +84,11 @@ void RpmBackend::getOrphansPackages()
 void RpmBackend::getPackage(const QString& name)
 {
     emit requestGetPackage(name);
+}
+
+void RpmBackend::listRepositories()
+{
+    emit requestListRepositories();
 }
 
 void RpmBackend::install(QString packageName)

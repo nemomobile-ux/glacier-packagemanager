@@ -402,3 +402,8 @@ void SnapBackendWorker::doUpdate()
 {
     emit dbRefreshed();
 }
+
+void SnapBackendWorker::doListRepositories()
+{
+    emit listRepositoriesReady(QVariantList());
+}

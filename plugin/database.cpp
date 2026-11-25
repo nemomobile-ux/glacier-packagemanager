@@ -26,6 +26,7 @@ DataBase::DataBase(QObject* parent)
     : QObject { parent }
 {
     qRegisterMetaType<GlacierPackage>("GlacierPackage");
+    qRegisterMetaType<GlacierRepo>("GlacierRepo");
     GlacierPMManager* manager = new GlacierPMManager(this);
     m_backends = manager->backends();
     if (m_backends.isEmpty()) {
@@ -240,4 +241,60 @@ void DataBase::refresh()
     for (GlacierPMBackend* backend : m_backends) {
         backend->update();
     }
+}
+
+void DataBase::listRepositories()
+{
+    if (m_backends.isEmpty()) {
+        emit listRepositoriesReady(QVariantList());
+        return;
+    }
+    const int gen = ++m_reposGeneration;
+    m_reposPending = m_backends.size();
+    m_reposResults.clear();
+    for (GlacierPMBackend* backend : m_backends) {
+        connect(backend, &GlacierPMBackend::listRepositoriesReady, this, [this, gen](QVariantList repositories) {
+            if (gen != m_reposGeneration) {
+                return;
+            }
+            m_reposResults.append(repositories);
+            m_reposPending--;
+            if (m_reposPending <= 0) {
+                emit listRepositoriesReady(m_reposResults);
+            } }, Qt::SingleShotConnection);
+        backend->listRepositories();
+    }
+}
+
+void DataBase::addRepository(const QString& url, const QString& name, const QString& backendId)
+{
+    GlacierPMBackend* backend = backendForRepo(backendId);
+    if (!backend && m_backends.size() == 1) {
+        backend = m_backends.first();
+    }
+    if (!backend) {
+        qWarning() << "No backend for addRepository" << url << backendId;
+        return;
+    }
+    backend->addRepository(url, name);
+}
+
+void DataBase::removeRepository(const QString& id, const QString& backendId)
+{
+    GlacierPMBackend* backend = backendForRepo(backendId);
+    if (!backend) {
+        qWarning() << "No backend for removeRepository" << id << backendId;
+        return;
+    }
+    backend->removeRepository(id);
+}
+
+void DataBase::setRepositoryEnabled(const QString& id, bool enabled, const QString& backendId)
+{
+    GlacierPMBackend* backend = backendForRepo(backendId);
+    if (!backend) {
+        qWarning() << "No backend for setRepositoryEnabled" << id << backendId;
+        return;
+    }
+    backend->setRepositoryEnabled(id, enabled);
 }

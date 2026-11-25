@@ -29,6 +29,7 @@ SnapBackend::SnapBackend()
     connect(this, &SnapBackend::requestGetUpdates, m_worker, &SnapBackendWorker::doGetUpdates, Qt::QueuedConnection);
     connect(this, &SnapBackend::requestGetOrphansPackages, m_worker, &SnapBackendWorker::doGetOrphansPackages, Qt::QueuedConnection);
     connect(this, &SnapBackend::requestGetPackage, m_worker, &SnapBackendWorker::doGetPackage, Qt::QueuedConnection);
+    connect(this, &SnapBackend::requestListRepositories, m_worker, &SnapBackendWorker::doListRepositories, Qt::QueuedConnection);
     connect(this, &SnapBackend::requestInstall, m_worker, &SnapBackendWorker::doInstall, Qt::QueuedConnection);
     connect(this, &SnapBackend::requestInstallFromLocalFile, m_worker, &SnapBackendWorker::doInstallFromLocalFile, Qt::QueuedConnection);
     connect(this, &SnapBackend::requestRemove, m_worker, &SnapBackendWorker::doRemove, Qt::QueuedConnection);
@@ -40,6 +41,7 @@ SnapBackend::SnapBackend()
     connect(m_worker, &SnapBackendWorker::getUpdatesReady, this, &SnapBackend::getUpdatesReady, Qt::QueuedConnection);
     connect(m_worker, &SnapBackendWorker::getOrphansPackagesReady, this, &SnapBackend::getOrphansPackagesReady, Qt::QueuedConnection);
     connect(m_worker, &SnapBackendWorker::getPackageReady, this, &SnapBackend::getPackageReady, Qt::QueuedConnection);
+    connect(m_worker, &SnapBackendWorker::listRepositoriesReady, this, &SnapBackend::listRepositoriesReady, Qt::QueuedConnection);
     connect(m_worker, &SnapBackendWorker::emitAction, this, &SnapBackend::emitAction, Qt::QueuedConnection);
     connect(m_worker, &SnapBackendWorker::emitActionProgress, this, &SnapBackend::emitActionProgress, Qt::QueuedConnection);
 
@@ -82,6 +84,11 @@ void SnapBackend::getOrphansPackages()
 void SnapBackend::getPackage(const QString& name)
 {
     emit requestGetPackage(name);
+}
+
+void SnapBackend::listRepositories()
+{
+    emit requestListRepositories();
 }
 
 void SnapBackend::install(QString packageName)

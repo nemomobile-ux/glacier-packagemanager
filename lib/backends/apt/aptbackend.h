@@ -46,6 +46,10 @@ public:
     void getUpdates() override;
     void getOrphansPackages() override;
     void getPackage(const QString& name) override;
+    void listRepositories() override;
+    void addRepository(const QString& url, const QString& name) override;
+    void removeRepository(const QString& id) override;
+    void setRepositoryEnabled(const QString& id, bool enabled) override;
 
     ~AptBackend();
 
@@ -54,6 +58,10 @@ signals:
     void requestGetUpdates();
     void requestGetOrphansPackages();
     void requestGetPackage(const QString& name);
+    void requestListRepositories();
+    void requestAddRepository(const QString& url, const QString& name);
+    void requestRemoveRepository(const QString& id);
+    void requestSetRepositoryEnabled(const QString& id, bool enabled);
     void requestInstall(const QString& packageName);
     void requestInstallFromLocalFile(const QString& patch);
     void requestRemove(const QString& packageName);

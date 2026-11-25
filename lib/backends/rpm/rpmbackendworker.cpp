@@ -19,6 +19,8 @@
 
 #include "rpmbackendworker.h"
 
+#include <glacierrepo.h>
+
 #include <zypp/Package.h>
 #include <zypp/Pathname.h>
 #include <zypp/RepoInfo.h>
@@ -394,4 +396,25 @@ void RpmBackendWorker::doUpdate()
         qWarning() << "Update failed";
         emit dbRefreshed();
     }
+}
+
+void RpmBackendWorker::doListRepositories()
+{
+    QVariantList repos;
+    try {
+        zypp::RepoManager repoManager;
+        const auto known = repoManager.knownRepositories();
+        for (const zypp::RepoInfo& info : known) {
+            GlacierRepo repo;
+            repo.id = QString::fromStdString(info.alias());
+            repo.name = QString::fromStdString(info.name().empty() ? info.alias() : info.name());
+            repo.url = QString::fromStdString(info.url().asString());
+            repo.backend = QStringLiteral("rpm");
+            repo.enabled = info.enabled();
+            repos.append(QVariant::fromValue(repo));
+        }
+    } catch (const zypp::Exception& e) {
+        qWarning() << "listRepositories failed:" << e.asUserHistory().c_str();
+    }
+    emit listRepositoriesReady(repos);
 }

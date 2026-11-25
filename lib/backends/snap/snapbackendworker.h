@@ -35,6 +35,7 @@ public slots:
     void doGetUpdates();
     void doGetOrphansPackages();
     void doGetPackage(const QString& name);
+    void doListRepositories();
     void doInstall(const QString& packageName);
     void doInstallFromLocalFile(const QString& patch);
     void doRemove(const QString& packageName);
@@ -47,6 +48,7 @@ signals:
     void getUpdatesReady(QVariantList packages);
     void getOrphansPackagesReady(QVariantList packages);
     void getPackageReady(GlacierPackage package);
+    void listRepositoriesReady(QVariantList repositories);
     void emitAction(const QString& action);
     void emitActionProgress(const QString& action, const QString& status, double progress);
 

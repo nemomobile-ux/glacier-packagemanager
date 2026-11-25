@@ -19,6 +19,8 @@
 
 #include "aptbackendworker.h"
 
+#include <glacierrepo.h>
+
 #include <apt-pkg/acquire.h>
 #include <apt-pkg/algorithms.h>
 #include <apt-pkg/cachefile.h>
@@ -26,6 +28,7 @@
 #include <apt-pkg/depcache.h>
 #include <apt-pkg/error.h>
 #include <apt-pkg/init.h>
+#include <apt-pkg/metaindex.h>
 #include <apt-pkg/packagemanager.h>
 #include <apt-pkg/pkgcache.h>
 #include <apt-pkg/pkgrecords.h>
@@ -427,5 +430,59 @@ void AptBackendWorker::doUpdate()
     } else {
         qWarning() << "Update failed";
         emit dbRefreshed();
+    }
+}
+
+void AptBackendWorker::doListRepositories()
+{
+    QVariantList repos;
+    withCache([&](pkgCacheFile& cache) {
+        pkgSourceList* list = cache.GetSourceList();
+        if (!list) {
+            return;
+        }
+
+        for (pkgSourceList::const_iterator it = list->begin(); it != list->end(); ++it) {
+            metaIndex* index = *it;
+            if (!index) {
+                continue;
+            }
+            GlacierRepo repo;
+            repo.backend = QStringLiteral("apt");
+            repo.enabled = true;
+            repo.url = QString::fromStdString(index->GetURI());
+            repo.name = QString::fromStdString(index->Describe());
+            repo.id = repo.url;
+            repos.append(QVariant::fromValue(repo));
+        }
+    });
+    emit listRepositoriesReady(repos);
+}
+
+void AptBackendWorker::doAddRepository(const QString& url, const QString& name)
+{
+    if (runHelper({ QStringLiteral("--add-repo"), name, url }, tr("Adding repository %1").arg(name.isEmpty() ? url : name))) {
+        emit dbRefreshed();
+    } else {
+        qWarning() << "Add repository failed" << url;
+    }
+}
+
+void AptBackendWorker::doRemoveRepository(const QString& id)
+{
+    if (runHelper({ QStringLiteral("--remove-repo"), id }, tr("Removing repository"))) {
+        emit dbRefreshed();
+    } else {
+        qWarning() << "Remove repository failed" << id;
+    }
+}
+
+void AptBackendWorker::doSetRepositoryEnabled(const QString& id, bool enabled)
+{
+    const QString action = enabled ? QStringLiteral("--enable-repo") : QStringLiteral("--disable-repo");
+    if (runHelper({ action, id }, tr("Updating repository"))) {
+        emit dbRefreshed();
+    } else {
+        qWarning() << "Set repository enabled failed" << id << enabled;
     }
 }
