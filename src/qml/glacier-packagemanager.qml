@@ -41,14 +41,23 @@ ApplicationWindow {
     Connections {
         target: pkgDb
         function onTransactionStarted() {
+            if (pkgDb.dbusInitiated) {
+                return
+            }
             pageStack.push(Qt.resolvedUrl("pages/TransactionPage.qml"))
             root.show()
         }
         function onAuthorizationFail() {
+            if (pkgDb.dbusInitiated) {
+                return
+            }
             pageStack.push(Qt.resolvedUrl("pages/AuthorizationFailPage.qml"))
             root.show()
         }
         function onShowUpdatesRequested() {
+            if (pkgDb.dbusInitiated) {
+                return
+            }
             pageStack.push(Qt.resolvedUrl("pages/UpdatesPage.qml"))
             root.show()
         }

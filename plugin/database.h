@@ -28,6 +28,7 @@
 
 class DataBase : public QObject {
     Q_OBJECT
+    Q_PROPERTY(bool dbusInitiated READ dbusInitiated NOTIFY dbusInitiatedChanged)
 public:
     explicit DataBase(QObject* parent = nullptr);
     ~DataBase();
@@ -38,6 +39,9 @@ public:
     Q_INVOKABLE void getPackage(const QString& name, const QString& repo = QString());
     Q_INVOKABLE QVariantMap findPackageByFile(const QString& filePath);
     Q_INVOKABLE void listRepositories();
+
+    bool dbusInitiated() const { return m_dbusInitiated; }
+    void setDbusInitiated(bool v);
 
     Q_INVOKABLE void install(const QString& packageName, const QString& repo = QString());
     Q_INVOKABLE void remove(const QString& packageName, const QString& repo = QString());
@@ -67,6 +71,7 @@ signals:
     void startPreparing();
     void stopPreparing();
     void showUpdatesRequested();
+    void dbusInitiatedChanged();
 
 private:
     GlacierPMBackend* backendForRepo(const QString& repo) const;
@@ -94,6 +99,8 @@ private:
     int m_reposGeneration = 0;
     int m_reposPending = 0;
     QVariantList m_reposResults;
+
+    bool m_dbusInitiated = false;
 };
 
 #endif // DATABASE_H

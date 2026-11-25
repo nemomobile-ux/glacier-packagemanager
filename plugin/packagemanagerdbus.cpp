@@ -48,6 +48,7 @@ PackageManagerDBus::PackageManagerDBus(DataBase* database, QObject* parent)
 void PackageManagerDBus::Install(const QString& packageName, const QString& repo)
 {
     if (m_database) {
+        m_database->setDbusInitiated(true);
         m_database->install(packageName, repo);
     }
 }
@@ -55,6 +56,7 @@ void PackageManagerDBus::Install(const QString& packageName, const QString& repo
 void PackageManagerDBus::Remove(const QString& packageName, const QString& repo)
 {
     if (m_database) {
+        m_database->setDbusInitiated(true);
         m_database->remove(packageName, repo);
     }
 }
@@ -62,6 +64,7 @@ void PackageManagerDBus::Remove(const QString& packageName, const QString& repo)
 void PackageManagerDBus::Upgrade(const QString& packageName, const QString& repo)
 {
     if (m_database) {
+        m_database->setDbusInitiated(true);
         m_database->upgrade(packageName, repo);
     }
 }
@@ -69,6 +72,7 @@ void PackageManagerDBus::Upgrade(const QString& packageName, const QString& repo
 void PackageManagerDBus::Refresh()
 {
     if (m_database) {
+        m_database->setDbusInitiated(true);
         m_database->refresh();
     }
 }

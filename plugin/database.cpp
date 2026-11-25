@@ -22,6 +22,8 @@
 #include "packagemanagerdbus.h"
 
 #include <QDebug>
+#include <QFileInfo>
+
 
 DataBase::DataBase(QObject* parent)
     : QObject { parent }
@@ -41,6 +43,7 @@ DataBase::DataBase(QObject* parent)
             if (m_transactionActiveCount > 0) {
                 m_transactionActiveCount--;
                 if (m_transactionActiveCount == 0) {
+                    setDbusInitiated(false);
                     emit transactionFinished();
                 }
             }
@@ -54,6 +57,15 @@ DataBase::DataBase(QObject* parent)
 }
 
 DataBase::~DataBase() = default;
+
+void DataBase::setDbusInitiated(bool v)
+{
+    if (m_dbusInitiated == v) {
+        return;
+    }
+    m_dbusInitiated = v;
+    emit dbusInitiatedChanged();
+}
 
 GlacierPMBackend* DataBase::backendForRepo(const QString& repo) const
 {
@@ -214,6 +226,7 @@ void DataBase::install(const QString& packageName, const QString& repo)
     GlacierPMBackend* backend = backendForRepo(repo);
     if (!backend) {
         qWarning() << "No backend for install" << packageName << repo;
+        setDbusInitiated(false);
         return;
     }
     m_transactionActiveCount = 1;
@@ -227,6 +240,7 @@ void DataBase::remove(const QString& packageName, const QString& repo)
     GlacierPMBackend* backend = backendForRepo(repo);
     if (!backend) {
         qWarning() << "No backend for remove" << packageName << repo;
+        setDbusInitiated(false);
         return;
     }
     m_transactionActiveCount = 1;
@@ -249,6 +263,7 @@ void DataBase::upgrade(const QString& packageName, const QString& repo)
             return;
         }
         qWarning() << "No backend for upgrade" << packageName << repo;
+        setDbusInitiated(false);
         return;
     }
     m_transactionActiveCount = 1;
@@ -266,6 +281,7 @@ void DataBase::refresh()
     for (GlacierPMBackend* backend : m_backends) {
         backend->update();
     }
+    setDbusInitiated(false);
 }
 
 void DataBase::listRepositories()
