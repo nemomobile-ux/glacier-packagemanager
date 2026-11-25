@@ -17,11 +17,11 @@
  * Boston, MA 02110-1301, USA.
  */
 
+#include <flatpak.h>
+
 #include "flatpakbackendworker.h"
 
 #include <glacierrepo.h>
-
-#include <flatpak.h>
 
 #include <QDebug>
 
@@ -61,22 +61,7 @@ static GlacierPackage packageFromRemoteRef(FlatpakRemoteRef* ref)
     pkg.repo = QStringLiteral("flatpak");
     pkg.installed = false;
     pkg.name = toQString(flatpak_ref_get_name(FLATPAK_REF(ref)));
-
-    const char* appName = flatpak_remote_ref_get_appdata_name(ref);
-    const char* summary = flatpak_remote_ref_get_appdata_summary(ref);
-    const char* version = flatpak_remote_ref_get_appdata_version(ref);
-    if (appName && *appName) {
-        pkg.name = toQString(appName);
-    }
-    if (summary && *summary) {
-        pkg.description = toQString(summary);
-    }
-    if (version && *version) {
-        pkg.version = toQString(version);
-    }
-    if (pkg.version.isEmpty()) {
-        pkg.version = toQString(flatpak_ref_get_commit(FLATPAK_REF(ref)));
-    }
+    pkg.version = toQString(flatpak_ref_get_commit(FLATPAK_REF(ref)));
     return pkg;
 }
 
@@ -141,11 +126,7 @@ void FlatpakBackendWorker::doSearchPackages(const QString& name)
             continue;
         }
         const QString refName = toQString(flatpak_ref_get_name(FLATPAK_REF(ref)));
-        const QString appName = toQString(flatpak_remote_ref_get_appdata_name(ref));
-        const QString summary = toQString(flatpak_remote_ref_get_appdata_summary(ref));
-        if (refName.contains(needle, Qt::CaseInsensitive)
-            || appName.contains(needle, Qt::CaseInsensitive)
-            || summary.contains(needle, Qt::CaseInsensitive)) {
+        if (refName.contains(needle, Qt::CaseInsensitive)) {
             results.append(QVariant::fromValue(packageFromRemoteRef(ref)));
         }
     }
@@ -162,7 +143,7 @@ void FlatpakBackendWorker::doGetUpdates()
     }
 
     GError* error = nullptr;
-    GPtrArray* refs = flatpak_installation_list_installed_refs_for_update_sync(m_installation, nullptr, &error);
+    GPtrArray* refs = flatpak_installation_list_installed_refs_for_update(m_installation, nullptr, &error);
     if (!refs) {
         qWarning() << "Flatpak updates failed:" << (error ? error->message : "unknown error");
         g_clear_error(&error);
@@ -200,7 +181,7 @@ void FlatpakBackendWorker::doGetPackage(const QString& name)
     }
 
     GError* error = nullptr;
-    GPtrArray* installed = flatpak_installation_list_installed_refs_sync(m_installation, nullptr, &error);
+    GPtrArray* installed = flatpak_installation_list_installed_refs(m_installation, nullptr, &error);
     if (installed) {
         for (guint i = 0; i < installed->len; ++i) {
             auto* ref = FLATPAK_INSTALLED_REF(g_ptr_array_index(installed, i));
@@ -229,8 +210,7 @@ void FlatpakBackendWorker::doGetPackage(const QString& name)
                 continue;
             }
             const QString refName = toQString(flatpak_ref_get_name(FLATPAK_REF(ref)));
-            const QString appName = toQString(flatpak_remote_ref_get_appdata_name(ref));
-            if (refName == name || appName == name) {
+            if (refName == name) {
                 result = packageFromRemoteRef(ref);
                 g_ptr_array_unref(remotes);
                 emit getPackageReady(result);
@@ -339,7 +319,7 @@ void FlatpakBackendWorker::doUpgrade(const QString& packageName)
     if (packageName.isEmpty()) {
         emit emitAction(tr("Upgrading all packages"));
         GError* error = nullptr;
-        GPtrArray* refs = flatpak_installation_list_installed_refs_for_update_sync(m_installation, nullptr, &error);
+        GPtrArray* refs = flatpak_installation_list_installed_refs_for_update(m_installation, nullptr, &error);
         if (!refs) {
             qWarning() << "Flatpak upgrade-all list failed:" << (error ? error->message : "unknown error");
             g_clear_error(&error);
