@@ -35,6 +35,7 @@ GlacierPMManager::GlacierPMManager(QObject* parent)
     const QStringList candidates = {
         backendDir + QStringLiteral("/apt.so"),
         backendDir + QStringLiteral("/rpm.so"),
+        backendDir + QStringLiteral("/flatpak.so"),
         backendDir + QStringLiteral("/snap.so")
     };
 
