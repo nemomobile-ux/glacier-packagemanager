@@ -47,6 +47,8 @@ Item {
     PackageDatabase {
         id: pkgDb
         onGetUpdatesReady: function(packages) {
+            console.log("glacier-packagemanager-daemon: updates ready, count=" + packages.length)
+            lastCheckValue.value = Date.now()
             if (packages.length > 0) {
                 updateNotification.summary = qsTr("Updates available")
                 updateNotification.body = qsTr("%n update(s) available", "", packages.length)
@@ -71,6 +73,8 @@ Item {
         }]
     }
 
+    property int networkRetries: 0
+
     Timer {
         id: quitTimer
         interval: 3000
@@ -80,9 +84,20 @@ Item {
 
     Timer {
         id: startTimer
-        interval: 1000
+        interval: 2000
         repeat: false
         onTriggered: root.maybeCheck()
+    }
+
+    Timer {
+        id: safetyQuitTimer
+        interval: 120000
+        repeat: false
+        running: true
+        onTriggered: {
+            console.log("glacier-packagemanager-daemon: safety timeout, quitting")
+            Qt.quit()
+        }
     }
 
     function isAllowedConnection() {
@@ -93,17 +108,34 @@ Item {
     }
 
     function maybeCheck() {
+        console.log("glacier-packagemanager-daemon: checking, valid=" + networkManager.valid
+            + " connected=" + networkManager.connected
+            + " wifi=" + (networkManager.connectedWifi !== null)
+            + " ethernet=" + (networkManager.connectedEthernet !== null)
+            + " policy=" + connectionPolicyValue.value)
+
+        if (!networkManager.valid && networkRetries < 10) {
+            networkRetries++
+            startTimer.interval = 2000
+            startTimer.restart()
+            return
+        }
+
         if (!isAllowedConnection()) {
+            console.log("glacier-packagemanager-daemon: connection not allowed, quitting")
             Qt.quit()
             return
         }
+
         var now = Date.now()
         var last = Number(lastCheckValue.value)
         if (last > 0 && (now - last) < 24 * 60 * 60 * 1000) {
+            console.log("glacier-packagemanager-daemon: checked recently, quitting")
             Qt.quit()
             return
         }
-        lastCheckValue.value = now
+
+        console.log("glacier-packagemanager-daemon: requesting updates")
         pkgDb.getUpdates()
     }
 
