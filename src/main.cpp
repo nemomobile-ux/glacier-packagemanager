@@ -56,9 +56,13 @@ int main(int argc, char* argv[])
     QCommandLineOption removeOption(QStringList() << "r"
                                                   << "remove",
         QCoreApplication::translate("main", "Remove <package>"), QCoreApplication::translate("main", "package"));
+    QCommandLineOption backgroundOption(QStringList() << "background",
+        QStringLiteral("Run in background for D-Bus activation."));
+    backgroundOption.setFlags(QCommandLineOption::HiddenFromHelp);
     parser.addOption(installOption);
     parser.addOption(updateOption);
     parser.addOption(removeOption);
+    parser.addOption(backgroundOption);
 
     parser.process(*app);
 
@@ -75,7 +79,8 @@ int main(int argc, char* argv[])
     }
 
     const bool dbusActivated = qEnvironmentVariableIsSet("DBUS_STARTER_ADDRESS")
-        || qEnvironmentVariableIsSet("DBUS_STARTER_BUS_TYPE");
+        || qEnvironmentVariableIsSet("DBUS_STARTER_BUS_TYPE")
+        || parser.isSet(backgroundOption);
     const bool hasAction = parser.isSet(installOption) || parser.isSet(updateOption) || parser.isSet(removeOption);
 
     QQuickWindow* window = GlacierApp::showWindow();
