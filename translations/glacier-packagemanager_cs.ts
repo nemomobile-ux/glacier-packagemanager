@@ -294,10 +294,10 @@
     <message numerus="yes">
         <location filename="../src/daemon/daemon.qml" line="48"/>
         <source>%n update(s) available</source>
-        <translation>
-            <numerusform>Dostupné aktualizace: %n</numerusform></numerusform>
-            <numerusform>Dostupné aktualizace: %n</numerusform></numerusform>
-            <numerusform>Dostupné aktualizace: %n</numerusform></numerusform>
+        <translation numerus="yes">
+            <numerusform>Dostupné aktualizace: %n</numerusform>
+            <numerusform>Dostupné aktualizace: %n</numerusform>
+            <numerusform>Dostupné aktualizace: %n</numerusform>
         </translation>
     </message>
     <message>

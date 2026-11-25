@@ -281,9 +281,9 @@
     <message numerus="yes">
         <location filename="../src/daemon/daemon.qml" line="48"/>
         <source>%n update(s) available</source>
-        <translation>
-            <numerusform>%n अपडेट उपलब्ध</numerusform></numerusform>
-            <numerusform>%n अपडेट उपलब्ध</numerusform></numerusform>
+        <translation numerus="yes">
+            <numerusform>%n अपडेट उपलब्ध</numerusform>
+            <numerusform>%n अपडेट उपलब्ध</numerusform>
         </translation>
     </message>
     <message>

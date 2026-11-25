@@ -301,13 +301,13 @@
     <message numerus="yes">
         <location filename="../src/daemon/daemon.qml" line="48"/>
         <source>%n update(s) available</source>
-        <translation>
-            <numerusform>تتوفر %n تحديث(ات)</numerusform></numerusform>
-            <numerusform>تتوفر %n تحديث(ات)</numerusform></numerusform>
-            <numerusform>تتوفر %n تحديث(ات)</numerusform></numerusform>
-            <numerusform>تتوفر %n تحديث(ات)</numerusform></numerusform>
-            <numerusform>تتوفر %n تحديث(ات)</numerusform></numerusform>
-            <numerusform>تتوفر %n تحديث(ات)</numerusform></numerusform>
+        <translation numerus="yes">
+            <numerusform>تتوفر %n تحديث(ات)</numerusform>
+            <numerusform>تتوفر %n تحديث(ات)</numerusform>
+            <numerusform>تتوفر %n تحديث(ات)</numerusform>
+            <numerusform>تتوفر %n تحديث(ات)</numerusform>
+            <numerusform>تتوفر %n تحديث(ات)</numerusform>
+            <numerusform>تتوفر %n تحديث(ات)</numerusform>
         </translation>
     </message>
     <message>
